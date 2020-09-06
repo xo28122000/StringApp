@@ -16,7 +16,7 @@
 | Student Name | Student Email         | GitHub Username |
 |    :---:     |     :---:             |     :---:       |
 | member1      |rpanta1@mail.sfsu.edu  |riteshcode9      |
-| member2      |                       |                 |
+| member2      |wsingh@mail.sfsu.edu   |wsmarshall       |
 | member3      |                       |                 |
 | member4      |                       |                 |
 | member5      |                       |                 |
