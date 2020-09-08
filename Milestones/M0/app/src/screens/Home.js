@@ -1,9 +1,10 @@
 import React from "react";
+import Navbar from "../components/Navbar";
 const HomeScreen = () => {
   return (
-    <div
-      style={{ width: "100vw", height: "100vh", backgroundColor: "ButtonFace" }}
-    ></div>
+    <div style={{ backgroundColor: "#000000", height: "100vh" }}>
+      <Navbar img={true} textColor={"#FFFFFF"} />
+    </div>
   );
 };
 
