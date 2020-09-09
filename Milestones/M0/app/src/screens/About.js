@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { setProfile } from "../redux/actions";
+import { connect } from "react-redux";
 import Navbar from "../components/Navbar";
 
 import "../css/About.css";
@@ -11,7 +12,7 @@ import joseProfileImage from "../assets/jose-profile-image.JPG";
 import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
 import placeholder from "../assets/placeholder.jpg";
 
-const AboutScreen = () => {
+const AboutScreen = props => {
   const teamMembers = [
     {
       name: "Jainam Shah",
@@ -65,13 +66,11 @@ const AboutScreen = () => {
           return (
             <Link
               key={teamMember.name}
-              to={{
-                pathname: "/profile",
-                // search: "?sort=name",
-                // hash: "#the-hash",
-                state: { teamMember: true }
-              }}
+              to="/profile"
               className="hyperlink-reset"
+              onClick={() => {
+                props.setProfile(teamMember);
+              }}
             >
               <div className="member-card">
                 {/* TEAM MEMBER PROFILE IMAGE */}
@@ -118,7 +117,17 @@ const AboutScreen = () => {
   );
 };
 
-export default AboutScreen;
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setProfile: profile => dispatch(setProfile(profile))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AboutScreen);
 
 // TEAM MEMBER FLEX CARD #1
 //         <a href="#" className="hyperlink-reset">
