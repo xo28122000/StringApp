@@ -4,6 +4,7 @@ import '../css/About.css';
 import leftArrow from '../assets/left-arrow.svg';
 import rightArrow from '../assets/right-arrow.svg';
 import joseProfileImage from '../assets/jose-profile-image.JPG';
+import wsProfileImage from '../assets/ws-profile-image.jpg'
 
 const AboutScreen = () => {
   return (
@@ -84,7 +85,7 @@ const AboutScreen = () => {
           <div class="member-card">
             {/* TEAM MEMBER PROFILE IMAGE */}
             <div class="member-profile-image">
-              <img class="profile-image" src="" alt="Warren Singh Profile Image" />
+              <img class="profile-image" src={wsProfileImage} alt="Warren Singh Profile Image" />
             </div>
             {/* TEAM MEMBER NAME & POSITION */}
             <div class="member-name-position">
