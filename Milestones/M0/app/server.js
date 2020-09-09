@@ -16,7 +16,7 @@ app.use(helmet());
 app.use(hpp());
 app.use(morgan("tiny"));
 
-const apiLimiter = rateLimit({
+const apiLimiter = rateLimiter({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 30,
   message:
