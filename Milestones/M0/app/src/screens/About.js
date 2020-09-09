@@ -4,13 +4,15 @@ import "../css/About.css";
 import leftArrow from "../assets/left-arrow.svg";
 import rightArrow from "../assets/right-arrow.svg";
 import joseProfileImage from "../assets/jose-profile-image.JPG";
+import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
+import placeholder from "../assets/placeholder.jpg";
 
 const AboutScreen = () => {
   const teamMembers = [
     {
       name: "Jainam Shah",
       position: "Frontend Lead",
-      imgSrc: joseProfileImage
+      imgSrc: jainamProfileImage
     },
     {
       name: "Jose H. Gonzalez",
@@ -20,22 +22,22 @@ const AboutScreen = () => {
     {
       name: "Leonid Novoselov",
       position: "Frontend Developer",
-      imgSrc: joseProfileImage
+      imgSrc: placeholder
     },
     {
       name: "Ritesh Panta",
       position: "Backend Lead",
-      imgSrc: joseProfileImage
+      imgSrc: placeholder
     },
     {
       name: "Warren Singh",
       position: "Developer | Documentation",
-      imgSrc: joseProfileImage
+      imgSrc: placeholder
     },
     {
       name: "Xuanjun Chen",
       position: "Backend Developer | Github",
-      imgSrc: joseProfileImage
+      imgSrc: placeholder
     }
   ];
 
