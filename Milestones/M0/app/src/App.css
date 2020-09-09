@@ -5,6 +5,7 @@
   font-size: 15px;
   letter-spacing: 5px;
   font-weight: 300;
+  text-transform: uppercase;
 }
 
 .navLinks-div {
@@ -18,5 +19,91 @@
   font-weight: 400;
   text-decoration: none;
 }
+
+/* end */
+
+/* contact page */
+
+.contact-heading {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 75px;
+  letter-spacing: 5px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.contact-form-text {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 20px;
+  letter-spacing: 5px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.contact-form-error-text {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 15px;
+  letter-spacing: 3px;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #da3e3e;
+}
+
+.contact-input-text {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 18px;
+  letter-spacing: 4px;
+  word-spacing: 6px;
+  font-weight: 300;
+}
+
+#contact_description::-webkit-scrollbar {
+  width: 5px;
+}
+#contact_description::-webkit-scrollbar-track {
+  background: #dedede;
+}
+#contact_description::-webkit-scrollbar-thumb {
+  background: #161616;
+}
+#contact_description::-webkit-scrollbar-thumb:hover {
+  background: #4c4c4c;
+}
+
+/* end */
+
+/* global css */
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus {
+  outline: 0px !important;
+  -webkit-appearance: none;
+  box-shadow: none !important;
+}
+/* add these to remove the blue bootstrap outline */
+/* button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active */
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #dedede;
+}
+::-webkit-scrollbar-thumb {
+  background: #161616;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4c4c4c;
+}
+/* end */
 
 /* end */
