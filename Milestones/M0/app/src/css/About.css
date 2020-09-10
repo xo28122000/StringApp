@@ -1,0 +1,122 @@
+/* ======= Yanone Kaffeesatz Import ======= */
+
+@import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&display=swap');
+/* eliminates the blue hyperlink text and underline. Instead uses the inheritted text color */
+
+html, body {
+    margin: 0;
+    padding: 0
+}
+
+.hyperlink-reset {
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+/* eliminates the blue button outline when clicked */
+
+input:focus, textarea, button {
+    outline: none !important;
+}
+
+.the-team-header {
+    font-size: 60px;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    letter-spacing: 15px;
+    font-weight: 500;
+    margin: 55px 0 0 40px;
+}
+
+/* ======= RIGHT AND LEFT ARROW ======= */
+
+.arrow {
+    width: 25px;
+    height: 25px;
+}
+
+.arrow svg {
+    fill: #5a5a5a;
+}
+
+.arrow svg:hover {
+    fill: #000;
+}
+
+.left-arrow {
+    border: none;
+    background: none;
+    float: left;
+    margin: 220px 0 0 50px;
+}
+
+.right-arrow {
+    border: none;
+    background: none;
+    float: right;
+    margin: -255px 50px 0 0;
+}
+
+/* ======= MAIN FLEX CONTAINER ======= */
+
+.container {
+    display: flex;
+    flex-direction: row;
+    overflow-y: scroll;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    height: 350px;
+    width: auto;
+    margin: 125px 0 0 0;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+/* ======= TEAM MEMBER FLEX CARD ======= */
+
+.member-card {
+    flex: 0 0 auto;
+    height: 300px;
+    width: 250px;
+    /* becomes a flex container for member profile & name/position */
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.member-card:hover {
+    margin-top: 0px;
+}
+
+/* ======= TEAM MEMBER PROFILE IMAGE ======= */
+
+.profile-image {
+    width: 185px;
+    height: 185px;
+    border-radius: 100%;
+    display: block;
+    background-color: #F2F2F2;
+    margin: 0 auto 0 auto;
+    box-shadow: -3px 3px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ======= TEAM MEMBER NAME & POSITION ======= */
+
+.member-name {
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    letter-spacing: 4px;
+    font-weight: 700;
+    padding-top: 20px;
+}
+
+.member-position {
+    text-align: center;
+    font-size: 15px;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    letter-spacing: 4px;
+    font-weight: 500;
+}
