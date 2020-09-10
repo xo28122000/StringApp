@@ -13,6 +13,7 @@ import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
 import placeholder from "../assets/placeholder.jpg";
 
 const AboutScreen = props => {
+
   const teamMembers = [
     {
       firstName: "Jainam",
@@ -44,7 +45,7 @@ const AboutScreen = props => {
       firstName: "Leonid",
       lastName: "Novoselov",
       name: "Leonid Novoselov",
-      position: "Frontend Developer",
+      position: "Frontend Developer | DB Master",
       imgSrc: placeholder,
       emailLink: "",
       facebookLink: "",
@@ -70,7 +71,7 @@ const AboutScreen = props => {
       firstName: "Warren",
       lastName: "Singh",
       name: "Warren Singh",
-      position: "Developer | Documentation",
+      position: "Frontend Developer | Documentation",
       imgSrc: placeholder,
       emailLink: "",
       facebookLink: "",
@@ -103,13 +104,12 @@ const AboutScreen = props => {
         TEAM
       </h1>
 
-      {/* HORIZONTAL LEFT SCROLL ARROW */}
-      <button className="left-arrow">
-        <img className="arrow" src={leftArrow} alt="Left Arrow Button" />
-      </button>
-
       {/* MAIN FLEX CONTAINER */}
-      <div className="container">
+      <div className="about-container">
+        {/* HORIZONTAL LEFT SCROLL ARROW
+        <a className="left-arrow">
+          <img className="arrow" src={leftArrow} alt="Left Arrow Button" />
+        </a> */}
         {teamMembers.map(teamMember => {
           return (
             <Link
@@ -138,29 +138,14 @@ const AboutScreen = props => {
             </Link>
           );
         })}
+        {/* HORIZONTAL RIGHT SCROLL ARROW
+        <a className="right-arrow" >
+          <img className="arrow" src={rightArrow} alt="Right Arrow Button" />
+        </a> */}
       </div>
-      {/* HORIZONTAL RIGHT SCROLL ARROW */}
-      <button className="right-arrow">
-        <img className="arrow" src={rightArrow} alt="Right Arrow Button" />
-      </button>
 
       {/* ALLOWS USERS TO CLICK ARROWS TO MOVE TEAMMATE CARDS (INSTEAD OF SCROLLING)  */}
-      {/* <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-      <script type="text/javascript">
-        $('.right-arrow').click(function() {
-          event.preventDefault();
-        $('.container').animate({
-          scrollLeft: "+=300px"
-        }, "slow");
-      });
 
-      $('.left-arrow').click(function() {
-          event.preventDefault();
-        $('.container').animate({
-          scrollLeft: "-=300px"
-        }, "slow");
-      });
-    </script> */}
     </div>
   );
 };
@@ -176,117 +161,3 @@ export default connect(
   null,
   mapDispatchToProps
 )(AboutScreen);
-
-// TEAM MEMBER FLEX CARD #1
-//         <a href="#" className="hyperlink-reset">
-//           <div className="member-card">
-//             {/* TEAM MEMBER PROFILE IMAGE */}
-//             <div className="member-profile-image">
-//               <img
-//                 className="profile-image"
-//                 src=""
-//                 alt="Jainam H. Shah Profile Image"
-//               />
-//             </div>
-//             {/* TEAM MEMBER NAME & POSITION */}
-//             <div className="member-name-position">
-//               <p className="member-name">Jainam H. Shah</p>
-//               <p className="member-position">Frontend Lead</p>
-//             </div>
-//           </div>
-//         </a>
-
-//         {/* TEAM MEMBER FLEX CARD #2*/}
-//         <a href="#" className="hyperlink-reset">
-//           <div className="member-card">
-//             {/* TEAM MEMBER PROFILE IMAGE */}
-//             <div className="member-profile-image">
-//               <img
-//                 className="profile-image"
-//                 src={joseProfileImage}
-//                 alt="Jose Gonzalez Profile Image"
-//               />
-//             </div>
-//             {/* TEAM MEMBER NAME & POSITION */}
-//             <div className="member-name-position">
-//               <p className="member-name">Jose H. Gonzalez</p>
-//               <p className="member-position">Team Lead</p>
-//             </div>
-//           </div>
-//         </a>
-
-//         {/* TEAM MEMBER FLEX CARD #3*/}
-//         <a href="#" className="hyperlink-reset">
-//           <div className="member-card">
-//             {/* TEAM MEMBER PROFILE IMAGE */}
-//             <div className="member-profile-image">
-//               <img
-//                 className="profile-image"
-//                 src=""
-//                 alt="Leonid Novoselov Profile Image"
-//               />
-//             </div>
-//             {/* TEAM MEMBER NAME & POSITION */}
-//             <div className="member-name-position">
-//               <p className="member-name">Leonid Novoselov</p>
-//               <p className="member-position">Frontend Developer</p>
-//             </div>
-//           </div>
-//         </a>
-
-//         {/* TEAM MEMBER FLEX CARD #4*/}
-//         <a href="#" className="hyperlink-reset">
-//           <div className="member-card">
-//             {/* TEAM MEMBER PROFILE IMAGE */}
-//             <div className="member-profile-image">
-//               <img
-//                 className="profile-image"
-//                 src=""
-//                 alt="Ritesh Panta Profile Image"
-//               />
-//             </div>
-//             {/* TEAM MEMBER NAME & POSITION */}
-//             <div className="member-name-position">
-//               <p className="member-name">Ritesh Panta</p>
-//               <p className="member-position">Backend Lead</p>
-//             </div>
-//           </div>
-//         </a>
-
-//         {/* TEAM MEMBER FLEX CARD #5*/}
-//         <a href="#" className="hyperlink-reset">
-//           <div className="member-card">
-//             {/* TEAM MEMBER PROFILE IMAGE */}
-//             <div className="member-profile-image">
-//               <img
-//                 className="profile-image"
-//                 src=""
-//                 alt="Warren Singh Profile Image"
-//               />
-//             </div>
-//             {/* TEAM MEMBER NAME & POSITION */}
-//             <div className="member-name-position">
-//               <p className="member-name">Warren Singh</p>
-//               <p className="member-position">Developer | Documentation</p>
-//             </div>
-//           </div>
-//         </a>
-
-//         {/* TEAM MEMBER FLEX CARD #6*/}
-//         <a href="#" className="hyperlink-reset">
-//           <div className="member-card">
-//             {/* TEAM MEMBER PROFILE IMAGE */}
-//             <div className="member-profile-image">
-//               <img
-//                 className="profile-image"
-//                 src=""
-//                 alt="Xuanjun Chen Profile Image"
-//               />
-//             </div>
-//             {/* TEAM MEMBER NAME & POSITION */}
-//             <div className="member-name-position">
-//               <p className="member-name">Xuanjun Chen</p>
-//               <p className="member-position">Backend Developer | Github</p>
-//             </div>
-//           </div>
-//         </a>

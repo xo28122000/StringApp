@@ -45,29 +45,36 @@ input:focus, textarea, button {
 .left-arrow {
     border: none;
     background: none;
-    float: left;
-    margin: 220px 0 0 50px;
+    position: absolute;
+    left: auto;
+    margin: 0 0 0 -35px;
+    cursor: pointer;
+    transition: 0.6s ease;
 }
 
 .right-arrow {
     border: none;
     background: none;
-    float: right;
-    margin: -255px 50px 0 0;
+    position: absolute;
+    right: 0;
+    margin: 0 0 0 0;
+    cursor: pointer;
+    transition: 0.6s ease;
 }
 
 /* ======= MAIN FLEX CONTAINER ======= */
 
-.container {
+.about-container {
     display: flex;
     flex-direction: row;
-    overflow-y: scroll;
+    overflow-y: hidden;
     flex-wrap: nowrap;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     height: 350px;
-    width: auto;
-    margin: 125px 0 0 0;
+    margin: 125px auto 0 auto;
+    width: 80%;
+    align-items: center;
 }
 
 .container::-webkit-scrollbar {
