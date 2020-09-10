@@ -1,0 +1,93 @@
+/* ======= Yanone Kaffeesatz Import ======= */
+
+@import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&display=swap');
+/* eliminates the blue hyperlink text and underline. Instead uses the inheritted text color */
+
+.hyperlink-reset {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* eliminates the blue button outline when clicked */
+
+button:focus {
+    outline: 0;
+}
+
+.name-header {
+    font-size: 40px;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    letter-spacing: 15px;
+    font-weight: 400;
+    margin: 55px 0 0 40px;
+}
+
+.position-header {
+    font-size: 15px;
+    font-style: italic;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    letter-spacing: 5px;
+    font-weight: 400;
+    margin: -5px 0 0 40px;
+}
+
+/* ======= MAIN FLEX CONTAINER ======= */
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    margin: 25px 100px 0 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ======= TEAM MEMBER FLEX CARD ======= */
+
+.profile-member-card {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ======= TEAM MEMBER PROFILE IMAGE ======= */
+
+.member-image {
+    width: 185px;
+    height: 185px;
+    border-radius: 100%;
+    display: block;
+    background-color: #F2F2F2;
+    margin: 0 auto 0 auto;
+    box-shadow: -3px 3px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ======= TEAM MEMBER SOCIAL ICONS ======= */
+
+.social-links-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-icon {
+    margin: 30px 15px 50px 15px;
+}
+
+.icon {
+    height: 20px;
+    width: 20px;
+}
+
+.icon svg {
+    fill: #EB5757;
+}
+
+.icon svg:hover {
+    fill: #000 !important;
+}
+
+.member-introduction {
+    text-align: center;
+}

@@ -31,7 +31,7 @@ const Navbar = props => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          width: 400
+          width: 300
         }}
       >
         <div className="navLinks-div navLinks-text">

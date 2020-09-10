@@ -4,6 +4,7 @@ import { Input, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import Axios from "axios";
+import "../css/About.css";
 
 function ValidateEmail(email) {
   return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
@@ -90,8 +91,8 @@ const ContactScreen = () => {
   return (
     <div>
       <Navbar img={false} textColor={"#000000"} />
-      <div className="contact-heading" style={{ margin: 40 }}>
-        Stay In Touch
+      <div className="page-header">
+        STAY IN<br/> TOUCH
       </div>
       <div
         style={{
