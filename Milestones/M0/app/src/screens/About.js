@@ -15,34 +15,82 @@ import placeholder from "../assets/placeholder.jpg";
 const AboutScreen = props => {
   const teamMembers = [
     {
+      firstName: "Jainam",
+      lastName: "Shah",
       name: "Jainam Shah",
       position: "Frontend Lead",
-      imgSrc: jainamProfileImage
+      imgSrc: jainamProfileImage,
+      emailLink: "",
+      facebookLink: "",
+      githubLink: "",
+      linkedinLink: "",
+      aboutMe_one: "This is a little about me... paragraph one",
+      aboutMe_two: "This is a little about me... paragraph two"
     },
     {
+      firstName: "Jose",
+      lastName: "Gonzalez",
       name: "Jose H. Gonzalez",
       position: "Team Lead",
-      imgSrc: joseProfileImage
+      imgSrc: joseProfileImage,
+      emailLink: "mailto: gonzalezhilariojose@gmail.com",
+      facebookLink: "https://www.facebook.com/gonzalezhilariojose",
+      githubLink: "https://github.com/Hilarioo",
+      linkedinLink: "https://www.linkedin.com/in/hilariooo/",
+      aboutMe_one: "Hey! I have recently become a San Francisco Gator! I transitioned to SFSU from Los Medanos Community College. I will be graduating Spring 2021 with a Bachelor of Science. I am full of random facts that have no purpose other than bringing them up during conversations. I am also known as the 'go-to' person when it comes to troubleshooting my home Wi-Fi (hint: reset the modem).",
+      aboutMe_two: "During this next year, I will be seeking a Computer Science Internships where I can further expand my intellect and further sharpen my skills, while simultaneously contributing to the team!! "
     },
     {
+      firstName: "Leonid",
+      lastName: "Novoselov",
       name: "Leonid Novoselov",
       position: "Frontend Developer",
-      imgSrc: placeholder
+      imgSrc: placeholder,
+      emailLink: "",
+      facebookLink: "",
+      githubLink: "",
+      linkedinLink: "",
+      aboutMe_one: "This is a little about me... paragraph one",
+      aboutMe_two: "This is a little about me... paragraph two"
     },
     {
+      firstName: "Ritesh",
+      lastName: "Panta",
       name: "Ritesh Panta",
       position: "Backend Lead",
-      imgSrc: placeholder
+      imgSrc: placeholder,
+      emailLink: "",
+      facebookLink: "",
+      githubLink: "",
+      linkedinLink: "",
+      aboutMe_one: "This is a little about me... paragraph one",
+      aboutMe_two: "This is a little about me... paragraph two"
     },
     {
+      firstName: "Warren",
+      lastName: "Singh",
       name: "Warren Singh",
       position: "Developer | Documentation",
-      imgSrc: placeholder
+      imgSrc: placeholder,
+      emailLink: "",
+      facebookLink: "",
+      githubLink: "",
+      linkedinLink: "",
+      aboutMe_one: "This is a little about me... paragraph one",
+      aboutMe_two: "This is a little about me... paragraph two"
     },
     {
+      firstName: "Xuanjun",
+      lastName: "Chen",
       name: "Xuanjun Chen",
       position: "Backend Developer | Github",
-      imgSrc: placeholder
+      imgSrc: placeholder,
+      emailLink: "",
+      facebookLink: "",
+      githubLink: "",
+      linkedinLink: "",
+      aboutMe_one: "This is a little about me... paragraph one",
+      aboutMe_two: "This is a little about me... paragraph two"
     }
   ];
 
