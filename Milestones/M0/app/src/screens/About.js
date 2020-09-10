@@ -97,7 +97,7 @@ const AboutScreen = props => {
   return (
     <div>
       <Navbar img={false} textColor={"#000000"} />
-      <h1 className="the-team-header">
+      <h1 className="page-header">
         THE
         <br />
         TEAM
