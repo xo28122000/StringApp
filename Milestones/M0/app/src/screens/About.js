@@ -17,32 +17,56 @@ const AboutScreen = props => {
     {
       name: "Jainam Shah",
       position: "Frontend Lead",
-      imgSrc: jainamProfileImage
+      imgSrc: jainamProfileImage,
+      instagramLink: "https://www.instagram.com/jxxshah/",
+      linkedinLink: "https://www.linkedin.com/in/jainam-s/",
+      facebookLink: null,
+      description: "Hey ya'll! I am a full stack dev! MERN stack is the best!"
     },
     {
       name: "Jose H. Gonzalez",
       position: "Team Lead",
-      imgSrc: joseProfileImage
+      imgSrc: joseProfileImage,
+      instagramLink: "",
+      linkedinLink: "",
+      facebookLink: "",
+      description: ""
     },
     {
       name: "Leonid Novoselov",
       position: "Frontend Developer",
-      imgSrc: placeholder
+      imgSrc: placeholder,
+      instagramLink: "",
+      linkedinLink: "",
+      facebookLink: "",
+      description: ""
     },
     {
       name: "Ritesh Panta",
       position: "Backend Lead",
-      imgSrc: placeholder
+      imgSrc: placeholder,
+      instagramLink: "",
+      linkedinLink: "",
+      facebookLink: "",
+      description: ""
     },
     {
       name: "Warren Singh",
       position: "Developer | Documentation",
-      imgSrc: placeholder
+      imgSrc: placeholder,
+      instagramLink: "",
+      linkedinLink: "",
+      facebookLink: "",
+      description: ""
     },
     {
       name: "Xuanjun Chen",
       position: "Backend Developer | Github",
-      imgSrc: placeholder
+      imgSrc: placeholder,
+      instagramLink: "",
+      linkedinLink: "",
+      facebookLink: "",
+      description: ""
     }
   ];
 
@@ -116,7 +140,6 @@ const AboutScreen = props => {
     </div>
   );
 };
-
 
 const mapDispatchToProps = dispatch => {
   return {
