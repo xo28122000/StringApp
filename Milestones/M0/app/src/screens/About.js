@@ -10,6 +10,8 @@ import leftArrow from "../assets/left-arrow.svg";
 import rightArrow from "../assets/right-arrow.svg";
 import joseProfileImage from "../assets/jose-profile-image.JPG";
 import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
+import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
+
 import placeholder from "../assets/placeholder.jpg";
 
 const AboutScreen = props => {
@@ -63,13 +65,13 @@ const AboutScreen = props => {
       lastName: "Panta",
       name: "Ritesh Panta",
       position: "Backend Lead",
-      imgSrc: placeholder,
-      emailLink: "",
-      facebookLink: "",
-      githubLink: "",
-      linkedinLink: "",
-      aboutMe_one: "This is a little about me... paragraph one",
-      aboutMe_two: "This is a little about me... paragraph two"
+      imgSrc: riteshProfileImage,
+      emailLink: "mailto: rpanta1@mail.sfsu.edu",
+      facebookLink: "https://www.facebook.com/ritesh.panta",
+      githubLink: "https://github.com/rcode9",
+      linkedinLink: "https://www.linkedin.com/in/ritesh-raj-panta/",
+      aboutMe_one: "I am a senior year student at SFSU, hopefully I will graduate in 1 year and get a CS related job.",
+      aboutMe_two: "I wish to learn a lot from this group project and contribute with all my will power to give my best."
     },
     {
       firstName: "Warren",

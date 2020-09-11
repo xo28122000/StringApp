@@ -72,7 +72,7 @@ const ProfileScreen = props => {
                     />
                   </a>
                 </div>
-                {/* making bacebook optional */}
+                {/* making facebook optional */}
                 {props.profile.facebookLink ? (
                   <div style={{ marginLeft: 20, marginRight: 20 }}>
                     <a href={props.profile.facebookLink}>
