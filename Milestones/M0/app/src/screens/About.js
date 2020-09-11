@@ -11,6 +11,7 @@ import rightArrow from "../assets/right-arrow.svg";
 import joseProfileImage from "../assets/jose-profile-image.JPG";
 import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
 import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
+import warrenProfileImage from "../assets/ws-profile-image.JPG";
 
 import placeholder from "../assets/placeholder.jpg";
 
@@ -78,14 +79,14 @@ const AboutScreen = props => {
       firstName: "Warren",
       lastName: "Singh",
       name: "Warren Singh",
-      position: "Frontend Developer | Documentation",
-      imgSrc: placeholder,
-      emailLink: "",
+      position: "Backend Developer | Documentation",
+      imgSrc: warrenProfileImage,
+      emailLink: "mailto: wsingh@mail.sfsu.edu",
       facebookLink: "",
-      githubLink: "",
+      githubLink: "https://github.com/wsmarshall",
       linkedinLink: "",
-      aboutMe_one: "This is a little about me... paragraph one",
-      aboutMe_two: "This is a little about me... paragraph two"
+      aboutMe_one: "Gemini. Introvert. Perpetual beginner.",
+      aboutMe_two: "Always interested in learning."
     },
     {
       firstName: "Xuanjun",
