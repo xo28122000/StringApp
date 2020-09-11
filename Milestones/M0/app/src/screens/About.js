@@ -10,7 +10,7 @@ import leftArrow from "../assets/left-arrow.svg";
 import rightArrow from "../assets/right-arrow.svg";
 import joseProfileImage from "../assets/jose-profile-image.JPG";
 import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
-import jainamProfileImage from "../assets/riteshProfileImage-profile-image.jpeg";
+import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
 
 import placeholder from "../assets/placeholder.jpg";
 
