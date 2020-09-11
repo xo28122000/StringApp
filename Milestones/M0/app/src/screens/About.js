@@ -11,7 +11,7 @@ import rightArrow from "../assets/right-arrow.svg";
 import joseProfileImage from "../assets/jose-profile-image.JPG";
 import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
 import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
-import warrenProfileImage from "../assets/ws-profile-image.JPG";
+import warrenProfileImage from "../assets/ws-profile-image.jpg";
 
 import placeholder from "../assets/placeholder.jpg";
 
