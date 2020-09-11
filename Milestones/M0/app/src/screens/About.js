@@ -13,7 +13,6 @@ import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
 import placeholder from "../assets/placeholder.jpg";
 
 const AboutScreen = props => {
-
   const teamMembers = [
     {
       firstName: "Jainam",
@@ -23,10 +22,13 @@ const AboutScreen = props => {
       imgSrc: jainamProfileImage,
       emailLink: "mailto: jshah3@mail.sfsu.edu",
       facebookLink: null,
+      instagramLink: "https://www.instagram.com/jxxshah/",
       githubLink: "https://github.com/xo28122000",
       linkedinLink: "https://www.linkedin.com/in/jainam-s/",
-      aboutMe_one: "This is a little about me... paragraph one",
-      aboutMe_two: "This is a little about me... paragraph two"
+      aboutMe_one:
+        "Hey all, I am a full stack dev and I LOVE NODE.JS (React.js and Express.js)",
+      aboutMe_two:
+        "Junior (Graduating Dec 2021), Comp Sci major, Capricorn, searching for internships, love playing ping pong"
     },
     {
       firstName: "Jose",
@@ -38,8 +40,10 @@ const AboutScreen = props => {
       facebookLink: "https://www.facebook.com/gonzalezhilariojose",
       githubLink: "https://github.com/Hilarioo",
       linkedinLink: "https://www.linkedin.com/in/hilariooo/",
-      aboutMe_one: "Hey! I have recently become a San Francisco Gator! I transitioned to SFSU from Los Medanos Community College. I will be graduating Spring 2021 with a Bachelor of Science. I am full of random facts that have no purpose other than bringing them up during conversations. I am also known as the 'go-to' person when it comes to troubleshooting my home Wi-Fi (hint: reset the modem).",
-      aboutMe_two: "During this next year, I will be seeking a Computer Science Internships where I can further expand my intellect and further sharpen my skills, while simultaneously contributing to the team!! "
+      aboutMe_one:
+        "Hey! I have recently become a San Francisco Gator! I transitioned to SFSU from Los Medanos Community College. I will be graduating Spring 2021 with a Bachelor of Science. I am full of random facts that have no purpose other than bringing them up during conversations. I am also known as the 'go-to' person when it comes to troubleshooting my home Wi-Fi (hint: reset the modem).",
+      aboutMe_two:
+        "During this next year, I will be seeking a Computer Science Internships where I can further expand my intellect and further sharpen my skills, while simultaneously contributing to the team!! "
     },
     {
       firstName: "Leonid",
@@ -145,7 +149,6 @@ const AboutScreen = props => {
       </div>
 
       {/* ALLOWS USERS TO CLICK ARROWS TO MOVE TEAMMATE CARDS (INSTEAD OF SCROLLING)  */}
-
     </div>
   );
 };

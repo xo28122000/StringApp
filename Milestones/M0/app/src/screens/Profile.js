@@ -1,6 +1,8 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 import Navbar from "../components/Navbar";
 
@@ -10,17 +12,36 @@ import emailIcon from "../assets/email.svg";
 import facebookIcon from "../assets/facebook.svg";
 import githubIcon from "../assets/github.svg";
 import linkedinIcon from "../assets/linkedin.svg";
+import instagramIcon from "../assets/instagram.svg";
 
 const ProfileScreen = props => {
-  console.log(props);
   return (
     <div>
-      <Navbar img={false} textColor={"#000000"} />
+      <Navbar
+        img={false}
+        textColor={"#000000"}
+        leftComponent={
+          <Link to="/about">
+            <FontAwesomeIcon
+              icon={faArrowLeft}
+              style={{ fontSize: 20, color: "#000000" }}
+            />
+          </Link>
+        }
+      />
       {props && !props.profile ? (
         <Redirect to="/about" />
       ) : (
         <div>
           {/* use this div as your main parent div, dont use props.prfile outside this div or it'll give you errors */}
+          {/* <div style={{ marginLeft: 40, marginTop: 80 }}>
+            <Link to="/about">
+              <FontAwesomeIcon
+                icon={faTimes}
+                style={{ fontSize: 20, color: "#000000" }}
+              />
+            </Link>
+          </div> */}
           <h1 className="name-header">
             {props.profile.firstName}
             <br />
@@ -36,43 +57,66 @@ const ProfileScreen = props => {
                 <img
                   className="member-image"
                   src={props.profile.imgSrc}
-                  alt="Jose H. Gonzalez Profile Image"
+                  alt={props.profile.firstName + " Profile Image"}
                 />
               </div>
               {/* TEAM MEMBER SOCIAL LINKS */}
               <div className="social-links-container">
-                <a className="social-icon" href={props.profile.emailLink}>
-                  email
-                  <img
-                    classNameName="icon"
-                    src={emailIcon}
-                    alt="Right Arrow Button"
-                  />
-                </a>
-                {/* making bacebook optional */}
-                {props.profile.facebookLink ? (
-                  <a className="social-icon" href={props.profile.facebookLink}>
+                <div style={{ marginLeft: 20, marginRight: 20 }}>
+                  <a href={props.profile.emailLink}>
                     <img
+                      style={{ height: 30, width: 30 }}
                       classNameName="icon"
-                      src={facebookIcon}
+                      src={emailIcon}
                       alt="Right Arrow Button"
                     />
                   </a>
+                </div>
+                {/* making bacebook optional */}
+                {props.profile.facebookLink ? (
+                  <div style={{ marginLeft: 20, marginRight: 20 }}>
+                    <a href={props.profile.facebookLink}>
+                      <img
+                        style={{ height: 30, width: 30 }}
+                        classNameName="icon"
+                        src={facebookIcon}
+                        alt="Right Arrow Button"
+                      />
+                    </a>
+                  </div>
                 ) : null}
-                <a className="social-icon" href={props.profile.githubLink}>
-                  <img
-                    classNameName="icon"
-                    src={githubIcon}
-                    alt="Right Arrow Button"
-                  />
-                </a>
-                <a className="social-icon" href={props.profile.linkedinLink}>
-                  <img
-                    classNameName="icon"
-                    src={linkedinIcon}
-                    alt="Right Arrow Button"
-                  />
-                </a>
+                {/* {props.profile.instagramLink ? (
+                  <div style={{ marginLeft: 20, marginRight: 20 }}>
+                    <a href={props.profile.instagramLink}>
+                      <img
+                        style={{ height: 30, width: 30 }}
+                        classNameName="icon"
+                        src={instagramIcon}
+                        alt="Right Arrow Button"
+                      />
+                    </a>
+                  </div>
+                ) : null} */}
+                <div style={{ marginLeft: 20, marginRight: 20 }}>
+                  <a href={props.profile.githubLink}>
+                    <img
+                      style={{ height: 30, width: 30 }}
+                      classNameName="icon"
+                      src={githubIcon}
+                      alt="Right Arrow Button"
+                    />
+                  </a>
+                </div>
+                <div style={{ marginLeft: 20, marginRight: 20 }}>
+                  <a href={props.profile.linkedinLink}>
+                    <img
+                      style={{ height: 30, width: 30 }}
+                      classNameName="icon"
+                      src={linkedinIcon}
+                      alt="Right Arrow Button"
+                    />
+                  </a>
+                </div>
               </div>
               {/* TEAM MEMBER NAME & POSITION */}
               <div>

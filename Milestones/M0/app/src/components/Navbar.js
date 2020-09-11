@@ -25,6 +25,7 @@ const Navbar = props => {
             style={{ width: "auto", height: 70 }}
           />
         ) : null}
+        {props.leftComponent ? props.leftComponent : null}
       </div>
       <div
         className=""
