@@ -12,6 +12,7 @@ import joseProfileImage from "../assets/jose-profile-image.JPG";
 import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
 import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
 import warrenProfileImage from "../assets/ws-profile-image.jpg";
+import leonidProfileImage from "../assets/leonid-ProfPic.jpg";
 
 import placeholder from "../assets/placeholder.jpg";
 
@@ -52,13 +53,13 @@ const AboutScreen = props => {
       lastName: "Novoselov",
       name: "Leonid Novoselov",
       position: "Frontend Developer | DB Master",
-      imgSrc: placeholder,
-      emailLink: "",
+      imgSrc: leonidProfileImage,
+      emailLink: "lnovoselov@mail.sfsu.edu",
       facebookLink: "",
       githubLink: "",
       linkedinLink: "",
-      aboutMe_one: "This is a little about me... paragraph one",
-      aboutMe_two: "This is a little about me... paragraph two"
+      aboutMe_one: "I live in SF. I just love this city. My big thing is backpacking. I love to go around California and discovering beautiful paysages.",
+      aboutMe_two: "I feel very pationate about this project. I think it's going to be a great and valuable experience. An opportunity to grow as a developers as well as professionals."
     },
     {
       firstName: "Ritesh",
