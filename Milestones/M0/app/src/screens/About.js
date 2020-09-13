@@ -22,7 +22,7 @@ const AboutScreen = props => {
       firstName: "Jainam",
       lastName: "Shah",
       name: "Jainam Shah",
-      position: "Frontend Lead",
+      position: "Team Lead / Frontend Lead",
       imgSrc: jainamProfileImage,
       emailLink: "mailto: jshah3@mail.sfsu.edu",
       facebookLink: null,
@@ -33,21 +33,21 @@ const AboutScreen = props => {
       aboutMe_two:
         "Junior (Graduating Dec 2021), Comp Sci major, Capricorn, searching for internships, love playing ping pong"
     },
-    {
-      firstName: "Jose",
-      lastName: "Gonzalez",
-      name: "Jose H. Gonzalez",
-      position: "Team Lead",
-      imgSrc: joseProfileImage,
-      emailLink: "mailto: gonzalezhilariojose@gmail.com",
-      facebookLink: "https://www.facebook.com/gonzalezhilariojose",
-      githubLink: "https://github.com/Hilarioo",
-      linkedinLink: "https://www.linkedin.com/in/hilariooo/",
-      aboutMe_one:
-        "Hey! I have recently become a San Francisco Gator! I transitioned to SFSU from Los Medanos Community College. I will be graduating Spring 2021 with a Bachelor of Science. I am full of random facts that have no purpose other than bringing them up during conversations. I am also known as the 'go-to' person when it comes to troubleshooting my home Wi-Fi (hint: reset the modem).",
-      aboutMe_two:
-        "During this next year, I will be seeking a Computer Science Internships where I can further expand my intellect and further sharpen my skills, while simultaneously contributing to the team!! "
-    },
+    // {
+    //   firstName: "Jose",
+    //   lastName: "Gonzalez",
+    //   name: "Jose H. Gonzalez",
+    //   position: "Team Lead",
+    //   imgSrc: joseProfileImage,
+    //   emailLink: "mailto: gonzalezhilariojose@gmail.com",
+    //   facebookLink: "https://www.facebook.com/gonzalezhilariojose",
+    //   githubLink: "https://github.com/Hilarioo",
+    //   linkedinLink: "https://www.linkedin.com/in/hilariooo/",
+    //   aboutMe_one:
+    //     "Hey! I have recently become a San Francisco Gator! I transitioned to SFSU from Los Medanos Community College. I will be graduating Spring 2021 with a Bachelor of Science. I am full of random facts that have no purpose other than bringing them up during conversations. I am also known as the 'go-to' person when it comes to troubleshooting my home Wi-Fi (hint: reset the modem).",
+    //   aboutMe_two:
+    //     "During this next year, I will be seeking a Computer Science Internships where I can further expand my intellect and further sharpen my skills, while simultaneously contributing to the team!! "
+    // },
     {
       firstName: "Leonid",
       lastName: "Novoselov",
