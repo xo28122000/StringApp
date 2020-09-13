@@ -25,13 +25,14 @@ const Navbar = props => {
             style={{ width: "auto", height: 70 }}
           />
         ) : null}
+        {props.leftComponent ? props.leftComponent : null}
       </div>
       <div
         className=""
         style={{
           display: "flex",
           justifyContent: "space-between",
-          width: 400
+          width: 300
         }}
       >
         <div className="navLinks-div navLinks-text">

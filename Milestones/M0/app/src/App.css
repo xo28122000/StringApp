@@ -1,3 +1,24 @@
+/* home */
+
+.home-text {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 80px;
+  letter-spacing: 10px;
+  font-weight: 500;
+  color: #3d3d3d;
+}
+
+.home-subtext {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  font-size: 40px;
+  letter-spacing: 10px;
+  font-weight: 500;
+  /* text-decoration: underline; */
+  color: #282828;
+}
+
+/* end */
+
 /* navbar */
 
 .navLinks-text {
@@ -94,7 +115,9 @@ label:focus,
 /* scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 4px;
 }
+
 ::-webkit-scrollbar-track {
   background: #dedede;
 }
@@ -105,5 +128,16 @@ label:focus,
   background: #4c4c4c;
 }
 /* end */
+
+::-moz-selection {
+  /* Code for Firefox */
+  color: #ff5b5b;
+  background: none;
+}
+
+::selection {
+  color: #ff5b5b;
+  background: none;
+}
 
 /* end */

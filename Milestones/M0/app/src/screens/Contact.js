@@ -4,6 +4,7 @@ import { Input, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import Axios from "axios";
+import "../css/About.css";
 
 function ValidateEmail(email) {
   return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
@@ -20,7 +21,8 @@ const FormItem = props => {
         borderColor: "#D2D1D1",
         paddingTop: 5,
         paddingBottom: 5,
-        width: "40%"
+        width: "40%",
+        minWidth: 300
       }}
     >
       <div className="contact-form-text">{props.label}</div>
@@ -32,6 +34,7 @@ const FormItem = props => {
         maxLength={props.maxlength}
         style={{
           borderWidth: 0,
+
           minHeight: props.minHeight ? props.minHeight : "auto",
           maxHeight: props.maxHeight ? props.maxHeight : "auto"
         }}
@@ -90,8 +93,9 @@ const ContactScreen = () => {
   return (
     <div>
       <Navbar img={false} textColor={"#000000"} />
-      <div className="contact-heading" style={{ margin: 40 }}>
-        Stay In Touch
+      <div className="page-header">
+        STAY IN
+        <br /> TOUCH
       </div>
       <div
         style={{
