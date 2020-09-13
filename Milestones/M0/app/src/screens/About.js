@@ -13,8 +13,8 @@ import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
 import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
 import warrenProfileImage from "../assets/ws-profile-image.jpg";
 import leonidProfileImage from "../assets/leonid-ProfPic.jpg";
-
-import placeholder from "../assets/placeholder.jpg";
+import xuanjunprofileImage from "../assets/"
+import placeholder from "../assets/WechatIMG2.jpeg;
 
 const AboutScreen = props => {
   const teamMembers = [
@@ -94,13 +94,13 @@ const AboutScreen = props => {
       lastName: "Chen",
       name: "Xuanjun Chen",
       position: "Backend Developer | Github",
-      imgSrc: placeholder,
-      emailLink: "",
+        imgSrc: xuanjunProfileimage,
+      emailLink: "mailto: xchen21@mail.sfsu.edu",
       facebookLink: "",
-      githubLink: "",
-      linkedinLink: "",
-      aboutMe_one: "This is a little about me... paragraph one",
-      aboutMe_two: "This is a little about me... paragraph two"
+        githubLink: "https://github.com/xuanjunc",
+        linkedinLink: "",
+      aboutMe_one: "I am a senior year student at SFSU, I will be graduating in Spring 2021",
+      aboutMe_two: "I wish to learn a lot from group project and I hopefully have an great experience with group member."
     }
   ];
 
