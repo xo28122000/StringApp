@@ -118,6 +118,7 @@ const AboutScreen = props => {
       </h1>
 
       {/* MAIN FLEX CONTAINER */}
+
       <div className="about-container">
         {/* HORIZONTAL LEFT SCROLL ARROW
         <a className="left-arrow">
@@ -155,6 +156,7 @@ const AboutScreen = props => {
         <a className="right-arrow" >
           <img className="arrow" src={rightArrow} alt="Right Arrow Button" />
         </a> */}
+
       </div>
 
       {/* ALLOWS USERS TO CLICK ARROWS TO MOVE TEAMMATE CARDS (INSTEAD OF SCROLLING)  */}

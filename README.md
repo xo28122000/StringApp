@@ -18,7 +18,7 @@ This is a test
 |    :---:     |     :---:             |     :---:       |
 | member1      |rpanta1@mail.sfsu.edu  |riteshcode9      |
 | member2      |wsingh@mail.sfsu.edu   |wsmarshall       |
-| member3      |                       |                 |
+| member3      |xchen21@mail.sfsu.edu  |xuanjunc         |
 | member4      |                       |                 |
 | member5      |                       |                 |
 | member6      |                       |                 |
