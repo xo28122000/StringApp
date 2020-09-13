@@ -13,8 +13,8 @@ import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
 import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
 import warrenProfileImage from "../assets/ws-profile-image.jpg";
 import leonidProfileImage from "../assets/leonid-ProfPic.jpg";
-import xuanjunprofileImage from "../assets/"
-import placeholder from "../assets/WechatIMG2.jpeg;
+import xuanjunprofileImage from "../assets/Xuanjun-profile-image.jpeg";
+import placeholder from "../assets/placeholder.jpg";
 
 const AboutScreen = props => {
   const teamMembers = [
@@ -55,11 +55,13 @@ const AboutScreen = props => {
       position: "Frontend Developer | DB Master",
       imgSrc: leonidProfileImage,
       emailLink: "lnovoselov@mail.sfsu.edu",
-      facebookLink: "",
-      githubLink: "",
-      linkedinLink: "",
-      aboutMe_one: "I live in SF. I just love this city. My big thing is backpacking. I love to go around California and discovering beautiful paysages.",
-      aboutMe_two: "I feel very pationate about this project. I think it's going to be a great and valuable experience. An opportunity to grow as a developers as well as professionals."
+      facebookLink: null,
+      githubLink: null,
+      linkedinLink: null,
+      aboutMe_one:
+        "I live in SF. I just love this city. My big thing is backpacking. I love to go around California and discovering beautiful paysages.",
+      aboutMe_two:
+        "I feel very pationate about this project. I think it's going to be a great and valuable experience. An opportunity to grow as a developers as well as professionals."
     },
     {
       firstName: "Ritesh",
@@ -83,9 +85,9 @@ const AboutScreen = props => {
       position: "Backend Developer | Documentation",
       imgSrc: warrenProfileImage,
       emailLink: "mailto: wsingh@mail.sfsu.edu",
-      facebookLink: "",
+      facebookLink: null,
       githubLink: "https://github.com/wsmarshall",
-      linkedinLink: "",
+      linkedinLink: null,
       aboutMe_one: "Gemini. Introvert. Perpetual beginner.",
       aboutMe_two: "Always interested in learning."
     },
@@ -94,13 +96,15 @@ const AboutScreen = props => {
       lastName: "Chen",
       name: "Xuanjun Chen",
       position: "Backend Developer | Github",
-        imgSrc: xuanjunProfileimage,
+      imgSrc: xuanjunprofileImage,
       emailLink: "mailto: xchen21@mail.sfsu.edu",
-      facebookLink: "",
-        githubLink: "https://github.com/xuanjunc",
-        linkedinLink: "",
-      aboutMe_one: "I am a senior year student at SFSU, I will be graduating in Spring 2021",
-      aboutMe_two: "I wish to learn a lot from group project and I hopefully have an great experience with group member."
+      facebookLink: null,
+      githubLink: "https://github.com/xuanjunc",
+      linkedinLink: null,
+      aboutMe_one:
+        "I am a senior year student at SFSU, I will be graduating in Spring 2021",
+      aboutMe_two:
+        "I wish to learn a lot from group project and I hopefully have an great experience with group member."
     }
   ];
 

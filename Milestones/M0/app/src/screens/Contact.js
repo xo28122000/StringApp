@@ -21,7 +21,8 @@ const FormItem = props => {
         borderColor: "#D2D1D1",
         paddingTop: 5,
         paddingBottom: 5,
-        width: "40%"
+        width: "40%",
+        minWidth: 300
       }}
     >
       <div className="contact-form-text">{props.label}</div>
@@ -33,6 +34,7 @@ const FormItem = props => {
         maxLength={props.maxlength}
         style={{
           borderWidth: 0,
+
           minHeight: props.minHeight ? props.minHeight : "auto",
           maxHeight: props.maxHeight ? props.maxHeight : "auto"
         }}
@@ -92,7 +94,8 @@ const ContactScreen = () => {
     <div>
       <Navbar img={false} textColor={"#000000"} />
       <div className="page-header">
-        STAY IN<br/> TOUCH
+        STAY IN
+        <br /> TOUCH
       </div>
       <div
         style={{

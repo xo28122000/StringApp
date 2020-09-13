@@ -39,7 +39,7 @@ button:focus {
   width: auto;
   margin: 20px 100px 50px 100px;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 }
 
 /* ======= TEAM MEMBER FLEX CARD ======= */
