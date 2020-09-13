@@ -54,9 +54,9 @@ const AboutScreen = props => {
       name: "Leonid Novoselov",
       position: "Frontend Developer | DB Master",
       imgSrc: leonidProfileImage,
-      emailLink: "lnovoselov@mail.sfsu.edu",
+      emailLink: "mailto: lnovoselov@mail.sfsu.edu",
       facebookLink: null,
-      githubLink: null,
+      githubLink: "https://github.com/leonidnovoselov",
       linkedinLink: null,
       aboutMe_one:
         "I live in SF. I just love this city. My big thing is backpacking. I love to go around California and discovering beautiful paysages.",
