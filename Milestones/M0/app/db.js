@@ -2,7 +2,7 @@ const mysql = require("mysql");
 
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: "csc648-db.cscogdnip4k5.us-west-1.rds.amazonaws.com",
+  host: "csc648-db.cbqgq7jmpyli.us-west-1.rds.amazonaws.com",
   user: "admin",
   password: "CSC-648(T5)",
   database: "M0"
