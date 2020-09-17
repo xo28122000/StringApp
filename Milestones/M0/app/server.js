@@ -6,15 +6,15 @@ const hpp = require("hpp");
 const morgan = require("morgan");
 const rateLimiter = require("express-rate-limit");
 
-const db = require("./db");
-
 const app = express();
+
+const db = require("./db");
 
 app.use(express.static(path.join(__dirname, "build")));
 app.use(bodyParser.json());
 app.use(helmet());
 app.use(hpp());
-app.use(morgan("tiny"));
+app.use(morgan("dev"));
 
 const apiLimiter = rateLimiter({
   windowMs: 15 * 60 * 1000, // 15 minutes
