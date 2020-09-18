@@ -1,5 +1,4 @@
 # csc648 Repository
-This is a test
 
 ## Please when ready add your teams application URL or IP to the repository description. This will help with grading. Teams are expected to keep this value up to date.
 
@@ -14,13 +13,15 @@ This is a test
 3. Fill out the table below
 
 
-| Student Name | Student Email          | GitHub Username |
-|    :---:     |     :---:              |     :---:       |
-| member1      |rpanta1@mail.sfsu.edu   |riteshcode9      |
-| member2      |wsingh@mail.sfsu.edu    |wsmarshall       |
-| member3      |xchen21@mail.sfsu.edu   |xuanjunc         |
-| member4      |lnovoselov@mail.sfsu.edu|LeonidNovoselov  |
-| member5      |                        |                 |
-| member6      |                        |                 |
+
+| Student Name | Student Email         | GitHub Username |
+|    :---:     |     :---:             |     :---:       |
+| member1      |rpanta1@mail.sfsu.edu  |riteshcode9      |
+| member2      |wsingh@mail.sfsu.edu   |wsmarshall       |
+| member3      |xchen21@mail.sfsu.edu  |xuanjunc         |
+| member4      |jshah3@mail.sfsu.edu   |xo28122000       |
+| member5      |lnovoselov@mail.sfsu.edu|LeonidNovoselov |
+| member6      |                       |                 |
+
 
 ## NO code needs to be stored in the root of your repository. You may rename the application folder if you like to your team's application name. But all source code related to your team's application should be stored inside the application folder.
