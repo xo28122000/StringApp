@@ -1,6 +1,6 @@
 {
-  "short_name": "T5 App",
-  "name": "Team 5 CSC 648 SFSU",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
