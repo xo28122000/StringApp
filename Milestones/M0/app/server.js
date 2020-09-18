@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-const helmet = require("helmet");
+// const helmet = require("helmet");
 // const hpp = require("hpp");
 // const morgan = require("morgan");
 // const rateLimiter = require("express-rate-limit");
@@ -12,7 +12,7 @@ const db = require("./db");
 
 app.use(express.static(path.join(__dirname, "build")));
 app.use(bodyParser.json());
-app.use(helmet());
+// app.use(helmet());
 // app.use(hpp());
 // app.use(morgan("dev"));
 
