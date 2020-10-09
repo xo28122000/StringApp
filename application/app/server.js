@@ -33,7 +33,7 @@ aws.config.update({ region: "us-west-1" });
 
 // routes
 const mainRouter = require("./backend/routes");
-app.use("/se", mainRouter);
+app.use("/api", mainRouter);
 
 app.use(express.static(path.join(__dirname, "build")));
 app.get("*", function(req, res) {
