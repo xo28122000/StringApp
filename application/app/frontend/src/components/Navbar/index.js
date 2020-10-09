@@ -9,8 +9,7 @@ const Navbar = () => {
       style={{
         display: "flex",
         justifyContent: "space-around",
-        alignContent: "center",
-        height: "10vh"
+        alignContent: "center"
       }}
     >
       <Link to="/someroute" className="linkButtons">

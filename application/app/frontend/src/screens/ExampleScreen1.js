@@ -7,10 +7,11 @@ const ExampleScreen1 = () => {
         display: "flex",
         justifyContent: "center",
         alignContent: "center",
+        alignItems: "center",
         height: "80vh"
       }}
     >
-      ExampleScreen1
+      ExampleScreen - 1
     </div>
   );
 };
