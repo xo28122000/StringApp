@@ -1,5 +1,5 @@
 const mysql = require("mysql");
-const credentials = require("../../credentials").default.mySQL;
+const credentials = require("./credentials");
 
 const pool = mysql.createPool({
   connectionLimit: 10,
@@ -12,8 +12,8 @@ const pool = mysql.createPool({
 pool.getConnection(async function(err, connection) {
   if (err) {
     console.log("MYSQL connection unsuccessful");
+    return;
   } // not connected!
-
   console.log("MYSQL connection successful!");
 
   //   connection.query("CREATE DATABASE IF NOT EXISTS M0;");
@@ -27,7 +27,5 @@ pool.getConnection(async function(err, connection) {
   //   );
   connection.release();
 });
-
-
 
 module.exports = pool;
