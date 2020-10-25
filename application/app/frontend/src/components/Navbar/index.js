@@ -11,14 +11,7 @@ const Navbar = () => {
         justifyContent: "space-around",
         alignContent: "center"
       }}
-    >
-      <Link to="/someroute" className="linkButtons">
-        someroute
-      </Link>
-      <Link to="/" className="linkButtons">
-        home
-      </Link>
-    </div>
+    ></div>
   );
 };
 
