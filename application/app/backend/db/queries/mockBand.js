@@ -1,10 +1,10 @@
 const pool = require("../index");
 let mockQuerries = {};
 
-mockQuerries.createBand = (name, type) => {
+mockQuerries.createBand = (name, type, numMembers, imgUrl) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO MOCKUSER VALUES ${name} ${type}`,
+      `INSERT INTO MOCKBAND VALUES('${name}', '${type}', ${numMembers}, '${imgUrl}')`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -16,18 +16,15 @@ mockQuerries.createBand = (name, type) => {
   });
 };
 
-mockQuerries.searchBand = (name, type) => {
+mockQuerries.searchBand = (name, type, numMembers) => {
   return new Promise((resolve, reject) => {
-    pool.query(
-      `INSERT INTO MOCKUSER VALUES ${name} ${type}`,
-      (err, results) => {
-        if (err) {
-          return reject(err);
-        } else {
-          return resolve(results);
-        }
+    pool.query(`Select * from MOCKBAND`, (err, results) => {
+      if (err) {
+        return reject(err);
+      } else {
+        return resolve(results);
       }
-    );
+    });
   });
 };
 

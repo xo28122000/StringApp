@@ -1,5 +1,5 @@
 const express = require("express");
-const mockBandController = require("../../controllers/mockController/mockBandController");
+const mockBandController = require("../../controllers/mockBandController/mockBandController");
 let mockBandRouter = express.Router();
 
 mockBandRouter.post("/createBand", mockBandController.createMockBand);
