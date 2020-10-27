@@ -24,11 +24,11 @@ app.use(
 // app.use(passport.session());
 
 //aws
-// aws.config.loadFromPath("./.aws/config.json");
+aws.config.loadFromPath("./aws/config.json");
 // AWS_ACCESS_KEY_ID
 // AWS_SECRET_ACCESS_KEY
 // AWS_SESSION_TOKEN (optional)
-// aws.config.update({ region: "us-west-1" });
+aws.config.update({ region: "us-west-1" });
 //end
 
 // routes
