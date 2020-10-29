@@ -45,12 +45,12 @@ const BandSearchBar = props => {
 
   const searchBands = () => {
     let params = {};
+    const numMembers = parseInt(filterNumMembers);
+
     params["name"] = !searchName || searchName.length <= 0 ? null : searchName;
     params["type"] = !filterType || filterType.length <= 0 ? null : filterType;
     params["numMembers"] =
-      !filterNumMembers || !isNaN(filterNumMembers) || filterNumMembers <= 0
-        ? 1
-        : filterType;
+      !numMembers || isNaN(numMembers) || numMembers <= 0 ? 1 : numMembers;
 
     Axios.post("/api/mockBand/searchBand", params)
       .then(resp => {
@@ -67,7 +67,7 @@ const BandSearchBar = props => {
       !createName ||
       createName.length <= 0 ||
       !createType ||
-      !isNaN(createNumBandMembers) ||
+      isNaN(createNumBandMembers) ||
       createNumBandMembers < 1 ||
       imageFileInput.files.length !== 1
     ) {
@@ -205,7 +205,12 @@ const BandSearchBar = props => {
           </FormText>
         </ModalBody>
       </Modal>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between"
+        }}
+      >
         <div style={{ display: "flex" }}>
           <Input
             value={searchName}

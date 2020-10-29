@@ -8,14 +8,17 @@ const Navbar = () => {
     <div
       style={{
         display: "flex",
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignItems: "center",
         height: 60,
-        padding: 10
-        // backgroundColor: "red"
+        padding: 5,
+        backgroundColor: "#000000"
       }}
     >
-      String
+      <img
+        src={require("../../assets/StringLogo.png")}
+        style={{ height: 45 }}
+      />
     </div>
   );
 };
