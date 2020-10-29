@@ -8,23 +8,19 @@ import {
 
 import Navbar from "./components/Navbar/index";
 
-import ExampleScreen1 from "./screens/ExampleScreen1";
-import ExampleScreen2 from "./screens/ExampleScreen2";
+import BandSearch from "./screens/BandSearch";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Filter from "./components/Dropdown/Dropdown";
 
 const App = props => {
   return (
     <div>
       <Navbar />
-
       <Switch>
-        <Route path="/someroute">
-          <ExampleScreen1 />
-        </Route>
         <Route path="/">
-          <ExampleScreen2 />
+          <BandSearch />
         </Route>
       </Switch>
     </div>

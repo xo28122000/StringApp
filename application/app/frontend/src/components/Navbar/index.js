@@ -8,16 +8,14 @@ const Navbar = () => {
     <div
       style={{
         display: "flex",
-        justifyContent: "space-around",
-        alignContent: "center"
+        justifyContent: "flex-start",
+        alignItems: "center",
+        height: 60,
+        padding: 10
+        // backgroundColor: "red"
       }}
     >
-      <Link to="/someroute" className="linkButtons">
-        someroute
-      </Link>
-      <Link to="/" className="linkButtons">
-        home
-      </Link>
+      String
     </div>
   );
 };

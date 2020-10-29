@@ -1,4 +1,4 @@
-import { EXAMPLE_CONSTANT1, EXAMPLE_CONSTANT2 } from "./constants";
+import { EXAMPLE_CONSTANT1, EXAMPLE_CONSTANT2 } from "../constants";
 
 export function exampleAction1() {
   return { type: EXAMPLE_CONSTANT1 };
