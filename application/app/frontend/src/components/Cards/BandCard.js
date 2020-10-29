@@ -1,10 +1,31 @@
 import React from "react";
+import {
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  Button,
+  Badge,
+} from "reactstrap";
 
-const BandCard = band => {
+const BandCard = (props) => {
   return (
-    <div style={{ borderWidth: 2, borderStyle: "solid", margin: 10 }}>
-      <div>{band.name}</div>
-      <div>{band.type}</div>
+    <div>
+      <Card>
+        <CardImg top width="100%" src="/assets/Band.png" alt="Card image cap" />
+        <CardBody>
+          <CardTitle>The Beatles</CardTitle>
+          <CardSubtitle>
+            <Badge color="dark" pill>
+              Rock
+            </Badge>
+          </CardSubtitle>
+          <CardText>Location: San Francisco</CardText>
+          <Button>MORE</Button>
+        </CardBody>
+      </Card>
     </div>
   );
 };

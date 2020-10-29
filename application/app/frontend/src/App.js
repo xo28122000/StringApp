@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar/index";
@@ -12,16 +12,21 @@ import BandSearch from "./screens/BandSearch";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Filter from "./components/Dropdown/Dropdown";
 
-const App = props => {
+const App = (props) => {
   return (
     <div>
-      <Navbar />
-      <Switch>
-        <Route path="/">
-          <BandSearch />
-        </Route>
-      </Switch>
+      String
+      <div>
+        <Navbar />
+        <Filter />
+        <Switch>
+          <Route path="/">
+            <BandSearch />
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 };
