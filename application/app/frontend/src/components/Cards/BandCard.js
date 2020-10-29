@@ -13,10 +13,10 @@ import {
 const BandCard = props => {
   return (
     <div style={{ margin: 10 }}>
-      <Card style={{ width: 200 }}>
+      <Card style={{ width: 200, padding: 2, alignItems: "center" }}>
         <CardImg
           top
-          style={{ width: 200, height: "auto", maxHeight: 200 }}
+          style={{ width: 180, height: "auto", maxHeight: 200 }}
           src={props.imgUrl}
         />
         <CardBody>

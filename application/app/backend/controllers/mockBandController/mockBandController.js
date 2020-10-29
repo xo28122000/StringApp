@@ -22,7 +22,6 @@ const awsS3 = require("../../lib/aws/s3");
 
 const createMockBand = async (req, res) => {
   if (!req.body.name || !req.body.type || !req.body.numMembers || !req.file) {
-    console.log(req.body);
     return res.send({ success: false, error: "fields missing" });
   }
 

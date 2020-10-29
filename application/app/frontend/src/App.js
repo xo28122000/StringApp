@@ -16,7 +16,7 @@ import Filter from "./components/Dropdown/Dropdown";
 
 const App = props => {
   return (
-    <div>
+    <div style={{ backgroundColor: "#e5e5e5" }}>
       <Navbar />
       <Switch>
         <Route path="/">
