@@ -18,13 +18,16 @@ mockQuerries.createBand = (name, type, numMembers, imgUrl) => {
 
 mockQuerries.searchBand = (name, type, numMembers) => {
   return new Promise((resolve, reject) => {
-    pool.query(`Select * from MOCKBAND`, (err, results) => {
-      if (err) {
-        return reject(err);
-      } else {
-        return resolve(results);
+    pool.query(
+      `Select * from MOCKBAND where name like '${name}' and type like '${type}' and numMembers >= ${numMembers}`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
       }
-    });
+    );
   });
 };
 

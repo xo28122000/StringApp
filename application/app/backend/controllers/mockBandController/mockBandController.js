@@ -54,8 +54,14 @@ const createMockBand = async (req, res) => {
 };
 
 const searchMockBand = (req, res) => {
+  var search = {
+    name: req.body.name ? req.body.name + "%" : "%",
+    type: req.body.type ? req.body.type : "%",
+    numMembers: req.body.numMembers ? req.body.numMembers : 1
+  };
+
   mockBandQuerries
-    .searchBand(null, null, null)
+    .searchBand(search.name, search.type, search.numMembers)
     .then(retObj => {
       return res.send({ success: true, result: retObj });
     })
