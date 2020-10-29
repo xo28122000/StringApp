@@ -22,8 +22,10 @@ import {
   faFilter,
   faPlus
 } from "@fortawesome/free-solid-svg-icons";
+import Axios from "axios";
+import { tsPropertySignature } from "@babel/types";
 
-const BandSearchBar = () => {
+const BandSearchBar = props => {
   const [createBandModal, setCreateBandModal] = useState(false);
   const toggleCreateBandModal = () => setCreateBandModal(!createBandModal);
 
@@ -37,8 +39,40 @@ const BandSearchBar = () => {
   const [filterTypeDDOpen, setFilterTypeDDOpen] = useState(false);
   const toggleFilterTypeDDOpen = () => setFilterTypeDDOpen(!filterTypeDDOpen);
 
+  const [searchName, setSearchName] = useState(null);
   const [filterType, setFilterType] = useState(null);
   const [filterNumMembers, setFilterNumMembers] = useState(1);
+
+  const searchBands = () => {
+    let params = {};
+    params["name"] = !searchName || searchName.length <= 0 ? null : searchName;
+    params["type"] = !filterType || filterType.length <= 0 ? null : filterType;
+    params["numberOfMembers"] =
+      !filterNumMembers || filterNumMembers <= 0 ? 1 : filterType;
+
+    Axios.post("/api/mockband/searchband", params)
+      .then(resp => {
+        if (resp.data.success) {
+          props.setBands(resp.data.mockbands);
+        }
+      })
+      .catch(err => {});
+  };
+
+  const createBand = () => {
+    var imageFileInput = document.getElementById("createBandFileInput");
+    if (
+      !createName ||
+      createName.length <= 0 ||
+      !createType ||
+      createNumBandMembers < 1 ||
+      imageFileInput.files.length !== 1
+    ) {
+      alert(
+        "Check the input fields and retry again. All fields are compulsary."
+      );
+    }
+  };
 
   return (
     <div style={{ padding: 10 }}>
@@ -52,7 +86,12 @@ const BandSearchBar = () => {
           <Form>
             <FormGroup>
               <Label>Name of your Band</Label>
-              <Input />
+              <Input
+                value={createName}
+                onChange={ev => {
+                  setCreateName(ev.target.value);
+                }}
+              />
             </FormGroup>
           </Form>
           <FormGroup>
@@ -103,6 +142,10 @@ const BandSearchBar = () => {
           <FormGroup>
             <Label>Number Of Band Members</Label>
             <Input
+              value={createNumBandMembers}
+              onChange={ev => {
+                setCreateNumBandMembers(ev.target.value);
+              }}
               type="number"
               placeholder="1"
               min={1}
@@ -118,35 +161,54 @@ const BandSearchBar = () => {
           </FormGroup>
           <FormGroup>
             <Label>Upload your Band Logo</Label>
-            <CustomInput type="file" accept=".jpg,.jpeg,.png" />
+            <CustomInput
+              id="createBandFileInput"
+              type="file"
+              accept="image/jpg,image/jpeg,image/png"
+            />
           </FormGroup>
-          <Button color={"primary"}>Create</Button>
+          <Button
+            onClick={() => {
+              createBand();
+            }}
+            color={"primary"}
+          >
+            Create
+          </Button>
           <FormText color="muted">
             You can only create a limited number of Bands in an hour.
           </FormText>
         </ModalBody>
       </Modal>
-      <div style={{ display: "flex" }}>
-        <Input
-          type="text"
-          name="name"
-          id="bandNameSearch"
-          placeholder="Search Bands"
-          style={{ width: "60vw", minWidth: 100 }}
-        />
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex" }}>
+          <Input
+            value={searchName}
+            onChange={ev => {
+              setSearchName(ev.target.value);
+            }}
+            placeholder="Search Bands"
+            style={{ width: "60vw", minWidth: 100, marginRight: 10 }}
+          />
 
-        <Button
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 20,
-            textAlign: "center",
-            backgroundColor: "#000000"
-          }}
-        >
-          <FontAwesomeIcon icon={faSearch} style={{ width: 15, height: 15 }} />
-        </Button>
-
+          <Button
+            onClick={() => {
+              searchBands();
+            }}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              textAlign: "center",
+              backgroundColor: "#000000"
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faSearch}
+              style={{ width: 15, height: 15 }}
+            />
+          </Button>
+        </div>
         <Button
           onClick={toggleCreateBandModal}
           style={{

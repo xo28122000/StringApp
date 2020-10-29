@@ -7,23 +7,33 @@ import {
   CardTitle,
   CardSubtitle,
   Button,
-  Badge,
+  Badge
 } from "reactstrap";
 
-const BandCard = (props) => {
+const BandCard = props => {
   return (
-    <div>
-      <Card>
-        <CardImg top width="100%" src="/assets/Band.png" alt="Card image cap" />
+    <div style={{ margin: 10 }}>
+      <Card style={{ width: 200 }}>
+        <CardImg
+          top
+          style={{ width: 200, height: "auto", maxHeight: 200 }}
+          src={props.imgUrl}
+        />
         <CardBody>
-          <CardTitle>The Beatles</CardTitle>
-          <CardSubtitle>
+          <CardTitle style={{ fontWeight: 600, fontSize: 20 }}>
+            {props.name}
+          </CardTitle>
+
+          <div>
             <Badge color="dark" pill>
-              Rock
+              Type of music: {props.type}
             </Badge>
-          </CardSubtitle>
-          <CardText>Location: San Francisco</CardText>
-          <Button>MORE</Button>
+          </div>
+          <div>
+            <Badge color="dark" pill>
+              Number of members: {props.numOfMembers}
+            </Badge>
+          </div>
         </CardBody>
       </Card>
     </div>
