@@ -20,7 +20,7 @@ const createMockBandLimiter = rateLimit({
 });
 const searchMockBandLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour window
-  max: 100, // start blocking after 5 requests
+  max: 250, // start blocking after 5 requests
   message: {
     success: false,
     error: "try again after an hour"
