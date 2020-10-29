@@ -117,4 +117,6 @@ dist
 
 
 # aws
-aws/
+aws/config.json
+aws/csc648-node-credentials.csv
+
