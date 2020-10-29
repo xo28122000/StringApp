@@ -47,13 +47,15 @@ const BandSearchBar = props => {
     let params = {};
     params["name"] = !searchName || searchName.length <= 0 ? null : searchName;
     params["type"] = !filterType || filterType.length <= 0 ? null : filterType;
-    params["numberOfMembers"] =
-      !filterNumMembers || filterNumMembers <= 0 ? 1 : filterType;
+    params["numMembers"] =
+      !filterNumMembers || !isNaN(filterNumMembers) || filterNumMembers <= 0
+        ? 1
+        : filterType;
 
-    Axios.post("/api/mockband/searchband", params)
+    Axios.post("/api/mockBand/searchBand", params)
       .then(resp => {
         if (resp.data.success) {
-          props.setBands(resp.data.mockbands);
+          props.setBands(resp.data.result);
         }
       })
       .catch(err => {});
@@ -65,12 +67,35 @@ const BandSearchBar = props => {
       !createName ||
       createName.length <= 0 ||
       !createType ||
+      !isNaN(createNumBandMembers) ||
       createNumBandMembers < 1 ||
       imageFileInput.files.length !== 1
     ) {
       alert(
         "Check the input fields and retry again. All fields are compulsary."
       );
+    } else if ((imageFileInput.files[0].size / 1024 / 1024).toFixed(4) > 10) {
+      alert("Please use a file of size smaller than 10mb");
+    } else {
+      toggleCreateBandModal();
+      var formData = new FormData();
+      formData.append("imageFile", imageFileInput.files[0]);
+      formData.append("name", createName);
+      formData.append("type", createType);
+      formData.append("numMembers", createNumBandMembers);
+      Axios.post("/api/mockBand/createBand", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      })
+        .then(resp => {
+          if (!resp.data.success) {
+            alert("failed to create band");
+          }
+        })
+        .catch(err => {
+          alert("failed to create band");
+        });
     }
   };
 

@@ -31,7 +31,7 @@ const BandCard = props => {
           </div>
           <div>
             <Badge color="dark" pill>
-              Number of members: {props.numOfMembers}
+              Number of members: {props.numMembers}
             </Badge>
           </div>
         </CardBody>
