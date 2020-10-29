@@ -1,7 +1,7 @@
 const express = require("express");
-const userRouter = require("./user");
+const mockBand = require("./mockBand");
 
 let mainRouter = express.Router();
-mainRouter.use("/user", userRouter);
+mainRouter.use("/mockBand", mockBand);
 
 module.exports = mainRouter;
