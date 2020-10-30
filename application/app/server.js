@@ -35,13 +35,13 @@ aws.config.update({ region: "us-west-1" });
 const mainRouter = require("./backend/routes");
 app.use("/api", mainRouter);
 
-app.use(express.static(path.join(__dirname, "build")));
+app.use(express.static(path.join(__dirname, "frontend/build")));
 app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+  res.sendFile(path.join(__dirname, "frontend/build", "index.html"));
 });
 // end
 
-var server = app.listen(process.env.PORT || 4000, () => {
+var server = app.listen(process.env.PORT || 5000, () => {
   var port = server.address().port;
   console.log("app listening at port", port);
 });

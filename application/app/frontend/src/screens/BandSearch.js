@@ -31,6 +31,11 @@ const BandSearch = () => {
           flexWrap: "wrap"
         }}
       >
+        {bands.length <= 0 && (
+          <div>
+            Use the create and search feature to create and search bands
+          </div>
+        )}
         {bands.map(band => (
           <BandCard
             {...band}
