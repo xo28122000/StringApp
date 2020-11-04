@@ -23,7 +23,7 @@ import {
   faPlus
 } from "@fortawesome/free-solid-svg-icons";
 import Axios from "axios";
-import { tsPropertySignature } from "@babel/types";
+
 
 const BandSearchBar = props => {
   const [createBandModal, setCreateBandModal] = useState(false);
