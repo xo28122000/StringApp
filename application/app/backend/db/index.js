@@ -20,13 +20,30 @@ pool.getConnection(async function(err, connection) {
   connection.query("USE StringApp;", function(error, result, fields) {});
   connection.query(
     "CREATE TABLE IF NOT EXISTS MOCKBAND(" +
-      // name, type, numMembers, imgUrl
       "name varchar(30), " +
       "type varchar(30), " +
       "numMembers INT, " +
       "imgUrl varchar(100) );",
     function(error, result, fields) {}
   );
+
+  connection.query(
+    "CREATE TABLE IF NOT EXISTS STRINGACCOUNT(" +
+      "userId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+      "email varchar(350) NOT NULL UNIQUE, " +
+      "password varchar(200) NOT NULL, " +
+      "name varchar(100) NOT NULL, " +
+      "profileImageUrl varchar(150), " +
+      "phoneNumber varchar(15), " +
+      "location varchar(500), " +
+      "locationLat decimal(30,15), " +
+      "locationLong decimal(30,15), " +
+      "role varchar(50), " +
+      "genre varchar(50) " +
+      " );",
+    function(error, result, fields) {}
+  );
+
   // connection.query("DROP TABLE MOCKBAND;", function(error, result, fields) {});
   connection.release();
 });

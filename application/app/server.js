@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const hpp = require("hpp");
 const morgan = require("morgan");
-// const passport = require("./server/lib/passport");
+const passport = require("./backend/lib/passport/index");
 const session = require("express-session");
 const aws = require("aws-sdk");
 
@@ -20,8 +20,8 @@ app.use(
     // cookie: { secure: true }
   })
 );
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 //aws
 aws.config.loadFromPath("./aws/config.json");
