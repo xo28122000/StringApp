@@ -54,6 +54,11 @@ authRouter.post("/login", function(req, res, next) {
   })(req, res, next);
 });
 
+authRouter.post("/logout", (req, res) => {
+  req.logout();
+  res.send({ success: true });
+});
+
 authRouter.post("/user", (req, res) => {
   if (req.user) {
     res.send({ success: true, user: req.user });
