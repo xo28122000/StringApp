@@ -14,7 +14,7 @@ import {
 import BandSearchBar from "../components/Searchbar/BandSearchBar";
 import BandCard from "../components/Cards/BandCard";
 
-const BandSearch = () => {
+const ExplorePage = () => {
   const [bands, setBands] = useState([
     {
       name: "band1",
@@ -68,4 +68,4 @@ const BandSearch = () => {
   );
 };
 
-export default BandSearch;
+export default ExplorePage;

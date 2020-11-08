@@ -8,19 +8,26 @@ import {
 
 import Navbar from "./components/Navbar/index";
 
-import BandSearch from "./screens/BandSearch";
+import ExplorePage from "./screens/Explore";
+import BandProfilePage from "./screens/BandProfile";
+import UserProfilePage from "./screens/UserProfile";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Filter from "./components/Dropdown/Dropdown";
 
 const App = props => {
   return (
     <div>
       <Navbar />
       <Switch>
+        <Route path="/user">
+          <UserProfilePage />
+        </Route>
+        <Route path="/band">
+          <BandProfilePage />
+        </Route>
         <Route path="/">
-          <BandSearch />
+          <ExplorePage />
         </Route>
       </Switch>
     </div>
