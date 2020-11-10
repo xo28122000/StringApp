@@ -1,12 +1,13 @@
 const express = require("express");
 
-const mockBand = require("./mockBand");
 const authRouter = require("./auth");
-const main = require("./main");
+const band = require("./band");
+const user = require("./user");
 
 let mainRouter = express.Router();
-mainRouter.use("/mockBand", mockBand);
+
 mainRouter.use("/auth", authRouter);
-mainRouter.use("/main", main);
+mainRouter.use("/band", band);
+mainRouter.use("/user", user);
 
 module.exports = mainRouter;

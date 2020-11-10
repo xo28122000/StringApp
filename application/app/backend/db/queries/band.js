@@ -1,10 +1,11 @@
 const pool = require("../index");
-let mainQueries = {};
+let bandQueries = {};
 
-main.searchEvents = (title, date, location) => {
+//TODO fix this SQL query
+bandQueries.createEvent = (name, type, numMembers, imgUrl) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `Select * from MOCKBAND where name like '${name}' and type like '${type}' and numMembers >= ${numMembers}`,
+      `INSERT INTO MOCKBAND VALUES('${name}', '${type}', ${numMembers}, '${imgUrl}')`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -16,5 +17,4 @@ main.searchEvents = (title, date, location) => {
   });
 };
 
-
-module.exports = mainQueries;
+module.exports = bandQueries;

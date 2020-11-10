@@ -1,18 +1,18 @@
 //const mysql = require("mysql");
 //const credentials = require("./credentials");
 
-const mysql = require('mysql');
-const credentials = require("../../credentials").default.mySQL;
+const mysql = require("mysql");
+const credentials = require("./credentials.js");
 
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: credentials.host,
   user: credentials.user,
   password: credentials.password,
-  database: credentials.database
+  database: credentials.database,
 });
 
-pool.getConnection(async function(err, connection) {
+pool.getConnection(async function (err, connection) {
   if (err) {
     console.log("MYSQL connection unsuccessful");
     return;
@@ -20,14 +20,14 @@ pool.getConnection(async function(err, connection) {
   console.log("MYSQL connection successful!");
 
   connection.query("CREATE DATABASE IF NOT EXISTS StringApp;");
-  connection.query("USE StringApp;", function(error, result, fields) {});
+  connection.query("USE StringApp;", function (error, result, fields) {});
   connection.query(
     "CREATE TABLE IF NOT EXISTS MOCKBAND(" +
       "name varchar(30), " +
       "type varchar(30), " +
       "numMembers INT, " +
       "imgUrl varchar(100) );",
-    function(error, result, fields) {}
+    function (error, result, fields) {}
   );
 
   connection.query(
@@ -44,7 +44,7 @@ pool.getConnection(async function(err, connection) {
       "role varchar(50), " +
       "genre varchar(50) " +
       " );",
-    function(error, result, fields) {}
+    function (error, result, fields) {}
   );
 
   // connection.query("DROP TABLE MOCKBAND;", function(error, result, fields) {});
