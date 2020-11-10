@@ -31,4 +31,11 @@ mainRouter.post(
   mainController.searchEvents
 );
 
+mainRouter.post(
+  "/createEvents",
+  searchEventsLimiter,
+  mainController.createEvents
+);
+
+
 module.exports = mainRouter;

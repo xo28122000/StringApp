@@ -16,4 +16,14 @@ const searchEvents = (req, res) => {
   //mainQueries
 };
 
-module.exports = { testRoute, searchEvents };
+const createEvents = (req, res) => {
+  if (!req.body.bandID || !req.body.title || !req.body.date || !req.body.location || !req.body.startTime || !req.body.endTime ) {
+    console.log(req.body);
+    return res.send({ success: false, error: "fields missing for createEvents" });
+  }
+
+  //mainQueries
+};
+
+
+module.exports = { testRoute, searchEvents, createEvents };

@@ -16,4 +16,5 @@ main.searchEvents = (title, date, location) => {
   });
 };
 
+
 module.exports = mainQueries;
