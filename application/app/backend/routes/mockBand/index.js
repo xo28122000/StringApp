@@ -3,9 +3,9 @@ const express = require("express");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: "backend/uploads",
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, file.originalname);
-  }
+  },
 });
 const upload = multer({ storage: storage });
 
@@ -15,16 +15,16 @@ const createMockBandLimiter = rateLimit({
   max: 15, // start blocking after 5 requests
   message: {
     success: false,
-    error: "try again after an hour"
-  }
+    error: "try again after an hour",
+  },
 });
 const searchMockBandLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour window
   max: 100, // start blocking after 5 requests
   message: {
     success: false,
-    error: "try again after an hour"
-  }
+    error: "try again after an hour",
+  },
 });
 
 const mockBandController = require("../../controllers/mockBandController/mockBandController");
@@ -42,5 +42,7 @@ mockBandRouter.post(
   searchMockBandLimiter,
   mockBandController.searchMockBand
 );
+
+mockBandRouter.post("/testRoute", mockBandController.testRoute);
 
 module.exports = mockBandRouter;

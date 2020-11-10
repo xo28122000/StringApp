@@ -57,17 +57,21 @@ const searchMockBand = (req, res) => {
   var search = {
     name: req.body.name ? req.body.name + "%" : "%",
     type: req.body.type ? req.body.type : "%",
-    numMembers: req.body.numMembers ? req.body.numMembers : 1
+    numMembers: req.body.numMembers ? req.body.numMembers : 1,
   };
 
   mockBandQuerries
     .searchBand(search.name, search.type, search.numMembers)
-    .then(retObj => {
+    .then((retObj) => {
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
+    .catch((err) => {
       return res.send({ success: false, error: "internal error" });
     });
 };
 
-module.exports = { createMockBand, searchMockBand };
+const testRoute = (req, res) => {
+  return res.send({ success: true, message: "no errors" });
+};
+
+module.exports = { createMockBand, searchMockBand, testRoute };
