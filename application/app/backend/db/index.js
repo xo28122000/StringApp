@@ -1,5 +1,8 @@
-const mysql = require("mysql");
-const credentials = require("./credentials");
+//const mysql = require("mysql");
+//const credentials = require("./credentials");
+
+const mysql = require('mysql');
+const credentials = require("../../credentials").default.mySQL;
 
 const pool = mysql.createPool({
   connectionLimit: 10,
