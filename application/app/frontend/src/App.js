@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar/index";
 import ExplorePage from "./screens/Explore";
 import BandProfilePage from "./screens/BandProfile";
 import UserProfilePage from "./screens/UserProfile";
+import RegisterPage from "./screens/Register";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,6 +21,9 @@ const App = props => {
     <div>
       <Navbar />
       <Switch>
+        <Route path="/register">
+          <RegisterPage />
+        </Route>
         <Route path="/user">
           <UserProfilePage />
         </Route>
