@@ -8,7 +8,17 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText
+  FormText,
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Card,
+  CardTitle,
+  CardText,
+  Row,
+  Col
 } from "reactstrap";
 
 import BandSearchBar from "../components/Searchbar/BandSearchBar";
@@ -46,23 +56,82 @@ const ExplorePage = () => {
     }
   ]);
 
+  const [activeTab, setActiveTab] = useState("1");
+
   return (
     <div>
       <div>
-        <BandSearchBar setBands={setBands} />
-      </div>
-      <div
-        style={{
-          marginTop: 50,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexWrap: "wrap"
-        }}
-      >
-        {bands.map(band => (
-          <BandCard {...band} />
-        ))}
+        <Nav
+          tabs
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: 20,
+            marginBottom: 20
+          }}
+        >
+          <NavItem>
+            <NavLink
+              className={activeTab === "1" ? "active" : ""}
+              onClick={() => {
+                setActiveTab("1");
+              }}
+              style={{
+                fontSize: 20,
+                fontWeight: 500,
+                paddingLeft: 40,
+                paddingRight: 40,
+                color: activeTab !== "1" ? "#7f7f7f" : "#000000",
+                borderBottomStyle: "solid",
+                borderBottomWidth: 3,
+                borderBottomColor: activeTab === "1" ? "#000000" : ""
+              }}
+            >
+              Explore Bands
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={activeTab === "2" ? "active" : ""}
+              onClick={() => {
+                setActiveTab("2");
+              }}
+              style={{
+                fontSize: 20,
+                fontWeight: 500,
+                paddingLeft: 40,
+                paddingRight: 40,
+                color: activeTab !== "2" ? "#7f7f7f" : "#000000",
+                borderBottomStyle: "solid",
+                borderBottomWidth: 3,
+                borderBottomColor: activeTab === "2" ? "#000000" : ""
+              }}
+            >
+              Explore Events
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent activeTab={activeTab}>
+          <TabPane tabId="1">
+            <div>
+              <BandSearchBar setBands={setBands} />
+            </div>
+            <div
+              style={{
+                marginTop: 50,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexWrap: "wrap"
+              }}
+            >
+              {bands.map(band => (
+                <BandCard {...band} />
+              ))}
+            </div>
+          </TabPane>
+          <TabPane tabId="2">there</TabPane>
+        </TabContent>
       </div>
     </div>
   );
