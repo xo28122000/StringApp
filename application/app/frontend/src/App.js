@@ -16,15 +16,11 @@ import RegisterPage from "./screens/Register";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Space from "./frontpageSpace/frontpageSpace";
 
 const App = (props) => {
   return (
     <div>
       <Navbar />
-      <div>
-        <Space />
-      </div>
       <Switch>
         <Route path="/register">
           <RegisterPage />
