@@ -4,3 +4,8 @@
   border-width: 1px;
   border-style: dotted;
 }
+
+.nav-logo {
+  float: left !important;
+  margin-top: -15px !important;
+}

@@ -1,9 +1,10 @@
 import React from "react";
+import { Jumbotron, Button } from "reactstrap";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar/index";
@@ -15,11 +16,15 @@ import RegisterPage from "./screens/Register";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Space from "./frontpageSpace/frontpageSpace";
 
-const App = props => {
+const App = (props) => {
   return (
     <div>
       <Navbar />
+      <div>
+        <Space />
+      </div>
       <Switch>
         <Route path="/register">
           <RegisterPage />
