@@ -141,6 +141,16 @@ pool.getConnection(async function (err, connection) {
     function (error, result, fields) {}
   );
 
+  connection.query(
+    "CREATE TABLE IF NOT EXISTS administratorStringAccount(" +
+      "adminUserId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+      "email varchar(45), " +
+      "password varchar(45), " +
+      "name varchar(45), " +
+      "role varchar(45)" +
+      " );",
+    function (error, result, fields) {}
+  );
   // connection.query("DROP TABLE MOCKBAND;", function(error, result, fields) {});
   connection.release();
 });
