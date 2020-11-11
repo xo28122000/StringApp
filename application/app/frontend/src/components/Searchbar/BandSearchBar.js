@@ -35,7 +35,7 @@ const BandSearchBar = props => {
   const toggleFilterGenreDDOpen = () =>
     setFilterGenreDDOpen(!filterGenreDDOpen);
 
-  const [searchName, setSearchName] = useState(null);
+  const [searchName, setSearchName] = useState("");
   const [filterType, setFilterType] = useState(null);
   const [filterNumMembers, setFilterNumMembers] = useState(1);
 
@@ -126,6 +126,7 @@ const BandSearchBar = props => {
               <DropdownMenu>
                 {genreOptions.map(genreOption => (
                   <DropdownItem
+                    key={genreOption}
                     onClick={() => {
                       setFilterType(genreOption === "All" ? null : genreOption);
                     }}
