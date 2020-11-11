@@ -24,6 +24,7 @@ import {
 
 import BandSearchBar from "../components/Searchbar/BandSearchBar";
 import BandCard from "../components/Cards/BandCard";
+import { scroller, Element } from "react-scroll";
 
 const ExplorePage = () => {
   const [bands, setBands] = useState([
@@ -62,19 +63,63 @@ const ExplorePage = () => {
   return (
     <div>
       <div>
-        <Jumbotron>
-          <h1 className="display-3">One stop for everything bands realted</h1>
-          <p className="lead">
-            Browse events near by with live music, showcase all your music and
-            work with posts and press mentions to make people find you easily,
-            connect with other musicians to work together!
-          </p>
-          <p className="lead">
-            <Button color="primary">Start Exploring</Button>
-          </p>
-        </Jumbotron>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+            backgroundColor: "#310020",
+            padding: 40,
+            paddingTop: 70,
+            paddingBottom: 70,
+            color: "#ffffff"
+          }}
+        >
+          <span style={{ fontSize: 45, fontWeight: 600 }}>
+            One stop for everything bands realted
+          </span>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              margin: 30,
+              width: "70vw",
+              maxWidth: 800,
+              minWidth: 300
+            }}
+          >
+            <div style={{ marginRight: 20, maxWidth: 500 }}>
+              Browse events near by with live music, showcase all your music and
+              work with posts and press mentions to make people find you easily,
+              connect with other musicians to work together!
+            </div>
+            <div style={{}}>
+              <Button
+                style={{
+                  padding: 20,
+                  backgroundColor: "#ffffff",
+                  color: "#000000",
+                  borderRadius: 20,
+                  width: 200
+                }}
+                onClick={() => {
+                  scroller.scrollTo("explore", {
+                    duration: 1000,
+                    delay: 50,
+                    smooth: true
+                  });
+                }}
+              >
+                Start Exploring
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
       <div>
+        <Element name="explore"></Element>
         <Nav
           tabs
           style={{
@@ -125,6 +170,7 @@ const ExplorePage = () => {
             </NavLink>
           </NavItem>
         </Nav>
+
         <TabContent activeTab={activeTab}>
           <TabPane tabId="1">
             <div>
