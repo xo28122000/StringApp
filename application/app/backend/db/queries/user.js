@@ -78,4 +78,19 @@ userQueries.getBands = (userID) => {
   });
 };
 
+userQueries.getEvent = (eventId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT * EVENTS where eventId like '${eventId}'`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 module.exports = userQueries;

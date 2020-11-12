@@ -126,6 +126,20 @@ const getBands = (req, res) => {
   }
 };
 
+const getEvent = (req, res) => {
+  if (isUser()) {
+    return res.send({
+      success: true,
+    });
+  } else {
+    console.log(req.body);
+    return res.send({
+      success: false,
+      error: "fields missing for account to get the event",
+    });
+  }
+};
+
 module.exports = {
   createBand,
   searchBands,
@@ -133,4 +147,5 @@ module.exports = {
   createEvent,
   account,
   getBands,
+  getEvent,
 };
