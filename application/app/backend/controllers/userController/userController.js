@@ -4,6 +4,7 @@ const awsS3 = require("../../lib/aws/s3");
 
 const createBand = async (req, res) => {
   if (!req.body.name || !req.body.type || !req.body.numMembers || !req.file) {
+    console.log(req.file);
     console.log(req.body);
     return res.send({ success: false, error: "fields missing" });
   }
@@ -20,11 +21,12 @@ const createBand = async (req, res) => {
     let fileData = await awsS3.getFileData(req.file);
     let result = await awsS3.addS3file("csc648-string", fileName, fileData);
 
-    await mainBandQueries.createBand(
+    await userQueries.createBand(
       req.body.name,
       req.body.type,
       req.body.numMembers,
-      fileName
+      fileName,
+      req.body.imageUrl
     );
 
     await awsS3.clearFile(req.file);
@@ -72,20 +74,24 @@ const createEvent = (req, res) => {
 };
 
 const searchEvents = (req, res) => {
-  if (!req.body.title || !req.body.date || !req.body.location) {
+  if (!req.body.title) {
     console.log(req.body);
-    return res.send({ success: false, error: "fields missing" });
+    return res.send({ success: false, error: "title field missing" });
   }
 
+  //TODO what does this do?
   var search = {
     name: req.body.title ? req.body.title + "%" : "%",
-    type: req.body.date ? req.body.date : "%",
+    date: req.body.date ? req.body.date : "%",
+    location: req.body.location ? req.body.location : "%",
     //location
   };
 
   userQueries
-    .searchEvents()
+    .searchEvents(search.name, search.date, search.location)
     .then((retObj) => {
+      console.log("successful search for events");
+      console.log(retObj);
       return res.send({ success: true, result: retObj });
     })
     .catch((err) => {

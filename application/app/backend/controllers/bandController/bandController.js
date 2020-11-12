@@ -4,8 +4,9 @@ const awsS3 = require("../../lib/aws/s3");
 
 const createEvent = (req, res) => {
   if (
-    !req.body.bandID ||
+    !req.body.bandId ||
     !req.body.title ||
+    !req.body.description ||
     !req.body.date ||
     !req.body.location ||
     !req.body.startTime ||

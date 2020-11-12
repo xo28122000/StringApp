@@ -31,12 +31,15 @@ userQueries.searchBands = (name, type, numMembers) => {
   });
 };
 
+//
+
 userQueries.searchEvents = (title, date, location) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `Select * from MOCKBAND where title like '${title}' and date like '${date}' and location like '${location}')`,
+      `Select * from EVENTS where title like '${title}' OR date <= '${date}' OR location like '${location}'`,
       (err, results) => {
         if (err) {
+          console.log(err);
           return reject(err);
         } else {
           return resolve(results);
