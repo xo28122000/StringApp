@@ -50,7 +50,7 @@ pool.getConnection(async function (err, connection) {
   connection.query(
     "CREATE TABLE IF NOT EXISTS BAND(" +
       "bandId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-      "name varchar(100) NOT NULL, " +
+      "name varchar(100) NOT NULL UNIQUE, " +
       "logoImageUrl varchar(45), " +
       "location varchar(500), " +
       "locationLat decimal(30,15), " +
