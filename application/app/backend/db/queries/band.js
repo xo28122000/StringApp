@@ -1,11 +1,18 @@
 const pool = require("../index");
 let bandQueries = {};
 
-//TODO fix this SQL query
-bandQueries.createEvent = (name, type, numMembers, imgUrl) => {
+bandQueries.createEvent = (
+  title,
+  description,
+  date,
+  startTime,
+  endTime,
+  location,
+  bandId
+) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO MOCKBAND VALUES('${name}', '${type}', ${numMembers}, '${imgUrl}')`,
+      `INSERT INTO EVENTS (title, description, date, startTime, endTime, location, bandId) VALUES('${title}', '${description}', '${date}', '${startTime}', '${endTime}', '${location}', '${bandId}')`,
       (err, results) => {
         if (err) {
           return reject(err);

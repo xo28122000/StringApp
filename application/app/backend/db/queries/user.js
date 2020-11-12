@@ -31,12 +31,15 @@ userQueries.searchBands = (name, type, numMembers) => {
   });
 };
 
+//
+
 userQueries.searchEvents = (title, date, location) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `Select * from MOCKBAND where title like '${title}' and date like '${date}' and location like '${location}')`,
+      `Select * from EVENTS where title like '${title}' OR date <= '${date}' OR location like '${location}'`,
       (err, results) => {
         if (err) {
+          console.log(err);
           return reject(err);
         } else {
           return resolve(results);
@@ -62,11 +65,12 @@ userQueries.account = (name, type, numMembers, imgUrl) => {
   });
 };
 
-//TODO fix this SQL query
-userQueries.getBands = (userID) => {
+//TODO fix this SQL query:
+//need to join the query - userId -> band member, bandId from band member, then bands from bands with bandID
+userQueries.getBands = (userId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO MOCKBAND VALUES('${name}', '${type}', ${numMembers}, '${imgUrl}')`,
+      `select from Band where userId = '${userId}'`,
       (err, results) => {
         if (err) {
           return reject(err);
