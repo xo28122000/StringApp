@@ -79,7 +79,6 @@ const searchEvents = (req, res) => {
     return res.send({ success: false, error: "title field missing" });
   }
 
-  //TODO what does this do?
   var search = {
     name: req.body.title ? req.body.title + "%" : "%",
     date: req.body.date ? req.body.date : "%",
@@ -117,8 +116,26 @@ const account = (req, res) => {
   }
 };
 
-//TODO fix this
 const getBands = (req, res) => {
+  if (!req.body.userId) {
+    console.log(req.body);
+    return res.send({ success: false, error: "title field missing" });
+  }
+  userQueries
+    .getBands(req.body.userId)
+    .then((retObj) => {
+      console.log("successful retrieval of bands from userId");
+      return res.send({ success: true, result: retObj });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error retrieving bands from userId",
+      });
+    });
+  //TODO need to verify if isUser, and get userId from table first
+  //TODO make middleware for retrieving userId, bandId?
+  /** 
   if (isUser()) {
     return res.send({
       success: true,
@@ -130,6 +147,7 @@ const getBands = (req, res) => {
       error: "fields missing for account",
     });
   }
+  */
 };
 
 module.exports = {
