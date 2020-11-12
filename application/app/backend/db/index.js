@@ -16,6 +16,7 @@ pool.getConnection(async function (err, connection) {
   if (err) {
     console.log("MYSQL connection unsuccessful");
     console.log(err);
+    
     return;
   } // not connected!
   console.log("MYSQL connection successful!");

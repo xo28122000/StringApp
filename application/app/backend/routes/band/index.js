@@ -15,4 +15,6 @@ const createEventLimiter = rateLimit({
 
 bandRouter.post("/createEvent", createEventLimiter, bandController.createEvent);
 
+bandRouter.post("/getBandInfo", bandController.createEvent);
+
 module.exports = bandRouter;
