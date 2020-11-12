@@ -1,16 +1,7 @@
 import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  NavbarText,
-} from "reactstrap";
+import { Button, NavLink } from "reactstrap";
 
 import "./navbar.css";
 
@@ -21,23 +12,25 @@ const Example = (props) => {
 
   return (
     <div>
-      <Navbar color="dark" expand="md">
-        <img />
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
-            <NavItem>
-              <NavLink href="">About</NavLink>
-            </NavItem>
-          </Nav>
+      <nav className="nav">
+        <img className="nav-logo" src={require("./logo192.png")} alt="logo" />
 
-          <NavLink color="light" href="">
-            Log in
-          </NavLink>
-
-          <NavLink href="">Sigh up</NavLink>
-        </Collapse>
-      </Navbar>
+        <ul className="leftLink">
+          <li>
+            <a>About</a>
+          </li>
+        </ul>
+        <ul className="rightLink">
+          <li>
+            <a>Log in</a>
+          </li>
+          <li>
+            <Button color="light" to="../screens/Register">
+              Sign up
+            </Button>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 };

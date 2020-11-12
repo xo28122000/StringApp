@@ -1,8 +1,52 @@
-.linkButtons {
-  padding: 5px;
-  border-color: chocolate;
-  border-width: 1px;
-  border-style: dotted;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+li {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  min-height: 10vh;
+  align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: black;
+  color: white;
+}
+
+nav .leftLink {
+  display: flex;
+  justify-content: left;
+  width: 50%;
+}
+nav .leftLink a {
+  font-size: 28px;
+  font-weight: normal;
+  cursor: pointer;
+}
+nav .leftLink a:hover {
+  border-bottom: 1px solid white;
+}
+
+nav .rightLink {
+  display: flex;
+  justify-content: space-around;
+  width: 20%;
+}
+nav .rightLink a {
+  font-size: 22px;
+  font-weight: normal;
+  cursor: pointer;
+}
+nav .rightLink a:hover {
+  border-bottom: 1px solid white;
 }
 
 .nav-logo {
