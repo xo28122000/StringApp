@@ -130,7 +130,7 @@ const ExplorePage = props => {
                   fontSize: 18
                 }}
                 onClick={() => {
-                  scroller.scrollTo("explore", {
+                  scroller.scrollTo("exploreJump", {
                     duration: 1000,
                     delay: 50,
                     smooth: true
@@ -144,7 +144,8 @@ const ExplorePage = props => {
         </div>
       </div>
       <div>
-        <Element name="explore"></Element>
+        <Element name="exploreJump"></Element>
+        <a id="explore" />
         <Nav
           tabs
           style={{

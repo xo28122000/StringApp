@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
+  Redirect
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar/index";
@@ -17,7 +17,7 @@ import RegisterPage from "./screens/Register";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const App = (props) => {
+const App = props => {
   return (
     <div>
       <Navbar />
@@ -25,7 +25,7 @@ const App = (props) => {
         <Route path="/register">
           <RegisterPage />
         </Route>
-        <Route path="/user">
+        <Route path="/profile">
           <UserProfilePage />
         </Route>
         <Route path="/band">

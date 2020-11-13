@@ -18,7 +18,9 @@ import {
   CustomInput
 } from "reactstrap";
 
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+
+import { useSelector, useDispatch } from "react-redux";
 
 const RegisterPage = () => {
   const roleOptions = ["None", "Musician", "Band Manager", "Enthusiast"];
@@ -26,15 +28,19 @@ const RegisterPage = () => {
   const toggleRoleDDOpen = () => setRoleDDOpen(!roleDDOpen);
   const [regType, setRegType] = useState("None");
 
+  const userObj = useSelector(state => state.userObj);
+
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        marginTop: 20
       }}
     >
+      {userObj ? <Redirect to="/" /> : null}
       <div style={{ fontSize: 25, fontWeight: 600 }}>Sign Up</div>
       <div
         style={{
