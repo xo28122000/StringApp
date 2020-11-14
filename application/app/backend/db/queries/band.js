@@ -54,4 +54,20 @@ bandQueries.createEvent = (
   });
 };
 
+bandQueries.getBandInfo = (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `Select * from BAND where bandId like '${bandId}'`,
+      [bandId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 module.exports = bandQueries;

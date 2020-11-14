@@ -101,4 +101,24 @@ const createEvent = (req, res) => {
     });
 };
 
-module.exports = { createBand, searchBands, createEvent };
+const getBandInfo = (req, res) => {
+  var search = {
+   /* name: req.body.name ? req.body.name + "%" : "%",
+    type: req.body.type ? req.body.type : "%",
+    numMembers: req.body.numMembers ? req.body.numMembers : "%",
+    */
+   name: req.body.name ? req.body.name + "%" : "%",
+  };
+
+  bandQueries
+    .getBandInfo(search.bandId)
+    .then((retObj) => {
+      return res.send({ success: true, result: retObj });
+    })
+    .catch((err) => {
+      return res.send({ success: false, error: "internal error" });
+    });
+};
+
+module.exports = { createBand, searchBands, createEvent, getBandInfo
+};

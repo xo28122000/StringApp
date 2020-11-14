@@ -99,18 +99,23 @@ const getBands = (req, res) => {
 };
 
 const getEvent = (req, res) => {
-  if (isUser()) {
-    return res.send({
-      success: true,
-    });
-  } else {
+  if (!req.body.bandId) {
     console.log(req.body);
-    return res.send({
-      success: false,
-      error: "fields missing for account to get the event",
-    });
+    return res.send({ success: false, error: "title field missing" });
   }
-};
+  userQueries
+    .getEvent(req.body.bandId)
+    .then((retObj) => {
+      console.log("successful retrieval of events from bandId");
+      return res.send({ success: true, result: retObj });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error retrieving events from bandId",
+      });
+    });
+  };
 
 module.exports = {
   searchEvents,

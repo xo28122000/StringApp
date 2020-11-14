@@ -32,6 +32,6 @@ bandRouter.post("/searchBands", limiter, bandController.searchBands);
 
 bandRouter.post("/createEvent", bandController.createEvent);
 
-bandRouter.post("/getBandInfo", bandController.createEvent);
+bandRouter.post("/getBandInfo", bandController.getBandInfo);
 
 module.exports = bandRouter;

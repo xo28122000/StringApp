@@ -52,12 +52,10 @@ userRouter.post(
   userController.searchEvents
 );
 
-userRouter.post("/getEvent", searchEventsLimiter, userController.getEvent);
-
 userRouter.post("/account", getAccountLimiter, userController.account);
 
 userRouter.post("/getBands", searchEventsLimiter, userController.getBands);
 
-userRouter.post("/getEvent", searchEventsLimiter, userController.getBands);
+userRouter.post("/getEvent", searchEventsLimiter, userController.getEvent);
 
 module.exports = userRouter;
