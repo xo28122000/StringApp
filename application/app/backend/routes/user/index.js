@@ -4,15 +4,6 @@ const userController = require("../../controllers/userController/userController.
 
 let userRouter = express.Router();
 
-const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: "backend/uploads",
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
-
 const createBandLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour window
   max: 15, // start blocking after 5 requests
@@ -49,16 +40,6 @@ const searchEventsLimiter = rateLimit({
   },
 });
 
-
-userRouter.post(
-  "/createBand",
-  createBandLimiter,
-  upload.single("imageFile"),
-  userController.createBand
-);
-
-userRouter.post("/searchBands", searchBandLimiter, userController.searchBands);
-
 userRouter.post(
   "/createEvent",
   searchEventsLimiter,
@@ -71,18 +52,12 @@ userRouter.post(
   userController.searchEvents
 );
 
-userRouter.post(
-  "/getEvent",
-  searchEventsLimiter,
-  userController.getEvent
-);
+userRouter.post("/getEvent", searchEventsLimiter, userController.getEvent);
 
 userRouter.post("/account", getAccountLimiter, userController.account);
 
 userRouter.post("/getBands", searchEventsLimiter, userController.getBands);
 
 userRouter.post("/getEvent", searchEventsLimiter, userController.getBands);
-
-
 
 module.exports = userRouter;
