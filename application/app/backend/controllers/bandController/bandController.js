@@ -3,9 +3,18 @@ const awsS3 = require("../../lib/aws/s3");
 const isUser = require("../../helpers/middlewares/isUser.js");
 
 const createBand = async (req, res) => {
-  if (!req.body.name || !req.body.type || !req.body.numMembers
-     || !req.file) 
-  {
+  if (
+    !req.body.name ||
+    !req.body.numMembers ||
+    !req.body.imgUrl ||
+    !req.body.location
+  ) {
+    console.log(req.file);
+    console.log(req.body);
+    return res.send({ success: false, error: "fields missing" });
+  }
+
+  if (!req.body.genre || !req.body.isLookingForMember) {
     console.log(req.file);
     console.log(req.body);
     return res.send({ success: false, error: "fields missing" });
@@ -25,10 +34,12 @@ const createBand = async (req, res) => {
 
     await bandQueries.createBand(
       req.body.name,
-      req.body.type,
       req.body.numMembers,
-      fileName,
-      req.body.imageUrl
+      req.body.imgUrl,
+      req.body.location,
+      req.body.genre,
+      req.body.isLookingForMember,
+      fileName //what does this do? is this imgUrl?
     );
 
     await awsS3.clearFile(req.file);
@@ -37,23 +48,6 @@ const createBand = async (req, res) => {
     await awsS3.clearFile(req.file);
     return res.send({ success: false });
   }
-};
-
-const searchBands = (req, res) => {
-  var search = {
-    name: req.body.name ? req.body.name + "%" : "%",
-    type: req.body.type ? req.body.type : "%",
-    numMembers: req.body.numMembers ? req.body.numMembers : 1,
-  };
-
-  bandQueries
-    .searchBands(search.name, search.type, search.numMembers)
-    .then((retObj) => {
-      return res.send({ success: true, result: retObj });
-    })
-    .catch((err) => {
-      return res.send({ success: false, error: "internal error" });
-    });
 };
 
 //TODO need to fix middleware
@@ -103,29 +97,107 @@ const createEvent = (req, res) => {
     });
 };
 
+const getBands = (req, res) => {
+  if (!req.body.userId) {
+    console.log(req.body);
+    return res.send({ success: false, error: "title field missing" });
+  }
+  bandQueries
+    .getBands(req.body.userId)
+    .then((retObj) => {
+      console.log("successful retrieval of bands from userId");
+      return res.send({ success: true, result: retObj });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error retrieving bands from userId",
+      });
+    });
+  //TODO need to verify if isUser, and get userId from table first
+  //TODO make middleware for retrieving userId, bandId?
+  /** 
+  if (isUser()) {
+    return res.send({
+      success: true,
+    });
+  } else {
+    console.log(req.body);
+    return res.send({
+      success: false,
+      error: "fields missing for account",
+    });
+  }
+  */
+};
+
 const getBandInfo = (req, res) => {
   if (!req.body.bandId) {
     console.log(req.body);
     return res.send({ success: false, error: "bandId field missing" });
   }
   var search = {
-   /* name: req.body.name ? req.body.name + "%" : "%",
+    /* name: req.body.name ? req.body.name + "%" : "%",
     type: req.body.type ? req.body.type : "%",
     numMembers: req.body.numMembers ? req.body.numMembers : "%",
     */
-   bandId: req.body.bandId ? req.body.bandId : "%",
+    bandId: req.body.bandId ? req.body.bandId : "%",
+  };
+
+  bandQueries.getBandInfo(search.bandId);
+};
+
+const searchBands = (req, res) => {
+  var search = {
+    name: req.body.name ? req.body.name + "%" : "%",
+    type: req.body.genre ? req.body.genre : "%",
+    numMembers: req.body.numMembers ? req.body.numMembers : 1,
+    location: req.body.location ? req.body.location : -1,
   };
 
   bandQueries
-    .getBandInfo(search.bandId)
+    .searchBands(search.name, search.genre, search.numMembers, search.location)
     .then((retObj) => {
       return res.send({ success: true, result: retObj });
     })
     .catch((err) => {
-      console.log(err);
+      //console.log(err);
       return res.send({ success: false, error: "internal error" });
     });
 };
 
-module.exports = { createBand, searchBands, createEvent, getBandInfo
+const searchEvents = (req, res) => {
+  if (!req.body.title) {
+    console.log(req.body);
+    return res.send({ success: false, error: "title field missing" });
+  }
+
+  var search = {
+    name: req.body.title ? req.body.title + "%" : "%",
+    date: req.body.date ? req.body.date : "%",
+    location: req.body.location ? req.body.location : "%",
+    //location
+  };
+
+  userQueries
+    .searchEvents(search.name, search.date, search.location)
+    .then((retObj) => {
+      console.log("successful search for events");
+      console.log(retObj);
+      return res.send({ success: true, result: retObj });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error searching for events",
+      });
+    });
+};
+
+module.exports = {
+  createBand,
+  createEvent,
+  getBands,
+  searchBands,
+  searchEvents,
 };

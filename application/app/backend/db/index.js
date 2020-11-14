@@ -16,14 +16,16 @@ pool.getConnection(async function (err, connection) {
   if (err) {
     console.log("MYSQL connection unsuccessful");
     console.log(err);
-    
+
     return;
   } // not connected!
   console.log("MYSQL connection successful!");
 
+  //below line won't work since the createPool call at line 7 needs the database to exist already
   connection.query("CREATE DATABASE IF NOT EXISTS StringApp;");
   connection.query("USE StringApp;", function (error, result, fields) {});
-  connection.query(
+  /** 
+  connection.query( 
     "CREATE TABLE IF NOT EXISTS MOCKBAND(" +
       "name varchar(30), " +
       "type varchar(30), " +
@@ -31,6 +33,7 @@ pool.getConnection(async function (err, connection) {
       "imgUrl varchar(100) );",
     function (error, result, fields) {}
   );
+  */
 
   connection.query(
     "CREATE TABLE IF NOT EXISTS STRINGACCOUNT(" +
@@ -53,6 +56,7 @@ pool.getConnection(async function (err, connection) {
     "CREATE TABLE IF NOT EXISTS BAND(" +
       "bandId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
       "name varchar(100) NOT NULL UNIQUE, " +
+      "numMembers INT DEFAULT 1, " +
       "logoImageUrl varchar(45), " +
       "location varchar(500), " +
       "locationLat decimal(30,15), " +

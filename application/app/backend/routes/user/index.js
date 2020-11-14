@@ -40,22 +40,11 @@ const searchEventsLimiter = rateLimit({
   },
 });
 
-userRouter.post(
-  "/createEvent",
-  searchEventsLimiter,
-  userController.createEvent
-);
-
-userRouter.post(
-  "/searchEvents",
-  searchEventsLimiter,
-  userController.searchEvents
-);
+userRouter.post("/getEvent", searchEventsLimiter, userController.getEvent);
 
 userRouter.post("/account", getAccountLimiter, userController.account);
 
-userRouter.post("/getBands", searchEventsLimiter, userController.getBands);
-
-userRouter.post("/getEvent", searchEventsLimiter, userController.getEvent);
+//is the below necessary?
+//userRouter.post("/getEvent", searchEventsLimiter, userController.getBands);
 
 module.exports = userRouter;
