@@ -117,10 +117,31 @@ const getEvent = (req, res) => {
     });
   };
 
+  const getAccount = (req, res) => {
+    if (isUser()) {
+      return res.send({
+        success: true,
+      });
+    } 
+    userQueries
+      .getAccount(req.body.userId)
+      .then((retObj) => {
+        console.log("successful retrieval of accounts that are logged in");
+        return res.send({ success: true, result: retObj });
+      })
+      .catch((err) => {
+        return res.send({
+          success: false,
+          error: "internal error retrieving accounts from STRINGACCOUNT",
+        });
+      });
+    };
+
 module.exports = {
   searchEvents,
   createEvent,
   account,
   getBands,
   getEvent,
+  getAccount
 };

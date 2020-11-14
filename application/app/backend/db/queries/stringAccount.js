@@ -55,7 +55,7 @@ stringAccountQueries.login = (email, passwordHash) => {
   });
 };
 
-stringAccountQueries.gerUserFromId = userId => {
+stringAccountQueries.getUserFromId = userId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select userId, email, name, profileImageUrl, phoneNumber, location, locationLat, locationLong, role, genre from STRINGACCOUNT where userId = ?`,
