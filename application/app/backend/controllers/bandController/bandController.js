@@ -3,7 +3,9 @@ const awsS3 = require("../../lib/aws/s3");
 const isUser = require("../../helpers/middlewares/isUser.js");
 
 const createBand = async (req, res) => {
-  if (!req.body.name || !req.body.type || !req.body.numMembers || !req.file) {
+  if (!req.body.name || !req.body.type || !req.body.numMembers
+     || !req.file) 
+  {
     console.log(req.file);
     console.log(req.body);
     return res.send({ success: false, error: "fields missing" });
@@ -102,12 +104,16 @@ const createEvent = (req, res) => {
 };
 
 const getBandInfo = (req, res) => {
+  if (!req.body.bandId) {
+    console.log(req.body);
+    return res.send({ success: false, error: "bandId field missing" });
+  }
   var search = {
    /* name: req.body.name ? req.body.name + "%" : "%",
     type: req.body.type ? req.body.type : "%",
     numMembers: req.body.numMembers ? req.body.numMembers : "%",
     */
-   name: req.body.name ? req.body.name + "%" : "%",
+   bandId: req.body.bandId ? req.body.bandId : "%",
   };
 
   bandQueries
@@ -116,6 +122,7 @@ const getBandInfo = (req, res) => {
       return res.send({ success: true, result: retObj });
     })
     .catch((err) => {
+      console.log(err);
       return res.send({ success: false, error: "internal error" });
     });
 };

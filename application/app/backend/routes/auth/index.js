@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const rateLimit = require("express-rate-limit");
+const isUser = require("../../helpers/middlewares/isUser");
 
 const createStringAccountLimmiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour window
@@ -60,6 +61,7 @@ authRouter.post("/logout", (req, res) => {
 });
 
 authRouter.post("/user", (req, res) => {
+  console.log(req.user);
   if (req.user) {
     res.send({ success: true, user: req.user });
   } else {

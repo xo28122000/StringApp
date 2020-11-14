@@ -4,7 +4,7 @@ let bandQueries = {};
 bandQueries.createBand = (name, type, numMembers, imgUrl) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO MOCKBAND VALUES('${name}', '${type}', ${numMembers}, '${imgUrl}')`,
+      `INSERT INTO BAND VALUES('${name}', '${type}', ${numMembers}, '${imgUrl}')`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -54,10 +54,10 @@ bandQueries.createEvent = (
   });
 };
 
-bandQueries.getBandInfo = (bandId) => {
+bandQueries.getBandInfo = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `Select * from BAND where bandId like '${bandId}'`,
+      `Select bandId, name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember from BAND where bandId = ?`,
       [bandId],
       (err, results) => {
         if (err) {
