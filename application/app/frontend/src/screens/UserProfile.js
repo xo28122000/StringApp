@@ -45,14 +45,14 @@ const UserProfileScreen = () => {
         </div>
       </div>
       <Row>
-        <Col sm={{ size: "auto", offset: 0 }}>
-          <img src="../logo512.png" />
+        <Col sm={{ size: "auto", offset: 1 }}>
+          <img style={{ height: 300 }} src="../logo512.png" />
           <Card
             body
             style={{
-              marginTop: 50,
+              marginTop: 10,
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "center",
               alignItems: "center",
               flexWrap: "wrap",
             }}
@@ -91,17 +91,14 @@ const UserProfileScreen = () => {
               justifyContent: "space-between",
               alignItems: "center",
               flexWrap: "wrap",
+              fontSize: 20,
             }}
           >
             <Badge color="dark" pill>
               Rock
             </Badge>
-            <Badge color="dark" pill>
-              The Beatles
-            </Badge>
-            <Badge color="dark" pill>
-              Band Manager
-            </Badge>
+            <Badge color="dark">The Beatles</Badge>
+            <Badge color="dark">Band Manager</Badge>
           </Row>
           <Row
             style={{
@@ -110,6 +107,7 @@ const UserProfileScreen = () => {
               justifyContent: "space-between",
               alignItems: "center",
               flexWrap: "wrap",
+              fontSize: 20,
             }}
           >
             <Badge color="dark">San Francisco</Badge>
