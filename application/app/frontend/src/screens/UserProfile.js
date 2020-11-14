@@ -22,24 +22,22 @@ const UserProfileScreen = () => {
   ]);
 
   return (
-    <Container>
+    <div>
       <div
         style={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          margin: 0,
-          width: "70vw",
-          maxWidth: 800,
-          minWidth: 300,
+          height: 300,
           backgroundColor: "#000000",
+          paddingRight: 20,
         }}
       >
         <div
           style={{
             marginRight: 0,
             maxWidth: 800,
-            fontSize: 50,
+            fontSize: 60,
             color: "white",
           }}
         >
@@ -146,7 +144,7 @@ const UserProfileScreen = () => {
           </div>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 };
 
