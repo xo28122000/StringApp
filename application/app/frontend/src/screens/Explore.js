@@ -127,6 +127,70 @@ const ExplorePage = props => {
         state: "California",
         zip: "94132"
       }
+    },
+    {
+      title: "event title 2",
+      description: "some description about the event...",
+      date: "Sept 21 2020",
+      startTime: "12:30 pm",
+      endTime: "1:30 pm",
+      genre: "mellow",
+      bandId: "3423342344",
+      bandName: "band6",
+      loc: {
+        street: "100 font blvd",
+        city: "San Francisco",
+        state: "California",
+        zip: "94132"
+      }
+    },
+    {
+      title: "event title 3",
+      description: "some description about the event...",
+      date: "Sept 21 2020",
+      startTime: "12:30 pm",
+      endTime: "1:30 pm",
+      genre: "mellow",
+      bandId: "3423342344",
+      bandName: "band6",
+      loc: {
+        street: "100 font blvd",
+        city: "San Francisco",
+        state: "California",
+        zip: "94132"
+      }
+    },
+    {
+      title: "event title 4",
+      description: "some description about the event...",
+      date: "Sept 21 2020",
+      startTime: "12:30 pm",
+      endTime: "1:30 pm",
+      genre: "mellow",
+      bandId: "3423342344",
+      bandName: "band6",
+      loc: {
+        street: "100 font blvd",
+        city: "San Francisco",
+        state: "California",
+        zip: "94132"
+      }
+    },
+    {
+      title: "event title 5",
+      description: "some description about the event...",
+      date: "Sept 21 2020",
+      startTime: "12:30 pm",
+      endTime: "1:30 pm",
+      genre: "mellow",
+      bandId: "3423342344",
+      bandName: "band6",
+      loc: {
+        street: "100 font blvd",
+        city: "San Francisco",
+        state: "California",
+        zip: "94132"
+      }
     }
   ]);
 

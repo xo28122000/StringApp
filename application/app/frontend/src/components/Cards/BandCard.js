@@ -33,8 +33,8 @@ const BandCard = props => {
       >
         <div
           style={{
-            width: 200,
-            height: 200,
+            width: 300,
+            height: 300,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -45,7 +45,7 @@ const BandCard = props => {
         >
           <CardImg
             top
-            style={{ width: 200, height: "auto", maxHeight: 200 }}
+            style={{ width: 300, height: "auto", maxHeight: 300 }}
             src={props.imgUrl}
           />
         </div>
@@ -59,7 +59,7 @@ const BandCard = props => {
                 padding: 6,
                 paddingLeft: 15,
                 paddingRight: 15,
-                fontSize: 13,
+                fontSize: 15,
                 fontWeight: 400
               }}
               pill
@@ -72,7 +72,7 @@ const BandCard = props => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              fontSize: 13,
+              fontSize: 15,
               fontWeight: 400,
               color: "#ABABAB",
               marginTop: 15
@@ -99,7 +99,7 @@ const BandCard = props => {
             padding: 10,
             backgroundColor: "#000000",
             borderRadius: 0,
-            fontSize: 13,
+            fontSize: 15,
             fontWeight: 400
           }}
         >

@@ -105,7 +105,7 @@ const EventCard = props => {
             padding: 10,
             backgroundColor: "#000000",
             borderRadius: 0,
-            fontSize: 13,
+            fontSize: 15,
             fontWeight: 400
           }}
         >
@@ -135,14 +135,18 @@ const EventCard = props => {
             }}
           >
             <div style={{ marginBottom: 10 }}>
-              Posted by: <Link>{props.bandName}</Link>
+              <span style={{ fontWeight: 600 }}>Posted by:</span>{" "}
+              <Link to="/band" target="_blank">
+                {props.bandName}
+              </Link>
             </div>
             <div style={{ marginBottom: 10 }}>
-              When: {props.date} from {props.startTime} to {props.endTime}
+              <span style={{ fontWeight: 600 }}>When:</span> {props.date} from{" "}
+              {props.startTime} to {props.endTime}
             </div>
 
             <div>
-              Where:{" "}
+              <span style={{ fontWeight: 600 }}>Where:</span>{" "}
               <a
                 href={
                   "https://maps.google.com/?q=" +
@@ -159,7 +163,16 @@ const EventCard = props => {
                 {props.loc.street}; {props.loc.city}
               </a>
             </div>
-            <div style={{ marginTop: 20 }}>{props.description}</div>
+            <div
+              style={{
+                margin: 20,
+                padding: 10,
+                borderRadius: 10,
+                backgroundColor: "#e9e9e9"
+              }}
+            >
+              {props.description}
+            </div>
           </div>
         </ModalBody>
       </Modal>
