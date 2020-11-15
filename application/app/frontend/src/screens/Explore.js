@@ -29,6 +29,16 @@ import EventCard from "../components/Cards/EventCard";
 import { scroller, Element } from "react-scroll";
 
 const ExplorePage = props => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  React.useEffect(() => {
+    function handleResize() {
+      setScreenWidth(window.innerWidth);
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const [bands, setBands] = useState([
     {
       name: "band1",
@@ -231,27 +241,29 @@ const ExplorePage = props => {
               work with posts and press mentions to make people find you easily,
               connect with other musicians to work together!
             </div>
-            <div style={{}}>
-              <Button
-                style={{
-                  padding: 20,
-                  backgroundColor: "#ffffff",
-                  color: "#000000",
-                  borderRadius: 20,
-                  width: 200,
-                  fontSize: 18
-                }}
-                onClick={() => {
-                  scroller.scrollTo("exploreJump", {
-                    duration: 1000,
-                    delay: 50,
-                    smooth: true
-                  });
-                }}
-              >
-                Start Exploring
-              </Button>
-            </div>
+            {screenWidth > 600 ? (
+              <div style={{}}>
+                <Button
+                  style={{
+                    padding: 20,
+                    backgroundColor: "#ffffff",
+                    color: "#000000",
+                    borderRadius: 20,
+                    width: 200,
+                    fontSize: 18
+                  }}
+                  onClick={() => {
+                    scroller.scrollTo("exploreJump", {
+                      duration: 1000,
+                      delay: 50,
+                      smooth: true
+                    });
+                  }}
+                >
+                  Start Exploring
+                </Button>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

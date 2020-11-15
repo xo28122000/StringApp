@@ -160,10 +160,13 @@ const RegisterPage = () => {
         style={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "center"
+          alignItems: "center",
+          marginLeft: 30,
+          marginRight: 30,
+          marginBottom: 50
         }}
       >
-        <Button color="success" style={{ fontSize: 20 }}>
+        <Button color="success" style={{ fontSize: 20, marginBottom: 10 }}>
           Sign Up!
         </Button>
         <FormText color="muted">

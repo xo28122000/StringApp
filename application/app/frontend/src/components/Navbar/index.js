@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../../redux/Actions/actions";
@@ -30,13 +30,23 @@ const Navbar = props => {
     dispatch(logout());
   };
 
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    function handleResize() {
+      setScreenWidth(window.innerWidth);
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        height: 70,
+        // height: screenWidth > 450 ? 70 : 40,
         backgroundColor: "#000000",
         paddingRight: 20
       }}
@@ -48,13 +58,19 @@ const Navbar = props => {
         }}
       >
         <Link to="/">
-          <img src={StringLogo} alt="logo" style={{ height: 70 }} />
+          <img
+            src={StringLogo}
+            alt="logo"
+            style={{ height: screenWidth > 450 ? 70 : 40 }}
+          />
         </Link>
-        <div style={{ marginLeft: 20 }}>
-          <a href="/#explore" className="navLink">
-            Explore
-          </a>
-        </div>
+        {screenWidth > 450 ? (
+          <div style={{ marginLeft: 20 }}>
+            <a href="/#explore" className="navLink">
+              Explore
+            </a>
+          </div>
+        ) : null}
       </div>
 
       {!userObj ? (
