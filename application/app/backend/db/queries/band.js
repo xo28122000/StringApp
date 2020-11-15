@@ -7,6 +7,8 @@ bandQueries.createBand = (
   numMembers,
   imgUrl,
   location,
+  locationLat,
+  locationLong,
   genre,
   isLookingForMember,
   filename
@@ -65,7 +67,14 @@ bandQueries.getBands = (userId) => {
   });
 };
 
-bandQueries.searchBands = (name, genre, numMembers, location) => {
+bandQueries.searchBands = (
+  name,
+  genre,
+  numMembers,
+  location,
+  locationLat,
+  locationLong
+) => {
   if (location < 0) {
     return new Promise((resolve, reject) => {
       pool.query(
@@ -80,12 +89,11 @@ bandQueries.searchBands = (name, genre, numMembers, location) => {
       );
     });
   } else {
-    //middleware for location search goes here
-    var locationLat = 3.14;
-    var locationLong = 3.14;
+    //if they provide a location (locationLat, locationLong found in band controller calling function)
     return new Promise((resolve, reject) => {
       pool.query(
-        `Select * from BAND where name like '${name}' or type like '${genre}' or numMembers >= ${numMembers} and (locationLat like '${locationLat}' and locationLong like '${locationLong}')`,
+        //change query below
+        `Select *, POWER( SIN( ((37.762067-'${locationLat}')*0.01745329252)/2 ), 2) + COS( '${locationLat}' * 0.01745329252 ) * COS( 37.762067 * 0.01745329252 ) * POWER( SIN( ((-122.483492- '${locationLong}')*0.01745329252)/2 ), 2) AS temp from BAND order by (6371 * 2 * ATAN2( SQRT(temp), SQRT(1-temp) ))`,
         (err, results) => {
           if (err) {
             return reject(err);

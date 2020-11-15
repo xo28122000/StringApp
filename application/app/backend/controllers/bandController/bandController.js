@@ -33,11 +33,13 @@ const createBand = async (req, res) => {
     let fileData = await awsS3.getFileData(req.file);
     let result = await awsS3.addS3file("csc648-string", fileName, fileData);
 
-    req.body.locationLat = 3.14;
-    req.body.locationLong = 3.14;
+    var locationCoords = {
+      locationLat: 3.14,
+      locationLong: 3.14,
+    };
 
     try {
-      geocode(req, res, next);
+      geocode(locationCoords);
     } catch (err) {
       console.log("error geocoding: ");
       console.log(err);
@@ -49,6 +51,8 @@ const createBand = async (req, res) => {
       req.body.numMembers,
       req.body.imgUrl,
       req.body.location,
+      locationCoords.locationLat,
+      locationCoords.locationLong,
       req.body.genre,
       req.body.isLookingForMember,
       fileName //what does this do? is this imgUrl?
@@ -165,10 +169,24 @@ const searchBands = (req, res) => {
     type: req.body.genre ? req.body.genre : "%",
     numMembers: req.body.numMembers ? req.body.numMembers : 1,
     location: req.body.location ? req.body.location : -1,
+    locationLat: -1,
+    locationLong: -1,
   };
 
+  if (search.location != -1) {
+    //call geocode middleware
+    geocode(search); //should create values for locationLat, locationLong in search object
+  }
+
   bandQueries
-    .searchBands(search.name, search.genre, search.numMembers, search.location)
+    .searchBands(
+      search.name,
+      search.genre,
+      search.numMembers,
+      search.location,
+      search.locationLat,
+      search.locationLong
+    )
     .then((retObj) => {
       return res.send({ success: true, result: retObj });
     })
@@ -210,6 +228,7 @@ module.exports = {
   createBand,
   createEvent,
   getBands,
+  getBandInfo,
   searchBands,
   searchEvents,
 };
