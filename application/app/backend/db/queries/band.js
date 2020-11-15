@@ -11,10 +11,6 @@ bandQueries.createBand = (
   isLookingForMember,
   filename
 ) => {
-  //TODO run middleware code to find location here
-  var locationLat = 3.14;
-  var locationLong = 3.14;
-
   return new Promise((resolve, reject) => {
     pool.query(
       `INSERT INTO BAND (name, numMembers, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${numMembers}', '${imgUrl}', '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,

@@ -1,6 +1,7 @@
 const bandQueries = require("../../db/queries/band.js");
 const awsS3 = require("../../lib/aws/s3");
 const isUser = require("../../helpers/middlewares/isUser.js");
+const geocode = require("../../helpers/middlewares/geocode.js");
 
 const createBand = async (req, res) => {
   if (
@@ -31,6 +32,17 @@ const createBand = async (req, res) => {
 
     let fileData = await awsS3.getFileData(req.file);
     let result = await awsS3.addS3file("csc648-string", fileName, fileData);
+
+    req.body.locationLat = 3.14;
+    req.body.locationLong = 3.14;
+
+    try {
+      geocode(req, res, next);
+    } catch (err) {
+      console.log("error geocoding: ");
+      console.log(err);
+      return res.send({ success: false });
+    }
 
     await bandQueries.createBand(
       req.body.name,
