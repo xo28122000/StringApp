@@ -29,6 +29,7 @@ const BandProfilePage = () => {
             <img src={BandLogo} style={{ width: 300, maxHeight: 300 }} />
           </div>
           <div
+            className="divShadow"
             style={{
               marginTop: 10,
               display: "flex",
@@ -57,6 +58,7 @@ const BandProfilePage = () => {
             </div>
           </div>
           <div
+            className="divShadow"
             style={{
               marginTop: 10,
               display: "flex",
@@ -96,6 +98,7 @@ const BandProfilePage = () => {
           <div style={{ fontSize: 45, fontWeight: 700 }}>The Beatles</div>
           <div style={{ display: "flex", flexWrap: "wrap", marginTop: 20 }}>
             <Badge
+              className="divShadow"
               style={{
                 margin: 10,
                 padding: 15,
@@ -111,6 +114,7 @@ const BandProfilePage = () => {
               <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />3
             </Badge>
             <Badge
+              className="divShadow"
               style={{
                 margin: 10,
                 padding: 15,
@@ -126,6 +130,7 @@ const BandProfilePage = () => {
               Rock
             </Badge>
             <Badge
+              className="divShadow"
               style={{
                 margin: 10,
                 padding: 15,
@@ -146,6 +151,7 @@ const BandProfilePage = () => {
             </Badge>
           </div>
           <div
+            className="divShadow"
             style={{ marginTop: 30, padding: 20, backgroundColor: "#ffffff" }}
           >
             <div style={{ fontSize: 35, fontWeight: 700 }}>Members</div>
@@ -327,6 +333,7 @@ const BandProfilePage = () => {
           {[1, 2, 3, 4, 4, 5, 5, 6].map((post, i) => (
             <div
               key={i}
+              className="divShadow"
               style={{
                 backgroundColor: "#ffffff",
                 marginRight: 20,

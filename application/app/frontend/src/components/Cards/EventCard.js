@@ -29,9 +29,10 @@ const EventCard = props => {
   return (
     <div style={{ margin: 25 }}>
       <Card
+        className="divShadow"
         style={{
           borderRadius: 0,
-          boxShadow: "3px 3px 5px 1px rgba(0,0,0,0.20)",
+          borderWidth: 0,
           width: 300
         }}
       >
