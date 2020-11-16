@@ -61,7 +61,6 @@ authRouter.post("/logout", (req, res) => {
 });
 
 authRouter.post("/user", (req, res) => {
-  console.log(req.user);
   if (req.user) {
     res.send({ success: true, user: req.user });
   } else {

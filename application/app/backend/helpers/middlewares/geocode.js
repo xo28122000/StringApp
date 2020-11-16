@@ -1,30 +1,31 @@
 //should run the location library and then
 //change the req.body.lat, req.body.long to what the function returns
 //everything gets done in here
-let nodeGeocoder = require("node-geocoder");
+const nodeGeocoder = require("node-geocoder");
 
-let options = {
-  provider: "openstreetmap",
-};
+const geoCoder = nodeGeocoder({
+  provider: "openstreetmap"
+});
 
-let geoCoder = nodeGeocoder(options);
-
-var inputLocation = "1600 Pennsylvania Avenue, Washington DC"; //for amusement
-
-const geocode = (req, res, next) => {
-  if (req.location) {
-    inputLocation = req.location;
+const geocode = async (req, res, next) => {
+  if (req.body.location) {
     try {
-      const coordinates = geoCoder.geocode(inputLocation);
-      req.body.latitude = coordinates.latitude;
-      req.body.longitude = coordinates.longitude;
+      const retObj = await geoCoder.geocode({
+        address: req.body.location.street,
+        city: req.body.location.city,
+        state: req.body.location.state,
+        zipcode: req.body.location.zip,
+        country: "United States"
+      });
+      req.body.latitude = retObj[0].latitude;
+      req.body.longitude = retObj[0].longitude;
       next();
     } catch (err) {
-      res.send("geolocation error");
+      return res.send({ success: false, error: "geolocation error" });
     }
   } else {
-    res.send({ success: "false" }, "no location provided by user");
+    return res.send({ success: false, error: "no location provided by user" });
   }
 };
 
-module.exports = { geocode };
+module.exports = geocode;

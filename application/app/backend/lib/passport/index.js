@@ -13,7 +13,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
   // console.log("deserializeUser");
   stringAccountQueries
-    .gerUserFromId(obj.userId)
+    .getUserFromId(obj.userId)
     .then(data => {
       if (data && data.length === 1) {
         return done(null, {

@@ -10,6 +10,7 @@ const aws = require("aws-sdk");
 const app = express();
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(hpp());
 app.use(morgan("dev"));
 app.use(
