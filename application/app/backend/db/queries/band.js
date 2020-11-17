@@ -4,26 +4,41 @@ let bandQueries = {};
 //TODO figure out difference between filename/imgUrl, if any (and proper use)
 bandQueries.createBand = (
   name,
-  numMembers,
   imgUrl,
   location,
   locationLat,
   locationLong,
   genre,
-  isLookingForMember,
-  filename
+  isLookingForMember
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO BAND (name, numMembers, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${numMembers}', '${imgUrl}', '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,
+      `INSERT INTO BAND (name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${imgUrl}', '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,
       (err, results) => {
         if (err) {
+          console.log("errors in query: ");
+          console.log(err);
           return reject(err);
         } else {
+          console.log("no errors");
           return resolve(results);
         }
       }
     );
+    pool.query(
+      `INSERT INTO BAND (name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${imgUrl}', '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,
+      (err, results) => {
+        if (err) {
+          console.log("errors in query: ");
+          console.log(err);
+          return reject(err);
+        } else {
+          console.log("no errors");
+          return resolve(results);
+        }
+      }
+    );
+    //`INSERT INTO BANDMEMBERS (isBandAdmin, bandId) VALUES (1, LAST_INSERT_ID())`,
   });
 };
 
@@ -70,19 +85,22 @@ bandQueries.getBands = (userId) => {
 bandQueries.searchBands = (
   name,
   genre,
-  numMembers,
-  location,
   locationLat,
-  locationLong
+  locationLong,
+  isLookingForMember
 ) => {
-  if (location < 0) {
+  if (!locationLat) {
+    //no location provided
     return new Promise((resolve, reject) => {
+      //console.log("reached no location search query");
       pool.query(
-        `Select * from BAND where name like '${name}' or type like '${genre}' or numMembers >= ${numMembers}`,
+        `SELECT * from BAND WHERE (name LIKE '${name}' AND genre LIKE '${genre}'AND isLookingForMember = '${isLookingForMember}') ORDER BY name DESC`,
         (err, results) => {
           if (err) {
             return reject(err);
           } else {
+            //console.log("no errors");
+            //console.log(results);
             return resolve(results);
           }
         }
@@ -92,8 +110,8 @@ bandQueries.searchBands = (
     //if they provide a location (locationLat, locationLong found in band controller calling function)
     return new Promise((resolve, reject) => {
       pool.query(
-        //change query below
-        `Select *, POWER( SIN( ((37.762067-'${locationLat}')*0.01745329252)/2 ), 2) + COS( '${locationLat}' * 0.01745329252 ) * COS( 37.762067 * 0.01745329252 ) * POWER( SIN( ((-122.483492- '${locationLong}')*0.01745329252)/2 ), 2) AS temp from BAND order by (6371 * 2 * ATAN2( SQRT(temp), SQRT(1-temp) ))`,
+        //query searches by location only(?)
+        `Select *, POWER( SIN( ((37.762067-'${locationLat}')*0.01745329252)/2 ), 2) + COS( '${locationLat}' * 0.01745329252 ) * COS( 37.762067 * 0.01745329252 ) * POWER( SIN( ((-122.483492- '${locationLong}')*0.01745329252)/2 ), 2) AS temp from BAND order by (6371 * 2 * ATAN2( SQRT(temp), SQRT(1-temp) )), name, genre`,
         (err, results) => {
           if (err) {
             return reject(err);

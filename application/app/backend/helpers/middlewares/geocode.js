@@ -4,7 +4,7 @@
 const nodeGeocoder = require("node-geocoder");
 
 const geoCoder = nodeGeocoder({
-  provider: "openstreetmap"
+  provider: "openstreetmap",
 });
 
 const geocode = async (req, res, next) => {
@@ -15,7 +15,7 @@ const geocode = async (req, res, next) => {
         city: req.body.location.city,
         state: req.body.location.state,
         zipcode: req.body.location.zip,
-        country: "United States"
+        country: "United States",
       });
       req.body.latitude = retObj[0].latitude;
       req.body.longitude = retObj[0].longitude;

@@ -57,7 +57,7 @@ pool.getConnection(async function (err, connection) {
       "bandId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
       "name varchar(100) NOT NULL UNIQUE, " +
       "numMembers INT DEFAULT 1, " +
-      "logoImageUrl varchar(45), " +
+      "logoImageUrl varchar(500), " +
       "location varchar(500), " +
       "locationLat decimal(30,15), " +
       "locationLong decimal(30,15), " +
