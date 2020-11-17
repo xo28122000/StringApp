@@ -21,14 +21,65 @@ import {
 import { Link, Redirect } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
+import { login } from "../redux/Actions/actions";
+
+const axios = require("axios");
 
 const RegisterPage = () => {
+  const dispatch = useDispatch();
+
   const roleOptions = ["None", "Musician", "Band Manager", "Enthusiast"];
   const [roleDDOpen, setRoleDDOpen] = useState(false);
   const toggleRoleDDOpen = () => setRoleDDOpen(!roleDDOpen);
   const [regType, setRegType] = useState("None");
 
   const userObj = useSelector(state => state.userObj);
+
+  const registerAccount = () => {
+    let registerName = document.getElementById("registerName").value;
+    let registerEmail = document.getElementById("registerEmail").value;
+    let registerPassword = document.getElementById("registerPassword").value;
+    let registerPhoneNumber = document.getElementById("registerPhoneNumber")
+      .value;
+    let registerStreetAddress = document.getElementById("registerStreetAddress")
+      .value;
+    let registerCity = document.getElementById("registerCity").value;
+    let registerState = document.getElementById("registerState").value;
+    let registerZip = document.getElementById("registerZip").value;
+    // regType
+
+    if (!registerName || !registerEmail || !registerPassword) {
+      alert("Name, Email and Password are required fields");
+    } else {
+      axios
+        .post("/api/auth/register", {
+          email: registerEmail,
+          password: registerPassword,
+          name: registerName,
+          phoneNumber: registerPhoneNumber,
+          location: {
+            street: registerStreetAddress,
+            city: registerCity,
+            state: registerState,
+            zip: registerZip
+          },
+          role: regType
+        })
+        .then(res => {
+          console.log(res);
+          dispatch(
+            login({
+              email: registerEmail,
+              password: registerPassword,
+              name: registerName
+            })
+          );
+        })
+        .catch(err => {
+          alert("some error occured! Please try again later.");
+        });
+    }
+  };
 
   return (
     <div
@@ -40,7 +91,7 @@ const RegisterPage = () => {
         marginTop: 20
       }}
     >
-      {userObj ? <Redirect to="/" /> : null}
+      {userObj && <Redirect to="/" />}
       <div style={{ fontSize: 25, fontWeight: 600 }}>Sign Up</div>
       <div
         style={{
@@ -166,7 +217,13 @@ const RegisterPage = () => {
           marginBottom: 50
         }}
       >
-        <Button color="success" style={{ fontSize: 20, marginBottom: 10 }}>
+        <Button
+          color="success"
+          style={{ fontSize: 20, marginBottom: 10 }}
+          onClick={() => {
+            registerAccount();
+          }}
+        >
           Sign Up!
         </Button>
         <FormText color="muted">

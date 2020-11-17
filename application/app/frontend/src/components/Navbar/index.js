@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 import StringLogo from "../../assets/StringLogo.png";
+import Axios from "axios";
 
 const Navbar = props => {
   const dispatch = useDispatch();
@@ -22,8 +23,20 @@ const Navbar = props => {
   const sendlogin = () => {
     let email = document.getElementById("loginEmail").value;
     let password = document.getElementById("loginPassword").value;
-    dispatch(login({ email, password }));
-    toggleLoginModal();
+
+    if (!email || !password) {
+      alert("email and password are required.");
+    } else {
+      Axios.post("/api/auth/login", { email, password })
+        .then(res => {
+          console.log(res);
+          dispatch(login({ email, password }));
+          toggleLoginModal();
+        })
+        .catch(err => {
+          alert("some error occured. Please try again later");
+        });
+    }
   };
 
   const triggerLogout = () => {
@@ -76,14 +89,14 @@ const Navbar = props => {
       {!userObj ? (
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ marginRight: 20 }}>
-            <Link
+            <a
               className="navLink"
               onClick={() => {
                 toggleLoginModal();
               }}
             >
               Log in
-            </Link>
+            </a>
           </div>
           <Button
             className="navButton"

@@ -52,7 +52,7 @@ const EventCard = props => {
             textAlign: "center"
           }}
         >
-          <Link>{props.bandName}</Link>
+          <Link to={"/band?" + props.bandName}>{props.bandName}</Link>
         </div>
         <div style={{ padding: 10 }}>
           <div

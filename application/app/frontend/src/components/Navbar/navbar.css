@@ -5,6 +5,7 @@
 }
 .navLink:hover {
   color: #cb0086;
+  cursor: pointer;
 }
 
 .navButton {
