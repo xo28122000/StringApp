@@ -20,20 +20,7 @@ bandQueries.createBand = (
           console.log(err);
           return reject(err);
         } else {
-          console.log("no errors");
-          return resolve(results);
-        }
-      }
-    );
-    pool.query(
-      `INSERT INTO BAND (name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${imgUrl}', '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,
-      (err, results) => {
-        if (err) {
-          console.log("errors in query: ");
-          console.log(err);
-          return reject(err);
-        } else {
-          console.log("no errors");
+          //console.log("no errors");
           return resolve(results);
         }
       }
@@ -111,7 +98,7 @@ bandQueries.searchBands = (
     return new Promise((resolve, reject) => {
       pool.query(
         //query searches by location only(?)
-        `Select *, POWER( SIN( ((37.762067-'${locationLat}')*0.01745329252)/2 ), 2) + COS( '${locationLat}' * 0.01745329252 ) * COS( 37.762067 * 0.01745329252 ) * POWER( SIN( ((-122.483492- '${locationLong}')*0.01745329252)/2 ), 2) AS temp from BAND order by (6371 * 2 * ATAN2( SQRT(temp), SQRT(1-temp) )), name, genre`,
+        `Select *, POWER( SIN( ((37.762067-'${locationLat}')*0.01745329252)/2 ), 2) + COS( '${locationLat}' * 0.01745329252 ) * COS( 37.762067 * 0.01745329252 ) * POWER( SIN( ((-122.483492- '${locationLong}')*0.01745329252)/2 ), 2) AS temp from BAND order by (6371 * 2 * ATAN2( SQRT(temp), SQRT(1-temp) )), name, genre, isLookingForMember`,
         (err, results) => {
           if (err) {
             return reject(err);
@@ -123,8 +110,6 @@ bandQueries.searchBands = (
     });
   }
 };
-
-//
 
 bandQueries.searchEvents = (title, date, location) => {
   return new Promise((resolve, reject) => {
