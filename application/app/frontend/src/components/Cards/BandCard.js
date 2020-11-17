@@ -17,7 +17,7 @@ import { withRouter } from "react-router";
 
 const BandCard = props => {
   const goToBandPage = () => {
-    props.history.push("/band/" + props.name);
+    props.history.push("/band?" + props.name);
   };
 
   return (

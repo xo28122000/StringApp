@@ -52,7 +52,9 @@ const EventCard = props => {
             textAlign: "center"
           }}
         >
-          <Link to={"/band?" + props.bandName}>{props.bandName}</Link>
+          <Link to={"/band?" + props.bandName} target="_blank">
+            {props.bandName}
+          </Link>
         </div>
         <div style={{ padding: 10 }}>
           <div
@@ -137,7 +139,7 @@ const EventCard = props => {
           >
             <div style={{ marginBottom: 10 }}>
               <span style={{ fontWeight: 600 }}>Posted by:</span>{" "}
-              <Link to="/band" target="_blank">
+              <Link to={"/band?" + props.bandName} target="_blank">
                 {props.bandName}
               </Link>
             </div>

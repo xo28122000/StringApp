@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Button, Badge, Container, Row, Col } from "reactstrap";
+import {
+  Button,
+  Badge,
+  Container,
+  Row,
+  Col,
+  Input,
+  Modal,
+  ModalHeader,
+  ModalBody
+} from "reactstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,8 +22,32 @@ import {
 import EventCard from "../components/Cards/EventCard";
 
 import BandLogo from "../assets/BandLogo.png";
+import { useLocation } from "react-router-dom";
 
 const BandProfilePage = () => {
+  const location = useLocation();
+  const isAdm = location.search === "?admBand";
+
+  const [invitationModal, setInvitationModal] = useState(false);
+  const toggleInvitationModal = () => setInvitationModal(!invitationModal);
+
+  const [invitations, setInvitations] = useState([
+    {
+      name: "Guy Russell",
+      message:
+        "I am a bass guitarist! I have played for 3 months with a band called ADBC. Please contact me at 8229918920. "
+    },
+    {
+      name: "Dianne Hawkins",
+      message: "I am a lead guitarist! My contact is 8229918920!"
+    },
+    {
+      name: "Kristin Watson",
+      message:
+        "I am a band manager! I have managed 3 bands: QQP, Leads and Bandit-C. To get in tough email me at kwatson@abc.abc"
+    }
+  ]);
+
   return (
     <div style={{ backgroundColor: "#E5E5E5" }}>
       <div
@@ -71,19 +105,48 @@ const BandProfilePage = () => {
               backgroundColor: "#ffffff"
             }}
           >
-            <div style={{ marginBottom: 10 }}>
-              This band is looking for a new Member
-            </div>
-            <Button
-              style={{
-                backgroundColor: "#CB0086",
-                fontSize: 18,
-                paddingRight: 20,
-                paddingLeft: 20
-              }}
-            >
-              Apply
-            </Button>
+            {isAdm ? (
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-start"
+                  }}
+                >
+                  Looking for new Members:
+                  <Input
+                    type="checkbox"
+                    checked={true}
+                    style={{ position: "relative", margin: 0, marginLeft: 10 }}
+                  />
+                </div>
+                <div style={{ marginTop: 20 }}>
+                  <Button
+                    onClick={() => toggleInvitationModal()}
+                    style={{ backgroundColor: "#000000" }}
+                  >
+                    View invitations
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <div style={{ marginBottom: 10 }}>
+                  This band is looking for a new Member
+                </div>
+                <Button
+                  style={{
+                    backgroundColor: "#CB0086",
+                    fontSize: 18,
+                    paddingRight: 20,
+                    paddingLeft: 20
+                  }}
+                >
+                  Apply
+                </Button>
+              </>
+            )}
           </div>
         </div>
         <div
@@ -393,6 +456,64 @@ const BandProfilePage = () => {
           ))}
         </div>
       </div>
+      <Modal
+        isOpen={invitationModal}
+        toggle={toggleInvitationModal}
+        backdrop="static"
+      >
+        <ModalHeader toggle={toggleInvitationModal}>
+          New Member Applications
+        </ModalHeader>
+        <ModalBody>
+          <div style={{ fontWeight: 600, fontSize: 20 }}>Invitations:</div>
+          <div style={{ color: "#666666" }}>
+            Accepting an invitation will result in adding them in your band as a
+            band member.
+          </div>
+          <div>
+            {invitations.map(invitation => (
+              <div
+                className="divShadow"
+                style={{ margin: 20, padding: 20, borderRadius: 20 }}
+              >
+                <div style={{ fontWeight: 500 }}>{invitation.name}</div>
+                <div
+                  style={{
+                    marginLeft: 20,
+                    marginTop: 15,
+                    maxHeight: 150,
+                    overflowY: "auto"
+                  }}
+                >
+                  {invitation.message}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    marginTop: 20
+                  }}
+                >
+                  <Button
+                    style={{ marginRight: 15, backgroundColor: "#000000" }}
+                  >
+                    Accept
+                  </Button>
+                  <Button
+                    style={{
+                      backgroundColor: "#f11313",
+                      borderColor: "#f88989"
+                    }}
+                  >
+                    Decline
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </ModalBody>
+      </Modal>
     </div>
   );
 };

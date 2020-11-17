@@ -45,7 +45,7 @@ const UserProfileScreen = () => {
 
   const [bands, setBands] = useState([
     {
-      name: "band1",
+      name: "admBand",
       genre: "rock",
       loc: {
         street: "100 font blvd",
@@ -58,7 +58,7 @@ const UserProfileScreen = () => {
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
     },
     {
-      name: "band1",
+      name: "admBand",
       genre: "rock",
       loc: {
         street: "100 font blvd",
@@ -71,7 +71,7 @@ const UserProfileScreen = () => {
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
     },
     {
-      name: "band1",
+      name: "admBand",
       genre: "rock",
       loc: {
         street: "100 font blvd",
