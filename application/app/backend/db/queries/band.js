@@ -54,7 +54,7 @@ bandQueries.createEvent = (
 
 //TODO fix this SQL query:
 //need to join the query - userId -> band member, bandId from band member, then bands from bands with bandID
-bandQueries.getBands = (userId) => {
+bandQueries.getBands = userId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `select from Band where userId = '${userId}'`,
@@ -76,12 +76,12 @@ bandQueries.searchBands = (
   locationLong,
   isLookingForMember
 ) => {
-  if (!locationLat) {
+  if (!locationLat || !locationLong) {
     //no location provided
     return new Promise((resolve, reject) => {
       //console.log("reached no location search query");
       pool.query(
-        `SELECT * from BAND WHERE (name LIKE '${name}' AND genre LIKE '${genre}'AND isLookingForMember = '${isLookingForMember}') ORDER BY name DESC`,
+        `SELECT * from BAND WHERE (name LIKE '${name}' AND genre LIKE '${genre}'AND isLookingForMember >= ${isLookingForMember})`,
         (err, results) => {
           if (err) {
             return reject(err);
@@ -98,7 +98,8 @@ bandQueries.searchBands = (
     return new Promise((resolve, reject) => {
       pool.query(
         //query searches by location only(?)
-        `Select *, POWER( SIN( ((37.762067-'${locationLat}')*0.01745329252)/2 ), 2) + COS( '${locationLat}' * 0.01745329252 ) * COS( 37.762067 * 0.01745329252 ) * POWER( SIN( ((-122.483492- '${locationLong}')*0.01745329252)/2 ), 2) AS temp from BAND order by (6371 * 2 * ATAN2( SQRT(temp), SQRT(1-temp) )), name, genre, isLookingForMember`,
+        // `Select name, location, POWER( SIN( ((37.762067-${locationLat})*0.01745329252)/2 ), 2) + COS( ${locationLat} * 0.01745329252 ) * COS( 37.762067 * 0.01745329252 ) * POWER( SIN( ((-122.483492- '${locationLong}')*0.01745329252)/2 ), 2) AS temp from BAND order by (6371 * 2 * ATAN2( SQRT(temp), SQRT(1-temp) ))`,
+        `select *, POWER( SIN( ((locationLat-${locationLat})*0.01745329252)/2 ), 2) + COS( ${locationLat} * 0.01745329252 ) * COS( locationLat * 0.01745329252 ) * POWER( SIN( ((locationLong-${locationLong})*0.01745329252)/2 ), 2) AS temp from band WHERE (name LIKE '${name}' AND genre LIKE '${genre}'AND isLookingForMember >= ${isLookingForMember}) order by (6371 * 2 * ATAN2( SQRT(temp), SQRT(1-temp) ));`,
         (err, results) => {
           if (err) {
             return reject(err);
@@ -127,7 +128,7 @@ bandQueries.searchEvents = (title, date, location) => {
   });
 };
 
-bandQueries.getBandInfo = (bandId) => {
+bandQueries.getBandInfo = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select bandId, name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember from BAND where bandId = ?`,
