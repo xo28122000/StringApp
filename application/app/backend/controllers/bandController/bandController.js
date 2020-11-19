@@ -160,6 +160,7 @@ const searchBands = (req, res) => {
       return res.send({ success: true, result: retObj });
     })
     .catch(err => {
+      console.log(err);
       return res.send({ success: false, error: "internal error" });
     });
 };
