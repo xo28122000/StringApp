@@ -1,9 +1,9 @@
-import { EXAMPLE_CONSTANT1, EXAMPLE_CONSTANT2 } from "../constants";
+import { LOGIN, LOGOUT } from "../constants";
 
-export function exampleAction1() {
-  return { type: EXAMPLE_CONSTANT1 };
+export function login(userObj) {
+  return { type: LOGIN, userObj: userObj };
 }
 
-export function exampleAction2(value) {
-  return { type: EXAMPLE_CONSTANT2, value: value };
+export function logout() {
+  return { type: LOGOUT };
 }
