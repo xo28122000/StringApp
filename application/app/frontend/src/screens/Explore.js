@@ -44,13 +44,31 @@ const ExplorePage = props => {
 
   const [events, setEvents] = useState([
     {
-      title: "event title",
-      description: "some description about the event...",
+      title: "Housewarming and Big Band Jam Session!",
+      description:
+        "Come help us break in our new house, and bring your instruments/talents! Big Band/Swing jam session.",
+      date: "Sept 21 2020",
+      startTime: "12:30 pm",
+      endTime: "1:30 pm",
+      genre: "rock",
+      bandId: "3423342344",
+      bandName: "band6",
+      loc: {
+        street: "150 font blvd",
+        city: "San Francisco",
+        state: "California",
+        zip: "94132"
+      }
+    },
+    {
+      title: "Tuck and Patti Annual Thanksgiving Show",
+      description:
+        "For 41 years this unique, genre-crossing vocal/guitar jazz duo has cast its passionate musical spell worldwide, capturing the hearts of lovers, the respect of jazz buffs and the jaw-dropping awe of guitarists and singers.",
       date: "Sept 21 2020",
       startTime: "12:30 pm",
       endTime: "1:30 pm",
       genre: "mellow",
-      bandId: "3423342344",
+      bandId: "4854",
       bandName: "band6",
       loc: {
         street: "100 font blvd",
@@ -60,67 +78,54 @@ const ExplorePage = props => {
       }
     },
     {
-      title: "event title 2",
-      description: "some description about the event...",
+      title: "TASTE (Hip Hop-Afro-Latin Remix)",
+      description:
+        "TASTE is a monthly dance party for the dance community happening in Oakland, inside Luka's side-room (lounge). An Afro-Latin Fusion of international music is here! With special surprise host and guest DJs mixing everything from Hip Hop/ R&B, Dancehall, Afrobeat and Reggaetón to Cumbia to Salsa. Come leave the floor on fire with us!",
       date: "Sept 21 2020",
       startTime: "12:30 pm",
       endTime: "1:30 pm",
-      genre: "mellow",
-      bandId: "3423342344",
+      genre: "hip hop",
+      bandId: "97347923",
       bandName: "band6",
       loc: {
-        street: "100 font blvd",
+        street: "San Diego Ave",
         city: "San Francisco",
         state: "California",
-        zip: "94132"
+        zip: "94014"
       }
     },
     {
-      title: "event title 3",
-      description: "some description about the event...",
+      title: "Salsa by the Bay",
+      description:
+        "Among his many accomplishments as a prominent DJ,Mix radio DJ, Promoter Tony O has been the face of Company's such as Marlboro Music presents, The SFjazz company,Liz Claiborne Cosmetic, Macy's and got sponsorships by dj company's through out the years.Tony O have DJ to sold-out crowds at the Bill Graham Civic Auditorium, the Cow Palace, The San Jose event center, the Hp Center and among others.",
       date: "Sept 21 2020",
       startTime: "12:30 pm",
       endTime: "1:30 pm",
       genre: "mellow",
-      bandId: "3423342344",
+      bandId: "3468326",
       bandName: "band6",
       loc: {
-        street: "100 font blvd",
+        street: "Wawona street",
         city: "San Francisco",
         state: "California",
-        zip: "94132"
+        zip: "94127"
       }
     },
     {
-      title: "event title 4",
-      description: "some description about the event...",
+      title: "Folk Music Open Mic & Song Circle",
+      description:
+        "In the center of the city, on the edge of the neighborhood: “a San Francisco kind of Jesus joint.” St Cyprian’s is a congregation emboldened by the opportunity to engage with our energized urban neighborhood to create a community where everyone matters.",
       date: "Sept 21 2020",
       startTime: "12:30 pm",
       endTime: "1:30 pm",
       genre: "mellow",
-      bandId: "3423342344",
+      bandId: "432947",
       bandName: "band6",
       loc: {
-        street: "100 font blvd",
+        street: "Freemont street",
         city: "San Francisco",
         state: "California",
-        zip: "94132"
-      }
-    },
-    {
-      title: "event title 5",
-      description: "some description about the event...",
-      date: "Sept 21 2020",
-      startTime: "12:30 pm",
-      endTime: "1:30 pm",
-      genre: "mellow",
-      bandId: "3423342344",
-      bandName: "band6",
-      loc: {
-        street: "100 font blvd",
-        city: "San Francisco",
-        state: "California",
-        zip: "94132"
+        zip: "94105"
       }
     }
   ]);
