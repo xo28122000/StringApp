@@ -38,16 +38,33 @@ const BandSearchBar = props => {
   const [searchName, setSearchName] = useState("");
   const [filterType, setFilterType] = useState(null);
 
-  const searchBands = () => {
-    // get location
+  const [street, setStreet] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState("");
 
-    Axios.post("/api/band/searchBand", { name: searchName, genre: filterType })
+  const searchBands = () => {
+    Axios.post("/api/band/searchBands", {
+      name: searchName,
+      genre: filterType,
+      location: {
+        street,
+        city,
+        state,
+        zip
+      }
+    })
       .then(resp => {
         if (resp.data.success) {
           props.setBands(resp.data.result);
+        } else {
+          alert("incorrect filter or search values");
         }
       })
-      .catch(err => {});
+      .catch(err => {
+        console.log(err);
+        alert("an error occured. Please try again later.");
+      });
   };
 
   return (
@@ -65,6 +82,10 @@ const BandSearchBar = props => {
               <Input
                 id="filterLocationStreet"
                 placeholder="street"
+                value={street}
+                onChange={ev => {
+                  setStreet(ev.target.value);
+                }}
                 style={{
                   borderRadius: 25,
                   margin: 5
@@ -74,6 +95,10 @@ const BandSearchBar = props => {
                 <Input
                   id="filterLocationCity"
                   placeholder="city"
+                  value={city}
+                  onChange={ev => {
+                    setCity(ev.target.value);
+                  }}
                   style={{
                     borderRadius: 25,
                     margin: 5
@@ -83,6 +108,10 @@ const BandSearchBar = props => {
                 <Input
                   id="filterLocationState"
                   placeholder="state"
+                  value={state}
+                  onChange={ev => {
+                    setState(ev.target.value);
+                  }}
                   style={{
                     borderRadius: 25,
                     margin: 5
@@ -92,6 +121,10 @@ const BandSearchBar = props => {
                 <Input
                   id="filterLocationZip"
                   placeholder="zip"
+                  value={zip}
+                  onChange={ev => {
+                    setZip(ev.target.value);
+                  }}
                   style={{
                     borderRadius: 25,
                     margin: 5
@@ -147,6 +180,7 @@ const BandSearchBar = props => {
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
             <Button
               onClick={() => {
+                searchBands();
                 toggleFilterBandModal();
               }}
               style={{

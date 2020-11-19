@@ -53,7 +53,7 @@ bandRouter.post(
         } else {
           req.body.location = {
             street: retObj[0].streetName,
-            city: retObj[0].city ? retObj[0].city : req.body.location,
+            city: retObj[0].city ? retObj[0].city : req.body.location.city,
             state: retObj[0].state
           };
           req.body.latitude = retObj[0].latitude;

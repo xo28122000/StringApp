@@ -263,12 +263,19 @@ const ExplorePage = props => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                flexWrap: "wrap"
+                flexWrap: "wrap",
+                minHeight: 300
               }}
             >
-              {bands.map(band => (
-                <BandCard key={band.name} {...band} loc={band.location} />
-              ))}
+              {bands.length > 0 ? (
+                bands.map(band => (
+                  <BandCard key={band.name} {...band} loc={band.location} />
+                ))
+              ) : (
+                <div style={{ fontSize: 18, fontWeight: 500 }}>
+                  Cannot get any Bands that match your seach...
+                </div>
+              )}
             </div>
           </TabPane>
           <TabPane tabId="2">

@@ -70,9 +70,6 @@ const BandCard = props => {
           </div>
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
               fontSize: 15,
               fontWeight: 400,
               color: "#ABABAB",
@@ -84,9 +81,9 @@ const BandCard = props => {
                 icon={faMapMarkerAlt}
                 style={{ marginRight: 4 }}
               />
-              {JSON.parse(props.loc).city}
+              {JSON.parse(props.loc).street}, {JSON.parse(props.loc).city}
             </div>
-            <div>
+            <div style={{ marginTop: 5 }}>
               <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />
               {4}
             </div>

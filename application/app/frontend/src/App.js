@@ -34,7 +34,7 @@ const App = props => {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#e5e5e5" }}>
+    <div style={{ backgroundColor: "#f6f6f6" }}>
       <Navbar />
       <Switch>
         <Route path="/register">

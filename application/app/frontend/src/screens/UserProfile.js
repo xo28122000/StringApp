@@ -47,40 +47,40 @@ const UserProfileScreen = () => {
     {
       name: "admBand",
       genre: "rock",
-      loc: {
+      loc: JSON.stringify({
         street: "100 font blvd",
         city: "San Francisco",
         state: "California",
         zip: "94132"
-      },
+      }),
       numOfMembers: 2,
-      imgUrl:
+      logoImageUrl:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
     },
     {
       name: "admBand",
       genre: "rock",
-      loc: {
+      loc: JSON.stringify({
         street: "100 font blvd",
         city: "San Francisco",
         state: "California",
         zip: "94132"
-      },
+      }),
       numOfMembers: 2,
-      imgUrl:
+      logoImageUrl:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
     },
     {
       name: "admBand",
       genre: "rock",
-      loc: {
+      loc: JSON.stringify({
         street: "100 font blvd",
         city: "San Francisco",
         state: "California",
         zip: "94132"
-      },
+      }),
       numOfMembers: 2,
-      imgUrl:
+      logoImageUrl:
         "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
     }
   ]);
@@ -169,7 +169,7 @@ const UserProfileScreen = () => {
       >
         John Lennon
       </div>
-      <Row style={{ margin: 0 }}>
+      <Row style={{ margin: 0, marginTop: 10, padding: 30 }}>
         <Col
           lg={4}
           style={{
@@ -184,7 +184,7 @@ const UserProfileScreen = () => {
           <div
             className="divShadow"
             style={{
-              marginTop: 10,
+              marginTop: 30,
               padding: 20,
               display: "flex",
               justifyContent: "center",
