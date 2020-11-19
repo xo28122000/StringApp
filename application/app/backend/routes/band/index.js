@@ -87,9 +87,10 @@ bandRouter.post(
           postalcode: req.body.location.zip,
           country: "United States"
         });
-
-        req.body.locationLat = retObj[0].latitude;
-        req.body.locationLong = retObj[0].longitude;
+        if (retObj.length > 0) {
+          req.body.locationLat = retObj[0].latitude;
+          req.body.locationLong = retObj[0].longitude;
+        }
 
         next();
       } catch (err) {

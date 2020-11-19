@@ -50,7 +50,6 @@ const createEvent = (req, res) => {
     !req.body.startTime ||
     !req.body.endTime
   ) {
-    console.log(req.body);
     return res.send({
       success: false,
       error: "fields missing for createEvent"
@@ -73,12 +72,9 @@ const createEvent = (req, res) => {
       req.body.bandId
     )
     .then(retObj => {
-      console.log("successful creation of event");
       return res.send({ success: true });
     })
     .catch(err => {
-      console.log("internal error creating event");
-      console.log(err);
       return res.send({
         success: false,
         error: "internal error when trying to create event"
@@ -88,13 +84,11 @@ const createEvent = (req, res) => {
 
 const getBands = (req, res) => {
   if (!req.body.userId) {
-    console.log(req.body);
     return res.send({ success: false, error: "title field missing" });
   }
   bandQueries
     .getBands(req.body.userId)
     .then(retObj => {
-      console.log("successful retrieval of bands from userId");
       return res.send({ success: true, result: retObj });
     })
     .catch(err => {
@@ -123,7 +117,6 @@ const getBands = (req, res) => {
 
 const getBandInfo = (req, res) => {
   if (!req.body.bandId) {
-    console.log(req.body);
     return res.send({ success: false, error: "bandId field missing" });
   }
   var search = {
@@ -166,7 +159,6 @@ const searchBands = (req, res) => {
 
 const searchEvents = (req, res) => {
   if (!req.body.title) {
-    console.log(req.body);
     return res.send({ success: false, error: "title field missing" });
   }
 
@@ -180,8 +172,6 @@ const searchEvents = (req, res) => {
   userQueries
     .searchEvents(search.name, search.date, search.location)
     .then(retObj => {
-      console.log("successful search for events");
-      console.log(retObj);
       return res.send({ success: true, result: retObj });
     })
     .catch(err => {
