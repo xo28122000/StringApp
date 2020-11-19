@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Jumbotron, Button } from "reactstrap";
 import {
   BrowserRouter as Router,
@@ -17,7 +17,22 @@ import RegisterPage from "./screens/Register";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { useDispatch } from "react-redux";
+import { login } from "./redux/Actions/actions";
+import Axios from "axios";
+
 const App = props => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    Axios.post("/api/auth/user")
+      .then(res => {
+        if (res.data.success) {
+          dispatch(login(res.data.user));
+        }
+      })
+      .catch(err => {});
+  }, []);
+
   return (
     <div style={{ backgroundColor: "#e5e5e5" }}>
       <Navbar />

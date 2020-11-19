@@ -30,8 +30,12 @@ const Navbar = props => {
       Axios.post("/api/auth/login", { email, password })
         .then(res => {
           console.log(res);
-          dispatch(login({ email, password }));
-          toggleLoginModal();
+          if (res.data.success) {
+            dispatch(login(res.data.user));
+            toggleLoginModal();
+          } else {
+            alert("Incorrect credentials");
+          }
         })
         .catch(err => {
           alert("some error occured. Please try again later");
@@ -40,7 +44,13 @@ const Navbar = props => {
   };
 
   const triggerLogout = () => {
-    dispatch(logout());
+    Axios.post("/api/auth/logout")
+      .then(() => {
+        dispatch(logout());
+      })
+      .catch(err => {
+        alert("an error occured. Please try again.");
+      });
   };
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);

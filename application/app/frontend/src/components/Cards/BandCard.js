@@ -47,7 +47,7 @@ const BandCard = props => {
           <CardImg
             top
             style={{ width: 300, height: "auto", maxHeight: 300 }}
-            src={props.imgUrl}
+            src={props.logoImageUrl}
           />
         </div>
         <div style={{ padding: 10 }}>
@@ -84,11 +84,11 @@ const BandCard = props => {
                 icon={faMapMarkerAlt}
                 style={{ marginRight: 4 }}
               />
-              {props.loc.city}
+              {JSON.parse(props.loc).city}
             </div>
             <div>
               <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />
-              {props.numOfMembers}
+              {4}
             </div>
           </div>
         </div>

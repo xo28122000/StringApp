@@ -117,12 +117,15 @@ const UserProfileScreen = () => {
       let formData = new FormData();
       formData.append("name", createBandName);
       formData.append("description", createBandDescription);
-      formData.append("location", {
-        street: createBandStreet,
-        city: createBandCity,
-        state: createBandState,
-        zip: createBandZip
-      });
+      formData.append(
+        "location",
+        JSON.stringify({
+          street: createBandStreet,
+          city: createBandCity,
+          state: createBandState,
+          zip: createBandZip
+        })
+      );
       formData.append("genre", genre);
       formData.append("imageFile", imagefiles.files[0]);
 
@@ -133,9 +136,15 @@ const UserProfileScreen = () => {
           }
         })
         .then(res => {
-          console.log(res);
+          if (res.data.success) {
+            toggleCreateBandModal();
+          } else {
+            alert("Invalid value in one or multiple fields.");
+          }
         })
-        .catch(err => {});
+        .catch(err => {
+          alert("Some error occured. Please try again later.");
+        });
     }
   };
 
@@ -305,6 +314,9 @@ const UserProfileScreen = () => {
                 borderRadius: 25,
                 height: 50,
                 width: 50
+              }}
+              onClick={() => {
+                toggleCreateBandModal();
               }}
             >
               <FontAwesomeIcon icon={faPlus} style={{ marginRight: 4 }} />

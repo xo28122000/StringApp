@@ -16,8 +16,6 @@ bandQueries.createBand = (
       `INSERT INTO BAND (name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${imgUrl}', '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,
       (err, results) => {
         if (err) {
-          console.log("errors in query: ");
-          console.log(err);
           return reject(err);
         } else {
           //console.log("no errors");
@@ -118,7 +116,6 @@ bandQueries.searchEvents = (title, date, location) => {
       `Select * from EVENTS where title like '${title}' OR date <= '${date}' OR location like '${location}'`,
       (err, results) => {
         if (err) {
-          console.log(err);
           return reject(err);
         } else {
           return resolve(results);

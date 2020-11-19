@@ -37,18 +37,11 @@ const BandSearchBar = props => {
 
   const [searchName, setSearchName] = useState("");
   const [filterType, setFilterType] = useState(null);
-  const [filterNumMembers, setFilterNumMembers] = useState(1);
 
   const searchBands = () => {
-    let params = {};
-    params["name"] = !searchName || searchName.length <= 0 ? null : searchName;
-    params["type"] = !filterType || filterType.length <= 0 ? null : filterType;
-    params["numMembers"] =
-      !filterNumMembers || !isNaN(filterNumMembers) || filterNumMembers <= 0
-        ? 1
-        : filterType;
+    // get location
 
-    Axios.post("/api/mockBand/searchBand", params)
+    Axios.post("/api/band/searchBand", { name: searchName, genre: filterType })
       .then(resp => {
         if (resp.data.success) {
           props.setBands(resp.data.result);

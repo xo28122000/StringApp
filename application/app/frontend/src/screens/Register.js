@@ -66,14 +66,11 @@ const RegisterPage = () => {
           role: regType
         })
         .then(res => {
-          console.log(res);
-          dispatch(
-            login({
-              email: registerEmail,
-              password: registerPassword,
-              name: registerName
-            })
-          );
+          if (res.data.success) {
+            dispatch(login(res.data.user));
+          } else {
+            alert("some error occured! Please try again later.");
+          }
         })
         .catch(err => {
           alert("some error occured! Please try again later.");
