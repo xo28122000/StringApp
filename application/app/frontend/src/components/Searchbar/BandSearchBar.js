@@ -55,6 +55,7 @@ const BandSearchBar = props => {
       }
     })
       .then(resp => {
+        console.log(resp.data);
         if (resp.data.success) {
           props.setBands(resp.data.result);
         } else {
