@@ -29,6 +29,8 @@ import {
   faPlus
 } from "@fortawesome/free-solid-svg-icons";
 
+import user5 from "../assets/bandProfile/user5.jpg";
+
 const axios = require("axios");
 
 const UserProfileScreen = () => {
@@ -45,7 +47,7 @@ const UserProfileScreen = () => {
 
   const [bands, setBands] = useState([
     {
-      name: "admBand",
+      name: "admBand 1",
       genre: "rock",
       loc: JSON.stringify({
         street: "100 font blvd",
@@ -55,33 +57,33 @@ const UserProfileScreen = () => {
       }),
       numOfMembers: 2,
       logoImageUrl:
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+        "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c0a56608-0770-4f53-9b4a-f0b30bf8f781/d8t4ar0-e7a0416b-86ac-4b86-b5dc-c9b70d97d1cd.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvYzBhNTY2MDgtMDc3MC00ZjUzLTliNGEtZjBiMzBiZjhmNzgxXC9kOHQ0YXIwLWU3YTA0MTZiLTg2YWMtNGI4Ni1iNWRjLWM5YjcwZDk3ZDFjZC5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.zni4bjOaGJ7smAuVQugAxbDM4R1qtbhDHFzQJ1hH1hI"
     },
     {
-      name: "admBand",
+      name: "admBand 2",
       genre: "rock",
       loc: JSON.stringify({
-        street: "100 font blvd",
+        street: "150 font blvd",
         city: "San Francisco",
         state: "California",
         zip: "94132"
       }),
-      numOfMembers: 2,
+      numOfMembers: 3,
       logoImageUrl:
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+        "https://static.tvtropes.org/pmwiki/pub/images/92962-the-beatles-1-the-bea_41.jpg"
     },
     {
-      name: "admBand",
+      name: "admBand 3",
       genre: "rock",
       loc: JSON.stringify({
-        street: "100 font blvd",
+        street: "16 Holloway Ave",
         city: "San Francisco",
         state: "California",
         zip: "94132"
       }),
-      numOfMembers: 2,
+      numOfMembers: 1,
       logoImageUrl:
-        "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"
+        "https://image.shutterstock.com/image-vector/rock-music-poster-old-school-260nw-742278952.jpg"
     }
   ]);
 
@@ -178,8 +180,18 @@ const UserProfileScreen = () => {
             alignItems: "center"
           }}
         >
-          <div>
-            <img style={{ height: 200 }} src="../logo512.png" />
+          <div
+            style={{
+              height: 250,
+              borderRadius: 125,
+              borderWidth: 5,
+              borderStyle: "solid",
+              borderColor: "#ffffff",
+              overflow: "hidden",
+              marginTop: -100
+            }}
+          >
+            <img style={{ width: 250, maxHeight: 250 }} src={user5} />
           </div>
           <div
             className="divShadow"

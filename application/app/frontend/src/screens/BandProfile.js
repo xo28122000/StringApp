@@ -22,6 +22,12 @@ import {
 import EventCard from "../components/Cards/EventCard";
 
 import BandLogo from "../assets/BandLogo.png";
+import user1 from "../assets/bandProfile/user1.jpg";
+import user2 from "../assets/bandProfile/user2.jpg";
+import user3 from "../assets/bandProfile/user3.jpg";
+import user4 from "../assets/bandProfile/user4.jpg";
+import bandPostImage from "../assets/bandProfile/bandPost.jpg";
+
 import { useLocation } from "react-router-dom";
 
 const BandProfilePage = () => {
@@ -226,7 +232,11 @@ const BandProfilePage = () => {
                 flexWrap: "wrap"
               }}
             >
-              {[1, 2, 3, 4].map(member => (
+              {[
+                { name: "John Lennon", role: "vocalist", img: user1 },
+                { name: "Johan Watson", role: "vocalist", img: user2 },
+                { name: "Amy Klark", role: "guitarrist", img: user3 }
+              ].map(member => (
                 <div
                   key={member}
                   style={{
@@ -246,7 +256,7 @@ const BandProfilePage = () => {
                     }}
                   >
                     <img
-                      src={BandLogo}
+                      src={member.img}
                       style={{ width: 130, maxHeight: 130, borderRadius: 130 }}
                     />
                   </div>
@@ -260,7 +270,7 @@ const BandProfilePage = () => {
                       marginBottom: 10
                     }}
                   >
-                    John Lennon
+                    {member.name}
                   </Badge>
 
                   <Badge
@@ -271,7 +281,7 @@ const BandProfilePage = () => {
                       borderRadius: 20
                     }}
                   >
-                    vocalist
+                    {member.role}
                   </Badge>
                 </div>
               ))}
@@ -409,14 +419,26 @@ const BandProfilePage = () => {
               }}
             >
               <div style={{ fontSize: 20, fontWeight: 600, marginBottom: 20 }}>
-                Post title
+                JAM Nov 18
               </div>
-              <div style={{ marginBottom: 20 }}>
-                <img src={BandLogo} style={{ width: 200, maxHeight: 200 }} />
+              <div
+                style={{
+                  marginBottom: 20,
+                  height: 200,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center"
+                }}
+              >
+                <img
+                  src={bandPostImage}
+                  style={{ width: 200, maxHeight: 200 }}
+                />
               </div>
               <div style={{ fontSize: 15 }}>
-                ryuijio qhguhkn jdagjkhdkehfkh qalfkqrlaffhg tyhujiuythfgjyhuyg
-                jgtfhgjhkug jflskjflsjdlflsadk fjlkdsjfl sjdfl
+                lots of great fans out tonight, stay tuned to cop one of our
+                surprize package giveaways to win a hoodie, backstage passes and
+                more!
               </div>
             </div>
           ))}
@@ -437,14 +459,14 @@ const BandProfilePage = () => {
           {[1, 2, 3, 4, 5, 6, 7].map((event, i) => (
             <div>
               <EventCard
-                title="event title"
-                description="some description about the event..."
+                title="LowKey Sessions"
+                description="We are planning a lowkey event to happen this Wednesday and would for you to join us! We will be playing some of our famous tracks and then will be taking public requests!"
                 date="Sept 21 2020"
-                startTime="12:30 pm"
-                endTime="1:30 pm"
+                startTime="8:30 pm"
+                endTime="10:30 pm"
                 genre="mellow"
                 bandId="3423342344"
-                bandName="band name"
+                bandName="Beatles"
                 loc={{
                   street: "100 font blvd",
                   city: "San Francisco",
