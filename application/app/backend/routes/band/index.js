@@ -22,7 +22,7 @@ let bandRouter = express.Router();
 
 bandRouter.post(
   "/createBand",
-  //isUser,
+  isUser,
   upload.single("imageFile"),
   async (req, res, next) => {
     try {

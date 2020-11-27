@@ -60,7 +60,8 @@ pool.getConnection(async function (err, connection) {
       "name varchar(100) NOT NULL UNIQUE, " +
       "numMembers INT DEFAULT 1, " +
       "logoImageUrl varchar(500), " +
-      "location varchar(500), " +
+      "description varchar(500)",
+    +"location varchar(500), " +
       "locationLat decimal(30,15), " +
       "locationLong decimal(30,15), " +
       "genre varchar(100), " +
@@ -88,6 +89,7 @@ pool.getConnection(async function (err, connection) {
       "inviteId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
       "message varchar(150), " +
       "dateSent DATE, " +
+      "sentByBand BOOLEAN, " +
       "userId INT, " +
       "bandId INT, " +
       "FOREIGN KEY (userId) REFERENCES stringaccount(userId) ON UPDATE CASCADE ON DELETE CASCADE, " +
