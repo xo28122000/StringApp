@@ -10,6 +10,8 @@ userRouter.put("/changeName", isUser, userController.changeName);
 
 userRouter.put("/changePhone", isUser, userController.changePhone);
 
+userRouter.put("/changeRole", isUser, userController.changeRole);
+
 userRouter.post("/getEvent", userController.getEvent);
 
 //is the below necessary?

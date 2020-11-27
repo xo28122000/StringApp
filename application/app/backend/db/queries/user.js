@@ -47,6 +47,21 @@ userQueries.changePhone = (userId, newPhoneNum) => {
   });
 };
 
+userQueries.changeRole = (userId, newRole) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE STRINGACCOUNT SET role = '${newRole}' WHERE userId = '${userId}'`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 userQueries.getEvent = (eventId) => {
   return new Promise((resolve, reject) => {
     pool.query(

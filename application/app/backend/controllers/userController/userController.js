@@ -9,7 +9,7 @@ const account = (req, res) => {
       success: true,
     });
   } else {
-    console.log(req.body);
+    //console.log(req.body);
     return res.send({
       success: false,
       error: "fields missing for account",
@@ -31,10 +31,32 @@ const changeName = (req, res) => {
       return res.send({ success: true });
     })
     .catch((err) => {
-      console.log(err);
+      //console.log(err);
       return res.send({
         success: false,
         error: "internal error when trying to change user name",
+      });
+    });
+};
+
+const changeRole = (req, res) => {
+  if (!req.body.newRole) {
+    return res.send({
+      success: false,
+      error: "missing field: new role",
+    });
+  }
+
+  userQueries
+    .changeRole(req.user.userId, req.body.newRole)
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      //console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error when trying to change user role",
       });
     });
 };
@@ -63,13 +85,13 @@ const changePhone = (req, res) => {
 
 const getEvent = (req, res) => {
   if (!req.body.bandId) {
-    console.log(req.body);
+    //console.log(req.body);
     return res.send({ success: false, error: "title field missing" });
   }
   userQueries
     .getEvent(req.body.bandId)
     .then((retObj) => {
-      console.log("successful retrieval of events from bandId");
+      //console.log("successful retrieval of events from bandId");
       return res.send({ success: true, result: retObj });
     })
     .catch((err) => {
@@ -89,7 +111,7 @@ const getAccount = (req, res) => {
   userQueries
     .getAccount(req.body.userId)
     .then((retObj) => {
-      console.log("successful retrieval of accounts that are logged in");
+      //console.log("successful retrieval of accounts that are logged in");
       return res.send({ success: true, result: retObj });
     })
     .catch((err) => {
@@ -104,6 +126,7 @@ module.exports = {
   account,
   changeName,
   changePhone,
+  changeRole,
   getEvent,
   getAccount,
 };
