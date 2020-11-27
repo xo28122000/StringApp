@@ -77,6 +77,8 @@ bandRouter.post(
 
 bandRouter.post("/createEvent", bandController.createEvent);
 
+bandRouter.post("/createMember", isUser, bandController.createMember);
+
 bandRouter.post("/getBands", bandController.getBands);
 
 bandRouter.post("/getBandInfo", bandController.createEvent);

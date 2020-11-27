@@ -52,6 +52,21 @@ bandQueries.createEvent = (
   });
 };
 
+bandQueries.createMember = (isBandAdmin, role, dateJoined, userId, bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `INSERT INTO BANDMEMBERS (isBandAdmin, role, dateJoined, userId, bandId) VALUES('${isBandAdmin}', '${role}', '${dateJoined}', '${userId}', '${bandId}')`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 //TODO fix this SQL query:
 //need to join the query - userId -> band member, bandId from band member, then bands from bands with bandID
 bandQueries.getBands = (userId) => {

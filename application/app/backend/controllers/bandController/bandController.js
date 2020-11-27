@@ -83,6 +83,33 @@ const createEvent = (req, res) => {
     });
 };
 
+const createMember = (req, res) => {
+  if (!req.user) {
+    return res.send({
+      success: false,
+      error: "Must be a logged in user to proceed.",
+    });
+  }
+
+  bandQueries
+    .createMember(
+      req.body.isBandAdmin,
+      req.body.role,
+      req.body.dateJoined,
+      req.user.userId,
+      req.body.bandId
+    )
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error creating a band member",
+      });
+    });
+};
+
 const getBands = (req, res) => {
   if (!req.body.userId) {
     return res.send({ success: false, error: "title field missing" });
@@ -194,6 +221,7 @@ const searchEvents = (req, res) => {
 module.exports = {
   createBand,
   createEvent,
+  createMember,
   getBands,
   getBandInfo,
   getBandMembers,
