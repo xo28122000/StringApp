@@ -17,6 +17,28 @@ const account = (req, res) => {
   }
 };
 
+const changeName = (req, res) => {
+  if (!req.body.newName) {
+    return res.send({
+      success: false,
+      error: "missing field: new name",
+    });
+  }
+
+  userQueries
+    .changeName(req.user.userId, req.body.newName)
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error when trying to change user name",
+      });
+    });
+};
+
 const changePhone = (req, res) => {
   if (!req.body.phoneNumber) {
     return res.send({
@@ -31,7 +53,7 @@ const changePhone = (req, res) => {
       return res.send({ success: true });
     })
     .catch((err) => {
-      console.log(err);
+      //console.log(err);
       return res.send({
         success: false,
         error: "internal error when trying to change user phone number",
@@ -80,6 +102,7 @@ const getAccount = (req, res) => {
 
 module.exports = {
   account,
+  changeName,
   changePhone,
   getEvent,
   getAccount,

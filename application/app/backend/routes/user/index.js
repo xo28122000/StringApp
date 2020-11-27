@@ -6,6 +6,8 @@ let userRouter = express.Router();
 
 userRouter.post("/account", userController.account);
 
+userRouter.put("/changeName", isUser, userController.changeName);
+
 userRouter.put("/changePhone", isUser, userController.changePhone);
 
 userRouter.post("/getEvent", userController.getEvent);
