@@ -17,6 +17,21 @@ userQueries.account = (name, type, numMembers, imgUrl) => {
   });
 };
 
+userQueries.changePhone = (userId, newPhoneNum) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE STRINGACCOUNT SET phoneNumber = '${newPhoneNum}' WHERE userId = '${userId}'`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 userQueries.getEvent = (eventId) => {
   return new Promise((resolve, reject) => {
     pool.query(

@@ -9,11 +9,13 @@ bandQueries.createBand = (
   locationLat,
   locationLong,
   genre,
-  isLookingForMember
+  isLookingForMember,
+  userId
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `INSERT INTO BAND (name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${imgUrl}', '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,
+      `INSERT INTO BANDMEMBERS (isBandAdmin, role, datejoined, userId, bandId) VALUES ('1', 'not specified', GETDATE(), '${userId}','LAST_INSERT_ID()')`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -52,10 +54,25 @@ bandQueries.createEvent = (
 
 //TODO fix this SQL query:
 //need to join the query - userId -> band member, bandId from band member, then bands from bands with bandID
-bandQueries.getBands = userId => {
+bandQueries.getBands = (userId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `select from BAND where userId = '${userId}'`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+bandQueries.getBandMembers = (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT * from BANDMEMBERS where (bandId = '${bandId}')`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -125,7 +142,7 @@ bandQueries.searchEvents = (title, date, location) => {
   });
 };
 
-bandQueries.getBandInfo = bandId => {
+bandQueries.getBandInfo = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select bandId, name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember from BAND where bandId = ?`,

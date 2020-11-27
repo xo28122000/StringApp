@@ -2,7 +2,7 @@ const express = require("express");
 
 const nodeGeocoder = require("node-geocoder");
 const geoCoder = nodeGeocoder({
-  provider: "openstreetmap"
+  provider: "openstreetmap",
 });
 
 const bandController = require("../../controllers/bandController/bandController.js");
@@ -12,9 +12,9 @@ const awsS3 = require("../../lib/aws/s3");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: "backend/uploads",
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, file.originalname);
-  }
+  },
 });
 const upload = multer({ storage: storage });
 
@@ -22,7 +22,7 @@ let bandRouter = express.Router();
 
 bandRouter.post(
   "/createBand",
-  isUser,
+  //isUser,
   upload.single("imageFile"),
   async (req, res, next) => {
     try {
@@ -41,7 +41,7 @@ bandRouter.post(
           city: req.body.location.city,
           state: req.body.location.state,
           postalcode: req.body.location.zip,
-          country: "United States"
+          country: "United States",
         });
         if (
           retObj.length <= 0 ||
@@ -54,7 +54,7 @@ bandRouter.post(
           req.body.location = {
             street: retObj[0].streetName,
             city: retObj[0].city ? retObj[0].city : req.body.location.city,
-            state: retObj[0].state
+            state: retObj[0].state,
           };
           req.body.latitude = retObj[0].latitude;
           req.body.longitude = retObj[0].longitude;
@@ -68,12 +68,20 @@ bandRouter.post(
       await awsS3.clearFile(req.file);
       return res.send({
         success: false,
-        error: "no location provided by user"
+        error: "no location provided by user",
       });
     }
   },
   bandController.createBand
 );
+
+bandRouter.post("/createEvent", bandController.createEvent);
+
+bandRouter.post("/getBands", bandController.getBands);
+
+bandRouter.post("/getBandInfo", bandController.createEvent);
+
+bandRouter.get("/getBandMembers", bandController.getBandMembers);
 
 bandRouter.post(
   "/searchBands",
@@ -85,7 +93,7 @@ bandRouter.post(
           city: req.body.location.city,
           state: req.body.location.state,
           postalcode: req.body.location.zip,
-          country: "United States"
+          country: "United States",
         });
         if (retObj.length > 0) {
           req.body.locationLat = retObj[0].latitude;
@@ -109,12 +117,6 @@ bandRouter.post(
   bandController.searchBands
 );
 
-bandRouter.post("/createEvent", bandController.createEvent);
-
 bandRouter.post("/searchEvents", bandController.searchEvents);
-
-bandRouter.post("/getBands", bandController.getBands);
-
-bandRouter.post("/getBandInfo", bandController.createEvent);
 
 module.exports = bandRouter;
