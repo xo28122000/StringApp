@@ -60,6 +60,23 @@ bandQueries.createMember = (isBandAdmin, role, dateJoined, userId, bandId) => {
         if (err) {
           return reject(err);
         } else {
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+bandQueries.createBandPost = (mediaLocation, title, description, bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `INSERT INTO BANDPOSTS (media, title, description, bandId) VALUES('${mediaLocation}', '${title}', '${description}', '${bandId}')`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          //console.log(results);
           return resolve(results);
         }
       }
@@ -96,6 +113,42 @@ bandQueries.getBandMembers = (bandId) => {
         }
       }
     );
+  });
+};
+
+bandQueries.isMember = (userId, bandId) => {
+  const promiseMember = new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT EXISTS(SELECT * from BANDMEMBERS where (userId = '${userId}' AND bandId = '${bandId}'))`,
+      (err, results) => {
+        if (err) {
+          //console.log(err);
+          return reject(err);
+        } else {
+          //console.log(results);
+          let r = JSON.parse(JSON.stringify(results));
+          //console.log(r);
+          for (var key in results[0]) {
+            r.result = results[0][key];
+          }
+          //console.log(r);
+          if (r.result < 1) {
+            //console.log("resolve: " + resolve);
+            return resolve(false);
+          } else {
+            return resolve(true);
+          }
+        }
+      }
+    );
+  });
+
+  promiseMember.then((value) => {
+    if (value) {
+      return true;
+    } else {
+      return false;
+    }
   });
 };
 

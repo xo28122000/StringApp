@@ -110,6 +110,30 @@ const createMember = (req, res) => {
     });
 };
 
+const createBandPost = (req, res) => {
+  if (!req.user) {
+    //is a registered user
+    return res.send({ success: false, error: "error in userId field" });
+  }
+
+  let member = isMember(req, res);
+
+  if (member) {
+    bandQueries.createBandPost(
+      req.body.media,
+      req.body.title,
+      req.body.description,
+      req.body.bandId
+    );
+    return res.send({ success: true });
+  } else {
+    return res.send({
+      success: false,
+      error: "internal error creating Band Post",
+    });
+  }
+};
+
 const getBands = (req, res) => {
   if (!req.body.userId) {
     return res.send({ success: false, error: "title field missing" });
@@ -164,6 +188,26 @@ const getBandMembers = (req, res) => {
   }
 
   bandQueries.getBandMembers(req.body.bandId);
+};
+
+const isMember = (req, res) => {
+  //internal helper function for band membership verification
+  //console.log("called inside isMember");
+  if (!req.body.bandId) {
+    return res.send({ success: false, error: "bandId field missing" });
+  } else if (!req.user) {
+    return res.send({
+      success: false,
+      error: "Must be a logged in user to proceed.",
+    });
+  }
+
+  let isMember = bandQueries.isMember(req.user.userId, req.body.bandId);
+  if (isMember) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 const searchBands = (req, res) => {
@@ -222,9 +266,11 @@ module.exports = {
   createBand,
   createEvent,
   createMember,
+  createBandPost,
   getBands,
   getBandInfo,
   getBandMembers,
+  isMember,
   searchBands,
   searchEvents,
 };
