@@ -10,6 +10,7 @@ const isUser = require("../../helpers/middlewares/isUser");
 const awsS3 = require("../../lib/aws/s3");
 
 const multer = require("multer");
+const geocode = require("../../helpers/middlewares/geocode.js");
 const storage = multer.diskStorage({
   destination: "backend/uploads",
   filename: function (req, file, cb) {
@@ -75,7 +76,9 @@ bandRouter.post(
   bandController.createBand
 );
 
-bandRouter.post("/createEvent", bandController.createEvent);
+bandRouter.post("/createEvent", isUser, geocode, bandController.createEvent);
+
+bandRouter.post("/createSetEntry", isUser, bandController.createSetEntry);
 
 bandRouter.post("/createMember", isUser, bandController.createMember);
 
@@ -87,39 +90,7 @@ bandRouter.post("/getBandInfo", bandController.createEvent);
 
 bandRouter.get("/getBandMembers", bandController.getBandMembers);
 
-bandRouter.post(
-  "/searchBands",
-  async (req, res, next) => {
-    if (req.body.location) {
-      try {
-        const retObj = await geoCoder.geocode({
-          street: req.body.location.street,
-          city: req.body.location.city,
-          state: req.body.location.state,
-          postalcode: req.body.location.zip,
-          country: "United States",
-        });
-        if (retObj.length > 0) {
-          req.body.locationLat = retObj[0].latitude;
-          req.body.locationLong = retObj[0].longitude;
-        }
-
-        next();
-      } catch (err) {
-        return res.send({ success: false, error: "geolocation error" });
-      }
-    } else {
-      next();
-    }
-    // else {
-    //   return res.send({
-    //     success: false,
-    //     error: "no location provided by user",
-    //   });
-    // }
-  },
-  bandController.searchBands
-);
+bandRouter.post("/searchBands", geocode, bandController.searchBands);
 
 bandRouter.post("/searchEvents", bandController.searchEvents);
 

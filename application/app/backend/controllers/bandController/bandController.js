@@ -40,47 +40,80 @@ const createBand = async (req, res) => {
   }
 };
 
-//TODO need to fix middleware
+const createBandPost = (req, res) => {
+  if (!req.user) {
+    //is a registered user
+    return res.send({ success: false, error: "error in userId field" });
+  }
+
+  let member = isMember(req, res);
+
+  if (member) {
+    bandQueries.createBandPost(
+      req.body.media,
+      req.body.title,
+      req.body.description,
+      req.body.bandId
+    );
+    return res.send({ success: true });
+  } else {
+    return res.send({
+      success: false,
+      error: "internal error creating Band Post",
+    });
+  }
+};
+
+//TODO need to test
 const createEvent = (req, res) => {
   if (
-    !req.body.bandId ||
     !req.body.title ||
     !req.body.description ||
     !req.body.date ||
-    !req.body.location ||
     !req.body.startTime ||
-    !req.body.endTime
+    !req.body.endTime ||
+    !req.body.location ||
+    !req.body.locationLat ||
+    !req.body.locationLong ||
+    !req.body.bandId
   ) {
     return res.send({
       success: false,
       error: "fields missing for createEvent",
     });
   }
-  //TODO middleware fix: need to get correct bandId somehow?
-  //or is this a frontEnd problem?
 
-  //TODO middleware fix: also need to get location for correct input
-  //for sql queries: locationLat and locationLong
-  //which are decimal(30,15)
-  bandQueries
-    .createEvent(
-      req.body.title,
-      req.body.description,
-      req.body.date,
-      req.body.startTime,
-      req.body.endTime,
-      req.body.location,
-      req.body.bandId
-    )
-    .then((retObj) => {
-      return res.send({ success: true });
-    })
-    .catch((err) => {
-      return res.send({
-        success: false,
-        error: "internal error when trying to create event",
+  let member = isMember(req, res);
+
+  console.log("member: " + member);
+  if (member) {
+    bandQueries
+      .createEvent(
+        req.body.title,
+        req.body.description,
+        req.body.date,
+        req.body.startTime,
+        req.body.endTime,
+        req.body.location,
+        req.body.locationLat,
+        req.body.locationLong,
+        req.body.bandId
+      )
+      .then((retObj) => {
+        return res.send({ success: true });
+      })
+      .catch((err) => {
+        return res.send({
+          success: false,
+          error: "internal error when trying to create event",
+        });
       });
+  } else {
+    return res.send({
+      success: false,
+      error: "internal error creating Event",
     });
+  }
 };
 
 const createMember = (req, res) => {
@@ -110,26 +143,25 @@ const createMember = (req, res) => {
     });
 };
 
-const createBandPost = (req, res) => {
+const createSetEntry = (req, res) => {
   if (!req.user) {
     //is a registered user
     return res.send({ success: false, error: "error in userId field" });
   }
 
   let member = isMember(req, res);
-
   if (member) {
-    bandQueries.createBandPost(
-      req.body.media,
-      req.body.title,
-      req.body.description,
-      req.body.bandId
+    console.log("member: " + member);
+    bandQueries.createSetEntry(
+      req.body.songName,
+      req.body.runTime,
+      req.body.eventId
     );
     return res.send({ success: true });
   } else {
     return res.send({
       success: false,
-      error: "internal error creating Band Post",
+      error: "internal error creating Set Entry",
     });
   }
 };
@@ -190,7 +222,7 @@ const getBandMembers = (req, res) => {
   bandQueries.getBandMembers(req.body.bandId);
 };
 
-const isMember = (req, res) => {
+const isMember = async (req, res) => {
   //internal helper function for band membership verification
   //console.log("called inside isMember");
   if (!req.body.bandId) {
@@ -202,10 +234,14 @@ const isMember = (req, res) => {
     });
   }
 
-  let isMember = bandQueries.isMember(req.user.userId, req.body.bandId);
-  if (isMember) {
+  let member = await bandQueries.isMember(req.user.userId, req.body.bandId);
+  console.log("member: " + member);
+
+  if (member == true) {
+    console.log("isMember is returning true");
     return true;
   } else {
+    console.log("isMember is returning false");
     return false;
   }
 };
@@ -264,9 +300,10 @@ const searchEvents = (req, res) => {
 
 module.exports = {
   createBand,
-  createEvent,
-  createMember,
   createBandPost,
+  createEvent,
+  createSetEntry,
+  createMember,
   getBands,
   getBandInfo,
   getBandMembers,

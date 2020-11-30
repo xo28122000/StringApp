@@ -11,6 +11,37 @@ const geocode = async (req, res, next) => {
   if (req.body.location) {
     try {
       const retObj = await geoCoder.geocode({
+        street: req.body.location.street,
+        city: req.body.location.city,
+        state: req.body.location.state,
+        postalcode: req.body.location.zip,
+        country: "United States",
+      });
+      if (retObj.length > 0) {
+        req.body.locationLat = retObj[0].latitude;
+        req.body.locationLong = retObj[0].longitude;
+      }
+
+      next();
+    } catch (err) {
+      return res.send({ success: false, error: "geolocation error" });
+    }
+  } else {
+    next();
+  }
+  // else {
+  //   return res.send({
+  //     success: false,
+  //     error: "no location provided by user",
+  //   });
+  // }
+};
+
+/** //this is the old version
+const geocode = async (req, res, next) => {
+  if (req.body.location) {
+    try {
+      const retObj = await geoCoder.geocode({
         address: req.body.location.street,
         city: req.body.location.city,
         state: req.body.location.state,
@@ -27,5 +58,6 @@ const geocode = async (req, res, next) => {
     return res.send({ success: false, error: "no location provided by user" });
   }
 };
+*/
 
 module.exports = geocode;

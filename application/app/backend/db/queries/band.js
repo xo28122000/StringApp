@@ -29,6 +29,22 @@ bandQueries.createBand = (
   });
 };
 
+bandQueries.createBandPost = (mediaLocation, title, description, bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `INSERT INTO BANDPOSTS (media, title, description, bandId) VALUES('${mediaLocation}', '${title}', '${description}', '${bandId}')`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 bandQueries.createEvent = (
   title,
   description,
@@ -36,11 +52,13 @@ bandQueries.createEvent = (
   startTime,
   endTime,
   location,
+  locationLat,
+  locationLong,
   bandId
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO EVENTS (title, description, date, startTime, endTime, location, bandId) VALUES('${title}', '${description}', '${date}', '${startTime}', '${endTime}', '${location}', '${bandId}')`,
+      `INSERT INTO EVENTS (title, description, date, startTime, endTime, location, locationLat, locationLong, bandId) VALUES('${title}', '${description}', '${date}', '${startTime}', '${endTime}', '${location}', '${locationLat}', '${locationLong}', '${bandId}')`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -68,10 +86,10 @@ bandQueries.createMember = (isBandAdmin, role, dateJoined, userId, bandId) => {
   });
 };
 
-bandQueries.createBandPost = (mediaLocation, title, description, bandId) => {
+bandQueries.createSetEntry = (songName, runTime, eventId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO BANDPOSTS (media, title, description, bandId) VALUES('${mediaLocation}', '${title}', '${description}', '${bandId}')`,
+      `INSERT INTO SETS (songName, runTime, eventId) VALUES('${songName}', '${runTime}', '${eventId}')`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -117,25 +135,32 @@ bandQueries.getBandMembers = (bandId) => {
 };
 
 bandQueries.isMember = (userId, bandId) => {
+  //console.log("isMember: userId = " + userId + ", bandId: " + bandId);
+
+  let flag = false;
+
   const promiseMember = new Promise((resolve, reject) => {
     pool.query(
-      `SELECT EXISTS(SELECT * from BANDMEMBERS where (userId = '${userId}' AND bandId = '${bandId}'))`,
+      `SELECT EXISTS(SELECT 1 from BANDMEMBERS where (userId = '${userId}' AND bandId = '${bandId}') LIMIT 1)`,
       (err, results) => {
         if (err) {
-          //console.log(err);
+          // console.log(err);
           return reject(err);
         } else {
-          //console.log(results);
+          // console.log(results);
           let r = JSON.parse(JSON.stringify(results));
-          //console.log(r);
+          // console.log(r);
           for (var key in results[0]) {
             r.result = results[0][key];
           }
-          //console.log(r);
+          // console.log(r);
           if (r.result < 1) {
-            //console.log("resolve: " + resolve);
+            // console.log("resolve: " + resolve);
             return resolve(false);
           } else {
+            // console.log("resolve: " + resolve);
+            // console.log("inside the else");
+            flag = true;
             return resolve(true);
           }
         }
@@ -144,11 +169,9 @@ bandQueries.isMember = (userId, bandId) => {
   });
 
   promiseMember.then((value) => {
-    if (value) {
-      return true;
-    } else {
-      return false;
-    }
+    // console.log("hit then of isMember promise query function");
+    // console.log("flag: " + flag);
+    return flag;
   });
 };
 
