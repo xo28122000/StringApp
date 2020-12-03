@@ -192,11 +192,24 @@ const searchEvents = (req, res) => {
     });
 };
 
+const getEventList = (req, res) => {
+  if (!req.body.eventId) {
+    console.log(req.body);
+    return res.send({ success: false, error: "eventId field missing" });
+  }
+  var search = {
+    bandId: req.body.eventId ? req.body.eventId : "%"
+  };
+
+  bandQueries.getEventList(search.eventId);
+};
+
 module.exports = {
   createBand,
   createEvent,
   getBands,
   getBandInfo,
   searchBands,
-  searchEvents
+  searchEvents,
+  getEventList
 };

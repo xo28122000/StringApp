@@ -100,6 +100,8 @@ bandRouter.post("/searchEvents", bandController.searchEvents);
 
 bandRouter.post("/getBands", bandController.getBands);
 
-bandRouter.post("/getBandInfo", bandController.createEvent);
+bandRouter.post("/getBandInfo", bandController.getBandInfo);
+
+bandRouter.post("/getEventlist", bandController.getEventList);
 
 module.exports = bandRouter;
