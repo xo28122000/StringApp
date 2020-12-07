@@ -17,13 +17,47 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-const upload = multer({ storage: storage });
+
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    //should validate file format input - must be jpg, jpeg, or png
+    if (
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg" ||
+      file.mimetype == "image/png"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error("Only .jpg, .jpeg, or .png formats allowed"));
+    }
+  },
+});
+
+const imageSizeCheck = (req, res, next) => {
+  const maxSize = 8 * 1024 * 1024; //for 8 MB
+
+  //validate file size
+  if (req.file.buffer.byteLength >= maxSize) {
+    //if size too large
+    res.send({
+      //reject, no next call
+      success: false,
+      error: "image file must be smaller than 8 MB in size",
+    });
+  } else {
+    //go on to the next file in stack call
+    next();
+  }
+};
 
 let bandRouter = express.Router();
 
 bandRouter.post(
   "/createBand",
   isUser,
+  imageSizeCheck,
   upload.single("imageFile"),
   async (req, res, next) => {
     try {
