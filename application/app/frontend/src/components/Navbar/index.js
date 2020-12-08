@@ -80,13 +80,20 @@ const Navbar = props => {
           alignItems: "center"
         }}
       >
-        <Link to="/">
+        <Link to="/explore">
           <img
             src={StringLogo}
             alt="logo"
             style={{ height: screenWidth > 450 ? 70 : 40 }}
           />
         </Link>
+        {screenWidth > 450 ? (
+          <div style={{ marginLeft: 20 }}>
+            <a href="/about" className="navLink">
+              About
+            </a>
+          </div>
+        ) : null}
         {screenWidth > 450 ? (
           <div style={{ marginLeft: 20 }}>
             <a href="/explore#explore" className="navLink">

@@ -103,7 +103,7 @@ const RegisterPage = () => {
         marginTop: 20
       }}
     >
-      {userObj && <Redirect to="/" />}
+      {userObj && <Redirect to="/profile" />}
       <div style={{ fontSize: 25, fontWeight: 600 }}>Sign Up</div>
       <div
         style={{
