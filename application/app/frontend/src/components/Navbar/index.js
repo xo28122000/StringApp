@@ -89,7 +89,7 @@ const Navbar = props => {
         </Link>
         {screenWidth > 450 ? (
           <div style={{ marginLeft: 20 }}>
-            <a href="/#explore" className="navLink">
+            <a href="/explore#explore" className="navLink">
               Explore
             </a>
           </div>
