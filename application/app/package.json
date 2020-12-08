@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "server": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "nodeTest": "sh ./tests/nodeVersion.sh",
+    "vscodeVersion": "sh ./tests/vscodeVersion.sh"
   },
   "author": "Jainam Shah",
   "license": "ISC",
