@@ -4,8 +4,8 @@
 currentNodeVer="$(node -v)"
 currentNPMVer="$(npm -v)"
 
-requiredNodeVerLow="12.0.0"
-requiredNodeVerHigh="15.0.0"
+requiredNodeVerLow="v12.0.0"
+requiredNodeVerHigh="v15.0.0"
 
 requiredNPMVerLow="6.13.0"
 requiredNPMVerHigh="6.15.0"
