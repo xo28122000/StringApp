@@ -3,7 +3,7 @@
 #!/bin/bash
 currentVSCodeVer="$(code -v)"
 
-requiredVSCodeVerLow="1.0.0"
+requiredVSCodeVerLow="1.29.0"
 
  if [ "$(printf '%s\n' "$currentVSCodeVer" "$requiredVSCodeVerLow" | sort -V | head -n1)" = "$requiredVSCodeVerLow" ]; then 
         echo "Node Version less than the required ${requiredNodeVerLow} (FAIL)"
