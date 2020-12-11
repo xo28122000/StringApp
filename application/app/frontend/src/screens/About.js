@@ -1,6 +1,7 @@
 import React from "react";
 import saxophoneplay from "../assets/saxophoneplay.svg";
 import bro from "../assets/bro.svg";
+import bandjam from "../assets/bandjam.svg";
 
 const About = () => {
   return (
@@ -14,6 +15,10 @@ const About = () => {
               <div style={{ marginBottom: 20 }}>
                 <img src={bro} style={{ width: 500, maxHeight: 500 }} />
               </div>
+              <div style={{ marginBottom: 20 }}>
+                <img src={bandjam} style={{ width: 500, maxHeight: 500 }} />
+              </div>
+            
 
     </div>
   );
