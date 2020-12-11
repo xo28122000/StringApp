@@ -1,22 +1,48 @@
 import React from "react";
 import saxophoneplay from "../assets/saxophoneplay.svg";
 import bro from "../assets/bro.svg";
+import bandjam from "../assets/bandjam.svg";
+import aboutbackground from "../assets/aboutbackground.svg";
 
-const About = () => {
-  return (
-    <div>
-      About Screen: should contain what our product is, how can users use it and
-      what is our goal. 
+
+
+
+
+
+
+// import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
+// import alfredoProfileImage from "../assets/alfredo-profile-image.jpg";
+// import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
+// import warrenProfileImage from "../assets/ws-profile-image.jpg";
+// import leonidProfileImage from "../assets/leonid-ProfPic.jpg";
+
+
+ const About = () => {
+   return (
+    <div><div style={{ marginBottom: 20 }}>
+    <img src={aboutbackground} style={{ width: 1000, maxHeight: 1000 }} />
+  </div>
+      <h1>Story</h1> String is a project born out of a team effort from class 
               <div style={{ marginBottom: 20 }}>
                 <img src={saxophoneplay} style={{ width: 500, maxHeight: 500 }} />
               </div>
-
+              <h1>Benefits</h1> #1 bla
+              #2 bla
+              #3 bla
               <div style={{ marginBottom: 20 }}>
                 <img src={bro} style={{ width: 500, maxHeight: 500 }} />
               </div>
+              <h1>Meet the team</h1> #1 bla
+              #2 bla
+              #3 bla
+              <div style={{ marginBottom: 20 }}>
+                <img src={bandjam} style={{ width: 500, maxHeight: 500 }} />
+              </div>
+            
 
     </div>
-  );
-};
+   );
+ };
 
-export default About;
+export default About
+
