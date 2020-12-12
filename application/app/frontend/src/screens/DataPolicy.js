@@ -12,11 +12,11 @@ const DataPolicy = () => {
   INFORMATION WE MAY COLLECT FROM YOU
   We may collect and process the following data about you:
   
-  Information that you provide by filling in forms on our site www.MusicBusinessWorldwide.com (our site). This includes information provided at the time of registering to use our site, subscribing to our service, posting material or requesting further services. We may also ask you for information [when you enter a competition or promotion sponsored by String] and when you report a problem with our site. All of your information is stored on a secure server.
+  Information that you provide by filling in forms on our site www.code-404.xyz (our site). This includes information provided at the time of registering to use our site, subscribing to our service, posting material or requesting further services. We may also ask you for information [when you enter a competition or promotion sponsored by String] and when you report a problem with our site. All of your information is stored on a secure server.
   If you contact us, we may keep a record of that correspondence. We may also ask you to complete surveys that we use for research purposes, although you do not have to respond to them.
   Details of transactions you carry out through our site and of the fulfilment of your orders.
   Details of your visits to our site including, but not limited to, traffic data, location data, weblogs and other communication data, whether this is required for our own billing purposes or otherwise and the resources that you access.
-  Please see our Cookie Policy for in-depth information on how we use Cookies to monitor the popularity of MusicBusinessWorldwide.com.
+  Please see our Cookie Policy for in-depth information on how we use Cookies to monitor the popularity of code-404.xyz.
   IP ADDRESSES AND COOKIES
   We may collect information about your computer, including where available your IP address, operating system and browser type, for system administration and to report aggregate information to our advertisers (ie. total page views and clicks, or a location breakdown of our users). This is statistical data about our users’ browsing actions and patterns, and does not identify any individual. We use Google Analytics for this purpose.
   
