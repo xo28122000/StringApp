@@ -10,11 +10,11 @@ import aboutbackground from "../assets/aboutbackground.svg";
 
 
 
-// import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
-// import alfredoProfileImage from "../assets/alfredo-profile-image.jpg";
-// import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
-// import warrenProfileImage from "../assets/ws-profile-image.jpg";
-// import leonidProfileImage from "../assets/leonid-ProfPic.jpg";
+import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
+import alfredoProfileImage from "../assets/alfredo-profile-image.jpg";
+import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
+import warrenProfileImage from "../assets/ws-profile-image.jpg";
+import leonidProfileImage from "../assets/leonid-ProfPic.jpg";
 
 
  const About = () => {
@@ -22,13 +22,12 @@ import aboutbackground from "../assets/aboutbackground.svg";
     <div><div style={{ marginBottom: 20 }}>
     <img src={aboutbackground} style={{ width: 1000, maxHeight: 1000 }} />
   </div>
-      <h1>Story</h1> String is a Full Stack application project born out of a team effort from CSC 648 Software Engineering class at San Francisco State University.
+      <h1>Story</h1> String is a Full Stack application, a project born out of a team effort from CSC 648 Software Engineering class at San Francisco State University.
 
-Together we delivered periodic milestone checkings the spring or 2020.
+Together we delivered this working prototype while conducting periodic milestone checkings during the 2020 spring semester.
 
-Preview milestones
-
-Stack: Aws, SQL, Express, React.js, Node 
+<black><underline>Preview milestones</underline></black>
+<italic><black>Stack:</black> Aws, SQL, Express, React.js, Node</italic>
 
 
               <div style={{ marginBottom: 20 }}>
@@ -45,9 +44,12 @@ Stack: Aws, SQL, Express, React.js, Node
               <div style={{ marginBottom: 20 }}>
                 <img src={bro} style={{ width: 500, maxHeight: 500 }} />
               </div>
-              <h1>Meet the team</h1> #1 bla
-              #2 bla
-              #3 bla
+              <h1>Meet the team</h1>
+              <h2>Leonid Novoselov</h2> Frontend Developer
+              <h2>Warren Singh</h2> Backend Lead
+              <h2>Ritesh Panta</h2> Backend Developer
+              <h2>Alfredo Diaz</h2> Frontend Lead
+              <h2>Jainam Shah</h2> Team Lead
               <div style={{ marginBottom: 20 }}>
                 <img src={bandjam} style={{ width: 500, maxHeight: 500 }} />
               </div>
