@@ -24,6 +24,7 @@ import EventCard from "../../components/Cards/EventCard";
 import ReloadPage from "./ReloadPage";
 import MusicRepItem from "./MusicRepItem";
 import BandPostItem from "./BandPostItem";
+import BandMemberItem from "./BandMemberItem";
 
 import BandLogo from "../../assets/BandLogo.png";
 import user1 from "../../assets/bandProfile/user1.jpg";
@@ -69,7 +70,32 @@ const BandProfilePage = props => {
         description:
           'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.'
       });
-      setBandMembers([]);
+      setBandMembers([
+        {
+          name: "John lenon",
+          role: "Lead Guitarist",
+          img:
+            "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
+        },
+        {
+          name: "John lenon",
+          role: "Lead Guitarist",
+          img:
+            "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
+        },
+        {
+          name: "John lenon",
+          role: "Lead Guitarist",
+          img:
+            "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
+        },
+        {
+          name: "John lenon",
+          role: "Lead Guitarist",
+          img:
+            "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
+        }
+      ]);
       setMusicRep([
         {
           name: "The Beatles - Hey Jude",
@@ -333,6 +359,7 @@ const BandProfilePage = props => {
                 style={{
                   marginTop: 30,
                   padding: 20,
+                  paddingBottom: 30,
                   backgroundColor: "#ffffff"
                 }}
               >
@@ -342,62 +369,14 @@ const BandProfilePage = props => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    flexWrap: "wrap"
+                    flexWrap: "wrap",
+                    maxHeight: 400,
+                    overflowY: "auto"
                   }}
                 >
                   {bandMembers ? (
-                    bandMembers.map(member => (
-                      <div
-                        key={member}
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          margin: 30
-                        }}
-                      >
-                        <div
-                          style={{
-                            width: 130,
-                            height: 130,
-                            borderRadius: 130,
-                            marginBottom: 10
-                          }}
-                        >
-                          <img
-                            src={member.img}
-                            style={{
-                              width: 130,
-                              maxHeight: 130,
-                              borderRadius: 130
-                            }}
-                          />
-                        </div>
-
-                        <Badge
-                          style={{
-                            padding: 10,
-                            width: "100%",
-                            backgroundColor: "#000000",
-                            borderRadius: 20,
-                            marginBottom: 10
-                          }}
-                        >
-                          {member.name}
-                        </Badge>
-
-                        <Badge
-                          style={{
-                            padding: 10,
-                            width: "100%",
-                            backgroundColor: "#000000",
-                            borderRadius: 20
-                          }}
-                        >
-                          {member.role}
-                        </Badge>
-                      </div>
+                    bandMembers.map((member, i) => (
+                      <BandMemberItem key={i} {...member} />
                     ))
                   ) : (
                     <ReloadPage value="band members" />
