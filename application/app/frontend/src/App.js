@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Jumbotron, Button } from "reactstrap";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,11 +7,17 @@ import {
 } from "react-router-dom";
 
 import Navbar from "./components/Navbar/index";
+import Footer from "./components/Footer/index";
 
+import AboutPage from "./screens/About";
 import ExplorePage from "./screens/Explore";
 import BandProfilePage from "./screens/BandProfile";
 import UserProfilePage from "./screens/UserProfile";
 import RegisterPage from "./screens/Register";
+import TermsAndConditionPage from "./screens/TermsAndCondition";
+import DataPolicyPage from "./screens/DataPolicy";
+import FAQPage from "./screens/FAQ";
+import ContactUsPage from "./screens/ContactUs";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -37,6 +42,18 @@ const App = props => {
     <div style={{ backgroundColor: "#f6f6f6" }}>
       <Navbar />
       <Switch>
+        <Route path="/FAQ">
+          <FAQPage />
+        </Route>
+        <Route path="/contact">
+          <ContactUsPage />
+        </Route>
+        <Route path="/data_policy">
+          <DataPolicyPage />
+        </Route>
+        <Route path="/terms_and_conditions">
+          <TermsAndConditionPage />
+        </Route>
         <Route path="/register">
           <RegisterPage />
         </Route>
@@ -46,10 +63,17 @@ const App = props => {
         <Route path="/band">
           <BandProfilePage />
         </Route>
-        <Route path="/">
+        <Route path="/explore">
           <ExplorePage />
         </Route>
+        <Route path="/about">
+          <AboutPage />
+        </Route>
+        <Route path="/">
+          <Redirect to="/about" />
+        </Route>
       </Switch>
+      <Footer />
     </div>
   );
 };

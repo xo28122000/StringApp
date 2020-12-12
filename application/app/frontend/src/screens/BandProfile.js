@@ -25,7 +25,6 @@ import BandLogo from "../assets/BandLogo.png";
 import user1 from "../assets/bandProfile/user1.jpg";
 import user2 from "../assets/bandProfile/user2.jpg";
 import user3 from "../assets/bandProfile/user3.jpg";
-import user4 from "../assets/bandProfile/user4.jpg";
 import bandPostImage from "../assets/bandProfile/bandPost.jpg";
 
 import { useLocation } from "react-router-dom";
