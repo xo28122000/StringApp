@@ -11,7 +11,7 @@ import aboutbackground from "../assets/aboutbackground.svg";
 
 
 import jainamProfileImage from "../assets/jainam-profile-image.jpeg";
-import alfredoProfileImage from "../assets/alfredo-profile-image.jpg";
+import Shinypichighrez from "../assets/Shinypichighrez.png";
 import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
 import warrenProfileImage from "../assets/ws-profile-image.jpg";
 import leonidProfileImage from "../assets/leonid-ProfPic.jpg";
@@ -45,10 +45,25 @@ Together we delivered this working prototype while conducting periodic milestone
                 <img src={bro} style={{ width: 500, maxHeight: 500 }} />
               </div>
               <h1>Meet the team</h1>
+              <div style={{ marginBottom: 20 }}>
+                <img src={leonidProfileImage} style={{ width: 500, maxHeight: 500 }} />
+              </div>
               <h2>Leonid Novoselov</h2> Frontend Developer
+              <div style={{ marginBottom: 20 }}>
+                <img src={warrenProfileImage} style={{ width: 500, maxHeight: 500 }} />
+              </div>
               <h2>Warren Singh</h2> Backend Lead
+              <div style={{ marginBottom: 20 }}>
+                <img src={riteshProfileImage} style={{ width: 500, maxHeight: 500 }} />
+              </div>
               <h2>Ritesh Panta</h2> Backend Developer
+              <div style={{ marginBottom: 20 }}>
+                <img src={Shinypichighrez} style={{ width: 500, maxHeight: 500 }} />
+              </div>
               <h2>Alfredo Diaz</h2> Frontend Lead
+                <div style={{ marginBottom: 20 }}>
+                <img src={jainamProfileImage} style={{ width: 500, maxHeight: 500 }} />
+              </div>
               <h2>Jainam Shah</h2> Team Lead
               <div style={{ marginBottom: 20 }}>
                 <img src={bandjam} style={{ width: 500, maxHeight: 500 }} />
