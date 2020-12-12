@@ -29,7 +29,6 @@ const Navbar = props => {
     } else {
       Axios.post("/api/auth/login", { email, password })
         .then(res => {
-          console.log(res);
           if (res.data.success) {
             dispatch(login(res.data.user));
             toggleLoginModal();

@@ -37,11 +37,34 @@ const BandProfilePage = props => {
   const history = useHistory();
   const userObj = useSelector(store => store.userObj);
   const [band, setBand] = useState(null);
+  const [bandMembers, setBandMembers] = useState(null);
+  const [musicRep, setMusicRep] = useState(null);
   useEffect(() => {
     if (!bandName) {
       history.goBack();
     } else {
       // todo: axios call to get the band
+      setBand({
+        bandId: "someid",
+        name: "band name",
+        numMembers: 2,
+        logoImageUrl: "urlhere",
+        location: {
+          street: "some street",
+          city: "San Francisco",
+          state: "CA",
+          country: "United States"
+        },
+        locationLat: 32432.423423,
+        locationLong: 32432.423423,
+        genre: "some genre",
+        isLookingForMember: true,
+        links: [{ key: "some key", link: "www.key.com" }],
+        description:
+          'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.'
+      });
+      try {
+      } catch (err) {}
       console.log(userObj);
     }
   }, [bandName]);
@@ -82,7 +105,10 @@ const BandProfilePage = props => {
           >
             <div style={{ width: "25%", minWidth: 300, marginTop: 20 }}>
               <div>
-                <img src={BandLogo} style={{ width: 300, maxHeight: 300 }} />
+                <img
+                  src={band.logoImageUrl}
+                  style={{ width: 300, maxHeight: 300 }}
+                />
               </div>
               <div
                 className="divShadow"
@@ -97,85 +123,90 @@ const BandProfilePage = props => {
                   backgroundColor: "#ffffff"
                 }}
               >
-                <div>
-                  <span style={{ fontWeight: 600 }}>Instagram:</span>{" "}
-                  www.link.com
-                </div>
-                <div>
-                  <span style={{ fontWeight: 600 }}>Twitter:</span> www.link.com
-                </div>
-                <div>
-                  <span style={{ fontWeight: 600 }}>Youtube:</span> www.link.com
-                </div>
-                <div>
-                  <span style={{ fontWeight: 600 }}>Spotify:</span> www.link.com
-                </div>
-                <div>
-                  <span style={{ fontWeight: 600 }}>Apple music:</span>{" "}
-                  www.link.com
-                </div>
+                {band.links.map(linkObj => (
+                  <div>
+                    <span style={{ fontWeight: 600 }}>{linkObj.key}:</span>{" "}
+                    {linkObj.link}
+                  </div>
+                ))}
               </div>
-              <div
-                className="divShadow"
-                style={{
-                  marginTop: 10,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                  width: 300,
-                  padding: 20,
-                  backgroundColor: "#ffffff"
-                }}
-              >
-                {isAdm ? (
-                  <>
-                    <div
+
+              {isAdm ? (
+                <div
+                  className="divShadow"
+                  style={{
+                    marginTop: 10,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    width: 300,
+                    padding: 20,
+                    backgroundColor: "#ffffff"
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start"
+                    }}
+                  >
+                    Looking for new Members:
+                    <Input
+                      type="checkbox"
+                      checked={true}
                       style={{
+                        position: "relative",
+                        margin: 0,
+                        marginLeft: 10
+                      }}
+                    />
+                  </div>
+                  <div style={{ marginTop: 20 }}>
+                    <Button
+                      onClick={() => toggleInvitationModal()}
+                      style={{ backgroundColor: "#000000" }}
+                    >
+                      View invitations
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {band.isLookingForMember && (
+                    <div
+                      className="divShadow"
+                      style={{
+                        marginTop: 10,
                         display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
                         alignItems: "center",
-                        justifyContent: "flex-start"
+                        textAlign: "center",
+                        width: 300,
+                        padding: 20,
+                        backgroundColor: "#ffffff"
                       }}
                     >
-                      Looking for new Members:
-                      <Input
-                        type="checkbox"
-                        checked={true}
-                        style={{
-                          position: "relative",
-                          margin: 0,
-                          marginLeft: 10
-                        }}
-                      />
-                    </div>
-                    <div style={{ marginTop: 20 }}>
+                      <div style={{ marginBottom: 10 }}>
+                        This band is looking for a new Member
+                      </div>
                       <Button
-                        onClick={() => toggleInvitationModal()}
-                        style={{ backgroundColor: "#000000" }}
+                        style={{
+                          backgroundColor: "#CB0086",
+                          fontSize: 18,
+                          paddingRight: 20,
+                          paddingLeft: 20
+                        }}
                       >
-                        View invitations
+                        Apply
                       </Button>
                     </div>
-                  </>
-                ) : (
-                  <>
-                    <div style={{ marginBottom: 10 }}>
-                      This band is looking for a new Member
-                    </div>
-                    <Button
-                      style={{
-                        backgroundColor: "#CB0086",
-                        fontSize: 18,
-                        paddingRight: 20,
-                        paddingLeft: 20
-                      }}
-                    >
-                      Apply
-                    </Button>
-                  </>
-                )}
-              </div>
+                  )}
+                </>
+              )}
             </div>
             <div
               style={{
@@ -186,7 +217,7 @@ const BandProfilePage = props => {
                 minWidth: 300
               }}
             >
-              <div style={{ fontSize: 45, fontWeight: 700 }}>The Beatles</div>
+              <div style={{ fontSize: 45, fontWeight: 700 }}>{band.name}</div>
               <div style={{ display: "flex", flexWrap: "wrap", marginTop: 20 }}>
                 <Badge
                   className="divShadow"
@@ -218,7 +249,7 @@ const BandProfilePage = props => {
                   }}
                 >
                   <FontAwesomeIcon icon={faMusic} style={{ marginRight: 4 }} />
-                  Rock
+                  {band.genre}
                 </Badge>
                 <Badge
                   className="divShadow"
@@ -238,7 +269,7 @@ const BandProfilePage = props => {
                     icon={faMapMarkerAlt}
                     style={{ marginRight: 4 }}
                   />
-                  San Francsico
+                  {band.location.city}
                 </Badge>
               </div>
               <div
@@ -258,92 +289,93 @@ const BandProfilePage = props => {
                     flexWrap: "wrap"
                   }}
                 >
-                  {[
-                    { name: "John Lennon", role: "vocalist", img: user1 },
-                    { name: "Johan Watson", role: "vocalist", img: user2 },
-                    { name: "Amy Klark", role: "guitarrist", img: user3 }
-                  ].map(member => (
-                    <div
-                      key={member}
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        margin: 30
-                      }}
-                    >
+                  {bandMembers ? (
+                    bandMembers.map(member => (
                       <div
+                        key={member}
                         style={{
-                          width: 130,
-                          height: 130,
-                          borderRadius: 130,
-                          marginBottom: 10
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          margin: 30
                         }}
                       >
-                        <img
-                          src={member.img}
+                        <div
                           style={{
                             width: 130,
-                            maxHeight: 130,
-                            borderRadius: 130
+                            height: 130,
+                            borderRadius: 130,
+                            marginBottom: 10
                           }}
-                        />
+                        >
+                          <img
+                            src={member.img}
+                            style={{
+                              width: 130,
+                              maxHeight: 130,
+                              borderRadius: 130
+                            }}
+                          />
+                        </div>
+
+                        <Badge
+                          style={{
+                            padding: 10,
+                            width: "100%",
+                            backgroundColor: "#000000",
+                            borderRadius: 20,
+                            marginBottom: 10
+                          }}
+                        >
+                          {member.name}
+                        </Badge>
+
+                        <Badge
+                          style={{
+                            padding: 10,
+                            width: "100%",
+                            backgroundColor: "#000000",
+                            borderRadius: 20
+                          }}
+                        >
+                          {member.role}
+                        </Badge>
                       </div>
-
-                      <Badge
-                        style={{
-                          padding: 10,
-                          width: "100%",
-                          backgroundColor: "#000000",
-                          borderRadius: 20,
-                          marginBottom: 10
-                        }}
-                      >
-                        {member.name}
-                      </Badge>
-
-                      <Badge
-                        style={{
-                          padding: 10,
-                          width: "100%",
-                          backgroundColor: "#000000",
-                          borderRadius: 20
-                        }}
-                      >
-                        {member.role}
-                      </Badge>
+                    ))
+                  ) : (
+                    <div
+                      style={{
+                        height: 100,
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-around",
+                        alignItems: "center"
+                      }}
+                    >
+                      <div>Could not fetch band members.</div>
+                      <Button color="primary">Retry</Button>
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             </div>
           </div>
-          <div
-            style={{
-              backgroundColor: "#ffffff",
-              padding: 40,
-              marginBottom: 20
-            }}
-          >
-            <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
-              About
+          {band.description && (
+            <div
+              style={{
+                backgroundColor: "#ffffff",
+                padding: 40,
+                marginBottom: 20
+              }}
+            >
+              <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
+                About
+              </div>
+              <div>{band.description}</div>
             </div>
-            <div>
-              Contrary to popular belief, Lorem Ipsum is not simply random text.
-              It has roots in a piece of classical Latin literature from 45 BC,
-              making it over 2000 years old. Richard McClintock, a Latin
-              professor at Hampden-Sydney College in Virginia, looked up one of
-              the more obscure Latin words, consectetur, from a Lorem Ipsum
-              passage, and going through the cites of the word in classical
-              literature, discovered the undoubtable source. Lorem Ipsum comes
-              from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et
-              Malorum" (The Extremes of Good and Evil) by Cicero, written in 45
-              BC. This book is a treatise on the theory of ethics, very popular
-              during the Renaissance. The first line of Lorem Ipsum, "Lorem
-              ipsum dolor sit amet..", comes from a line in section 1.10.32.
-            </div>
-          </div>
+          )}
+
           <div
             style={{
               backgroundColor: "#ffffff",
