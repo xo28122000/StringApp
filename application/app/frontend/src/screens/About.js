@@ -33,7 +33,7 @@ Together we delivered this working prototype while conducting periodic milestone
               <div style={{ marginBottom: 20 }}>
                 <img src={saxophoneplay} style={{ width: 500, maxHeight: 500 }} />
               </div>
-              <h1>Benefits</h1> <break>#1 create, grow, and communicate with their local fan base 
+              <h1>Features</h1> <break>#1 create, grow, and communicate with their local fan base 
               #2  search for bands & music events nearby
               #3 browse and listen to band portfolios directly on the page
               #4 bands can manage events and their music repertoire
