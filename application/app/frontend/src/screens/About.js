@@ -29,12 +29,19 @@ Together we delivered periodic milestone checkings the spring or 2020.
 Preview milestones
 
 Stack: Aws, SQL, Express, React.js, Node 
+
+
               <div style={{ marginBottom: 20 }}>
                 <img src={saxophoneplay} style={{ width: 500, maxHeight: 500 }} />
               </div>
-              <h1>Benefits</h1> #1 bla
-              #2 bla
-              #3 bla
+              <h1>Benefits</h1> <break>#1 create, grow, and communicate with their local fan base 
+              #2  search for bands & music events nearby
+              #3 browse and listen to band portfolios directly on the page
+              #4 bands can manage events and their music repertoire
+              #5 String also serves as an informational medium for fans to access posts and keep a close look on their favorite band’s media page
+              #6 fans can access the upcoming and past events and see what songs the band will play
+              #7 join bands by directly sending an invitation to bands who are recruiting.</break>
+
               <div style={{ marginBottom: 20 }}>
                 <img src={bro} style={{ width: 500, maxHeight: 500 }} />
               </div>
