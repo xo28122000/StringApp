@@ -1,5 +1,8 @@
 const LocalStrategy = require("passport-local").Strategy;
 const stringAccountQueries = require("../../db/queries/stringAccount");
+
+const bcrypt = require("bcryptjs");
+
 module.exports = {
   "user-login": new LocalStrategy(
     {
@@ -9,9 +12,14 @@ module.exports = {
     },
     function(req, email, password, done) {
       stringAccountQueries
-        .login(email, password)
+        .login(email)
         .then(data => {
-          if (data && data.length === 1) {
+          if (
+            data &&
+            data.length === 1 &&
+            !bcrypt.compareSync(password, data.password)
+          ) {
+            // check password
             delete data.password;
             return done(null, {
               ...data[0],
@@ -33,10 +41,11 @@ module.exports = {
       passReqToCallback: true
     },
     function(req, email, password, done) {
+      const hashedPassword = bcrypt.hashSync(password, 12);
       stringAccountQueries
         .register(
           email,
-          password,
+          hashedPassword,
           req.body.name,
           req.body.imgUrl,
           req.body.phoneNumber,

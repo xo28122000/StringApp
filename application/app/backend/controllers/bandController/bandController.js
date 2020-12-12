@@ -28,7 +28,8 @@ const createBand = async (req, res) => {
       req.body.latitude,
       req.body.longitude,
       req.body.genre,
-      1
+      1,
+      req.user.userId
     );
 
     await awsS3.clearFile(req.file);
@@ -39,47 +40,130 @@ const createBand = async (req, res) => {
   }
 };
 
-//TODO need to fix middleware
+const createBandPost = (req, res) => {
+  if (!req.user) {
+    //is a registered user
+    return res.send({ success: false, error: "error in userId field" });
+  }
+
+  let member = isMember(req, res);
+
+  if (member) {
+    bandQueries.createBandPost(
+      req.body.media,
+      req.body.title,
+      req.body.description,
+      req.body.bandId
+    );
+    return res.send({ success: true });
+  } else {
+    return res.send({
+      success: false,
+      error: "internal error creating Band Post",
+    });
+  }
+};
+
+//TODO need to test
 const createEvent = (req, res) => {
   if (
-    !req.body.bandId ||
     !req.body.title ||
     !req.body.description ||
     !req.body.date ||
-    !req.body.location ||
     !req.body.startTime ||
-    !req.body.endTime
+    !req.body.endTime ||
+    !req.body.location ||
+    !req.body.locationLat ||
+    !req.body.locationLong ||
+    !req.body.bandId
   ) {
     return res.send({
       success: false,
-      error: "fields missing for createEvent"
+      error: "fields missing for createEvent",
     });
   }
-  //TODO middleware fix: need to get correct bandId somehow?
-  //or is this a frontEnd problem?
 
-  //TODO middleware fix: also need to get location for correct input
-  //for sql queries: locationLat and locationLong
-  //which are decimal(30,15)
+  let member = isMember(req, res);
+
+  console.log("member: " + member);
+  if (member) {
+    bandQueries
+      .createEvent(
+        req.body.title,
+        req.body.description,
+        req.body.date,
+        req.body.startTime,
+        req.body.endTime,
+        req.body.location,
+        req.body.locationLat,
+        req.body.locationLong,
+        req.body.bandId
+      )
+      .then((retObj) => {
+        return res.send({ success: true });
+      })
+      .catch((err) => {
+        return res.send({
+          success: false,
+          error: "internal error when trying to create event",
+        });
+      });
+  } else {
+    return res.send({
+      success: false,
+      error: "internal error creating Event",
+    });
+  }
+};
+
+const createMember = (req, res) => {
+  if (!req.user) {
+    return res.send({
+      success: false,
+      error: "Must be a logged in user to proceed.",
+    });
+  }
+
   bandQueries
-    .createEvent(
-      req.body.title,
-      req.body.description,
-      req.body.date,
-      req.body.startTime,
-      req.body.endTime,
-      req.body.location,
+    .createMember(
+      req.body.isBandAdmin,
+      req.body.role,
+      req.body.dateJoined,
+      req.user.userId,
       req.body.bandId
     )
-    .then(retObj => {
+    .then((retObj) => {
       return res.send({ success: true });
     })
-    .catch(err => {
+    .catch((err) => {
       return res.send({
         success: false,
-        error: "internal error when trying to create event"
+        error: "internal error creating a band member",
       });
     });
+};
+
+const createSetEntry = (req, res) => {
+  if (!req.user) {
+    //is a registered user
+    return res.send({ success: false, error: "error in userId field" });
+  }
+
+  let member = isMember(req, res);
+  if (member) {
+    console.log("member: " + member);
+    bandQueries.createSetEntry(
+      req.body.songName,
+      req.body.runTime,
+      req.body.eventId
+    );
+    return res.send({ success: true });
+  } else {
+    return res.send({
+      success: false,
+      error: "internal error creating Set Entry",
+    });
+  }
 };
 
 const getBands = (req, res) => {
@@ -88,14 +172,14 @@ const getBands = (req, res) => {
   }
   bandQueries
     .getBands(req.body.userId)
-    .then(retObj => {
+    .then((retObj) => {
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
+    .catch((err) => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving bands from userId"
+        error: "internal error retrieving bands from userId",
       });
     });
   //TODO need to verify if isUser, and get userId from table first
@@ -124,10 +208,42 @@ const getBandInfo = (req, res) => {
     type: req.body.type ? req.body.type : "%",
     numMembers: req.body.numMembers ? req.body.numMembers : "%",
     */
-    bandId: req.body.bandId ? req.body.bandId : "%"
+    bandId: req.body.bandId ? req.body.bandId : "%",
   };
 
   bandQueries.getBandInfo(search.bandId);
+};
+
+const getBandMembers = (req, res) => {
+  if (!req.body.bandId) {
+    return res.send({ success: false, error: "bandId field missing" });
+  }
+
+  bandQueries.getBandMembers(req.body.bandId);
+};
+
+const isMember = async (req, res) => {
+  //internal helper function for band membership verification
+  //console.log("called inside isMember");
+  if (!req.body.bandId) {
+    return res.send({ success: false, error: "bandId field missing" });
+  } else if (!req.user) {
+    return res.send({
+      success: false,
+      error: "Must be a logged in user to proceed.",
+    });
+  }
+
+  let member = await bandQueries.isMember(req.user.userId, req.body.bandId);
+  console.log("member: " + member);
+
+  if (member == true) {
+    console.log("isMember is returning true");
+    return true;
+  } else {
+    console.log("isMember is returning false");
+    return false;
+  }
 };
 
 const searchBands = (req, res) => {
@@ -138,7 +254,7 @@ const searchBands = (req, res) => {
     locationLong: req.body.locationLong ? req.body.locationLong : null,
     isLookingForMember: req.body.isLookingForMember
       ? req.body.isLookingForMember
-      : 0
+      : 0,
   };
 
   bandQueries
@@ -149,10 +265,10 @@ const searchBands = (req, res) => {
       search.locationLong,
       search.isLookingForMember
     )
-    .then(retObj => {
+    .then((retObj) => {
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
+    .catch((err) => {
       return res.send({ success: false, error: "internal error" });
     });
 };
@@ -165,28 +281,33 @@ const searchEvents = (req, res) => {
   var search = {
     name: req.body.title ? req.body.title + "%" : "%",
     date: req.body.date ? req.body.date : "%",
-    location: req.body.location ? req.body.location : "%"
+    location: req.body.location ? req.body.location : "%",
     //location
   };
 
   userQueries
     .searchEvents(search.name, search.date, search.location)
-    .then(retObj => {
+    .then((retObj) => {
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
+    .catch((err) => {
       return res.send({
         success: false,
-        error: "internal error searching for events"
+        error: "internal error searching for events",
       });
     });
 };
 
 module.exports = {
   createBand,
+  createBandPost,
   createEvent,
+  createSetEntry,
+  createMember,
   getBands,
   getBandInfo,
+  getBandMembers,
+  isMember,
   searchBands,
-  searchEvents
+  searchEvents,
 };

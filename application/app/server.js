@@ -17,7 +17,7 @@ app.use(
   session({
     secret: "secretKeyHere",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
     // cookie: { secure: true }
   })
 );
@@ -37,7 +37,7 @@ const mainRouter = require("./backend/routes");
 app.use("/api", mainRouter);
 
 app.use(express.static(path.join(__dirname, "frontend/build")));
-app.get("*", function(req, res) {
+app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "frontend/build", "index.html"));
 });
 // end

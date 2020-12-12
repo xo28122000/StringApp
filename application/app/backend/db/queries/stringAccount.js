@@ -26,7 +26,7 @@ stringAccountQueries.register = (
         locationLat,
         locationLong,
         role,
-        genre
+        genre,
       ],
       (err, results) => {
         if (err) {
@@ -46,6 +46,7 @@ stringAccountQueries.login = (email, passwordHash) => {
       [email, passwordHash],
       (err, results) => {
         if (err) {
+          //console.log(err);
           return reject(err);
         } else {
           return resolve(results);
@@ -55,7 +56,7 @@ stringAccountQueries.login = (email, passwordHash) => {
   });
 };
 
-stringAccountQueries.getUserFromId = userId => {
+stringAccountQueries.getUserFromId = (userId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select userId, email, name, profileImageUrl, phoneNumber, location, locationLat, locationLong, role, genre from STRINGACCOUNT where userId = ?`,
