@@ -60,6 +60,9 @@ const App = props => {
         <Route path="/profile">
           <UserProfilePage />
         </Route>
+        <Route exact path="/band/:bandName">
+          <BandProfilePage />
+        </Route>
         <Route path="/band">
           <BandProfilePage />
         </Route>

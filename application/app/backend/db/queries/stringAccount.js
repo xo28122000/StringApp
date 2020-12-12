@@ -26,7 +26,7 @@ stringAccountQueries.register = (
         locationLat,
         locationLong,
         role,
-        genre,
+        genre
       ],
       (err, results) => {
         if (err) {
@@ -39,10 +39,10 @@ stringAccountQueries.register = (
   });
 };
 
-stringAccountQueries.login = (email, passwordHash) => {
+stringAccountQueries.getUser = (email, passwordHash) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `Select userId, email, name, profileImageUrl, phoneNumber, location, locationLat, locationLong, role, genre from STRINGACCOUNT where email like ? and password like ?`,
+      `Select userId, email, password, name, profileImageUrl, phoneNumber, location, locationLat, locationLong, role, genre from STRINGACCOUNT where email like ?`,
       [email, passwordHash],
       (err, results) => {
         if (err) {
@@ -56,7 +56,7 @@ stringAccountQueries.login = (email, passwordHash) => {
   });
 };
 
-stringAccountQueries.getUserFromId = (userId) => {
+stringAccountQueries.getUserFromId = userId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select userId, email, name, profileImageUrl, phoneNumber, location, locationLat, locationLong, role, genre from STRINGACCOUNT where userId = ?`,

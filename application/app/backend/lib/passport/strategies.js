@@ -12,19 +12,20 @@ module.exports = {
     },
     function(req, email, password, done) {
       stringAccountQueries
-        .login(email)
+        .getUser(email)
         .then(data => {
-          if (
-            data &&
-            data.length === 1 &&
-            !bcrypt.compareSync(password, data.password)
-          ) {
-            // check password
-            delete data.password;
-            return done(null, {
-              ...data[0],
-              location: JSON.parse(data[0].location)
-            });
+          if (data && data.length === 1) {
+            if (!bcrypt.compareSync(password, data[0].password)) {
+              // incorrect pass
+              console.log("incorrect pass");
+              return done(null, false, { message: "Incorrect password" });
+            } else {
+              delete data[0].password;
+              return done(null, {
+                ...data[0],
+                location: JSON.parse(data[0].location)
+              });
+            }
           } else {
             return done(null, false, { message: "Incorrect field" });
           }
