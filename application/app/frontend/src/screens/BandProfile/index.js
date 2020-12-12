@@ -20,13 +20,16 @@ import {
   faMusic
 } from "@fortawesome/free-solid-svg-icons";
 
-import EventCard from "../components/Cards/EventCard";
+import EventCard from "../../components/Cards/EventCard";
+import ReloadPage from "./ReloadPage";
+import MusicRepItem from "./MusicRepItem";
+import BandPostItem from "./BandPostItem";
 
-import BandLogo from "../assets/BandLogo.png";
-import user1 from "../assets/bandProfile/user1.jpg";
-import user2 from "../assets/bandProfile/user2.jpg";
-import user3 from "../assets/bandProfile/user3.jpg";
-import bandPostImage from "../assets/bandProfile/bandPost.jpg";
+import BandLogo from "../../assets/BandLogo.png";
+import user1 from "../../assets/bandProfile/user1.jpg";
+import user2 from "../../assets/bandProfile/user2.jpg";
+import user3 from "../../assets/bandProfile/user3.jpg";
+import bandPostImage from "../../assets/bandProfile/bandPost.jpg";
 
 import { useLocation, useParams, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -39,6 +42,8 @@ const BandProfilePage = props => {
   const [band, setBand] = useState(null);
   const [bandMembers, setBandMembers] = useState(null);
   const [musicRep, setMusicRep] = useState(null);
+  const [posts, setPosts] = useState(null);
+  const [events, setEvents] = useState(null);
   useEffect(() => {
     if (!bandName) {
       history.goBack();
@@ -48,7 +53,8 @@ const BandProfilePage = props => {
         bandId: "someid",
         name: "band name",
         numMembers: 2,
-        logoImageUrl: "urlhere",
+        logoImageUrl:
+          "https://upload.wikimedia.org/wikipedia/commons/8/89/The_Band_%281969%29.png",
         location: {
           street: "some street",
           city: "San Francisco",
@@ -63,13 +69,54 @@ const BandProfilePage = props => {
         description:
           'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.'
       });
+      setBandMembers([]);
+      setMusicRep([
+        {
+          name: "The Beatles - Hey Jude",
+          link: "www.eirshugfhyisjikao.com",
+          genre: "Rock",
+          duration: "2:06"
+        }
+      ]);
+      setPosts([
+        {
+          bandPostId: 2112,
+          media: "www.eirshugfhyisjikao.com",
+          title: "some band title",
+          description: "some band long long description"
+        }
+      ]);
+      setEvents([
+        {
+          title: "LowKey Sessions",
+          description:
+            "We are planning a lowkey event to happen this Wednesday and would for you to join us! We will be playing some of our famous tracks and then will be taking public requests!",
+          date: "Sept 21 2020",
+          startTime: "8:30 pm",
+          endTime: "10:30 pm",
+          genre: "mellow",
+          bandId: "3423342344",
+          bandName: "Beatles",
+          loc: {
+            street: "100 font blvd",
+            city: "San Francisco",
+            state: "California",
+            zip: "94132"
+          }
+        }
+      ]);
       try {
       } catch (err) {}
       console.log(userObj);
     }
   }, [bandName]);
 
-  const isAdm = location.search === "?admBand";
+  const isBandAdmin = () => {
+    return true;
+  };
+  const isBandMember = () => {
+    return false;
+  };
 
   const [invitationModal, setInvitationModal] = useState(false);
   const toggleInvitationModal = () => setInvitationModal(!invitationModal);
@@ -92,7 +139,7 @@ const BandProfilePage = props => {
   ]);
 
   return (
-    <div style={{ backgroundColor: "#E5E5E5" }}>
+    <div style={{ backgroundColor: "#ffffff" }}>
       {band ? (
         <>
           <div
@@ -131,7 +178,7 @@ const BandProfilePage = props => {
                 ))}
               </div>
 
-              {isAdm ? (
+              {isBandAdmin() ? (
                 <div
                   className="divShadow"
                   style={{
@@ -272,6 +319,15 @@ const BandProfilePage = props => {
                   {band.location.city}
                 </Badge>
               </div>
+
+              {/* 
+                ***
+                ***
+                    Band members
+                ***
+                ***
+              */}
+
               <div
                 className="divShadow"
                 style={{
@@ -344,23 +400,21 @@ const BandProfilePage = props => {
                       </div>
                     ))
                   ) : (
-                    <div
-                      style={{
-                        height: 100,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "space-around",
-                        alignItems: "center"
-                      }}
-                    >
-                      <div>Could not fetch band members.</div>
-                      <Button color="primary">Retry</Button>
-                    </div>
+                    <ReloadPage value="band members" />
                   )}
                 </div>
               </div>
             </div>
           </div>
+
+          {/* 
+          ***
+          ***
+              Band Description
+          ***
+          ***
+          */}
+
           {band.description && (
             <div
               style={{
@@ -376,6 +430,14 @@ const BandProfilePage = props => {
             </div>
           )}
 
+          {/* 
+          ***
+          ***
+              REP LIST
+          ***
+          ***
+          */}
+
           <div
             style={{
               backgroundColor: "#ffffff",
@@ -386,179 +448,117 @@ const BandProfilePage = props => {
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
               Music Repertoir
             </div>
-            <Container style={{ fontSize: 18, overflowX: "scroll" }}>
-              <Row
-                style={{
-                  marginBottom: 30,
-                  color: "#B7B7B7",
-                  flexWrap: "nowrap"
-                }}
-              >
-                <Col xs="1"></Col>
-                <Col xs="6" style={{ minWidth: 180 }}>
-                  Name
-                </Col>
-                <Col xs="3" style={{ textAlign: "center", minWidth: 150 }}>
-                  Genre
-                </Col>
-                <Col xs="2" style={{ textAlign: "center", minWidth: 100 }}>
-                  Duration
-                </Col>
-              </Row>
-              {[
-                {
-                  name: "The Beatles - Hey Jude",
-                  link: "www.eirshugfhyisjikao.com",
-                  genre: "Rock",
-                  duration: "2:06"
-                },
-                {
-                  name: "The Beatles - Here Comes The Sun",
-                  link: "www.eirshugfhyisjikao.com",
-                  genre: "Rock",
-                  duration: "5:26"
-                },
-                {
-                  name: "The Beatles - Let It Be",
-                  link: "www.eirshugfhyisjikao.com",
-                  genre: "Rock",
-                  duration: "4:37"
-                },
-                {
-                  name: "The Beatles - Yesterday",
-                  link: "www.eirshugfhyisjikao.com",
-                  genre: "Rock",
-                  duration: "4:37"
-                }
-              ].map((rep, i) => (
+            {musicRep ? (
+              <Container style={{ fontSize: 18, overflowX: "auto" }}>
                 <Row
-                  key={i}
                   style={{
                     marginBottom: 30,
-                    alignItems: "center",
+                    color: "#B7B7B7",
                     flexWrap: "nowrap"
                   }}
                 >
-                  <Col xs="1">{i + 1}.</Col>
+                  <Col xs="1"></Col>
                   <Col xs="6" style={{ minWidth: 180 }}>
-                    <div>{rep.name}</div>
-                    <div style={{ fontSize: 13, color: "#CB0086" }}>
-                      {rep.link}
-                    </div>
+                    Name
                   </Col>
                   <Col xs="3" style={{ textAlign: "center", minWidth: 150 }}>
-                    <Badge
-                      style={{
-                        backgroundColor: "#CB0086",
-                        padding: 10,
-                        paddingLeft: 20,
-                        paddingRight: 20,
-                        borderRadius: 20
-                      }}
-                    >
-                      <FontAwesomeIcon
-                        icon={faMusic}
-                        style={{ marginRight: 5 }}
-                      />
-                      {rep.genre}
-                    </Badge>
+                    Genre
                   </Col>
                   <Col xs="2" style={{ textAlign: "center", minWidth: 100 }}>
-                    {rep.duration}
+                    Duration
                   </Col>
                 </Row>
-              ))}
-            </Container>
+                {musicRep.map((rep, i) => (
+                  <MusicRepItem {...rep} key={i} index={i} />
+                ))}
+              </Container>
+            ) : (
+              <ReloadPage value="music rep list" />
+            )}
           </div>
-          <div style={{ padding: 40, paddingBottom: 0, marginBottom: 20 }}>
+
+          {/* 
+          ***
+          ***
+              BAND POSTS
+          ***
+          ***
+          */}
+
+          <div
+            style={{
+              padding: 40,
+              marginBottom: 20,
+              backgroundColor: "#ffffff"
+            }}
+          >
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
               Posts
             </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                overflowX: "scroll",
-                paddingBottom: 10
-              }}
-            >
-              {[1, 2, 3, 4, 4, 5, 5, 6].map((post, i) => (
-                <div
-                  key={i}
-                  className="divShadow"
-                  style={{
-                    backgroundColor: "#ffffff",
-                    marginRight: 20,
-                    padding: 30,
-                    width: 400,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center"
-                  }}
-                >
-                  <div
-                    style={{ fontSize: 20, fontWeight: 600, marginBottom: 20 }}
-                  >
-                    JAM Nov 18
-                  </div>
-                  <div
-                    style={{
-                      marginBottom: 20,
-                      height: 200,
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <img
-                      src={bandPostImage}
-                      style={{ width: 200, maxHeight: 200 }}
-                    />
-                  </div>
-                  <div style={{ fontSize: 15 }}>
-                    lots of great fans out tonight, stay tuned to cop one of our
-                    surprize package giveaways to win a hoodie, backstage passes
-                    and more!
-                  </div>
-                </div>
-              ))}
-            </div>
+
+            {posts ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  overflowX: "auto",
+                  paddingBottom: 10
+                }}
+              >
+                {posts.map((post, i) => (
+                  <BandPostItem key={i} {...post} />
+                ))}
+              </div>
+            ) : (
+              <ReloadPage value="Band Posts" />
+            )}
           </div>
-          <div style={{ padding: 40, paddingBottom: 100 }}>
+
+          {/* 
+          ***
+          ***
+              EVENTS
+          ***
+          ***
+          */}
+
+          <div
+            style={{
+              padding: 40,
+              backgroundColor: "#ffffff"
+            }}
+          >
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
               Events
             </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                overflowX: "scroll",
-                paddingBottom: 10
-              }}
-            >
-              {[1, 2, 3, 4, 5, 6, 7].map((event, i) => (
-                <div>
-                  <EventCard
-                    title="LowKey Sessions"
-                    description="We are planning a lowkey event to happen this Wednesday and would for you to join us! We will be playing some of our famous tracks and then will be taking public requests!"
-                    date="Sept 21 2020"
-                    startTime="8:30 pm"
-                    endTime="10:30 pm"
-                    genre="mellow"
-                    bandId="3423342344"
-                    bandName="Beatles"
-                    loc={{
-                      street: "100 font blvd",
-                      city: "San Francisco",
-                      state: "California",
-                      zip: "94132"
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
+            {events ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  overflowX: "auto",
+                  paddingBottom: 10
+                }}
+              >
+                {events.map((event, i) => (
+                  <div key={i}>
+                    <EventCard {...event} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <ReloadPage value="band events" />
+            )}
           </div>
+
+          {/* 
+          ***
+          ***
+              MODALS
+          ***
+          ***
+          */}
+
           <Modal
             isOpen={invitationModal}
             toggle={toggleInvitationModal}

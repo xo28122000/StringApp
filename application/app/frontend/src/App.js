@@ -11,7 +11,7 @@ import Footer from "./components/Footer/index";
 
 import AboutPage from "./screens/About";
 import ExplorePage from "./screens/Explore";
-import BandProfilePage from "./screens/BandProfile";
+import BandProfilePage from "./screens/BandProfile/index";
 import UserProfilePage from "./screens/UserProfile";
 import RegisterPage from "./screens/Register";
 import TermsAndConditionPage from "./screens/TermsAndCondition";
