@@ -22,7 +22,13 @@ import aboutbackground from "../assets/aboutbackground.svg";
     <div><div style={{ marginBottom: 20 }}>
     <img src={aboutbackground} style={{ width: 1000, maxHeight: 1000 }} />
   </div>
-      <h1>Story</h1> String is a project born out of a team effort from class 
+      <h1>Story</h1> String is a Full Stack application project born out of a team effort from CSC 648 Software Engineering class at San Francisco State University.
+
+Together we delivered periodic milestone checkings the spring or 2020.
+
+Preview milestones
+
+Stack: Aws, SQL, Express, React.js, Node 
               <div style={{ marginBottom: 20 }}>
                 <img src={saxophoneplay} style={{ width: 500, maxHeight: 500 }} />
               </div>
