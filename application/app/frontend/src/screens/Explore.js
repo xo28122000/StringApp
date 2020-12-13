@@ -159,7 +159,7 @@ const ExplorePage = props => {
           }}
         >
           <span style={{ fontSize: 45, fontWeight: 600 }}>
-            One stop for everything bands realted
+            One stop for everything bands related
           </span>
           <div
             style={{
