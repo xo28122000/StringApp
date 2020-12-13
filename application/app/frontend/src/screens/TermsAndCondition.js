@@ -1,7 +1,7 @@
 import React from "react";
 
 const TermsAndCondition = () => {
-  return <div><h1>Terms and Conditions</h1>
+  return <div style={{"padding": "60px"}}><h1>Terms and Conditions</h1>
   <p>Last updated: December 12, 2020</p>
   <p>Please read these terms and conditions carefully before using Our Service.</p>
   <h1>Interpretation and Definitions</h1>

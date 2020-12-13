@@ -15,6 +15,8 @@ import Shinypichighrez from "../assets/Shinypichighrez.png";
 import riteshProfileImage from "../assets/ritesh-profile-image.jpeg";
 import warrenProfileImage from "../assets/ws-profile-image.jpg";
 import leonidProfileImage from "../assets/leonid-ProfPic.jpg";
+import xuanjunprofileimage from "../assets/xuanjunprofileimage.jpeg";
+
 
 
  const About = () => {
@@ -65,6 +67,10 @@ Together we delivered this working prototype while conducting periodic milestone
                 <img src={jainamProfileImage} style={{ width: 500, maxHeight: 500 }} />
               </div>
               <h2>Jainam Shah</h2> Team Lead
+              <div style={{ marginBottom: 20 }}>
+                <img src={xuanjunprofileimage} style={{ width: 500, maxHeight: 500 }} />
+              </div>
+              <h2>Xuanjun Chen</h2> Frontend Developer
               <div style={{ marginBottom: 20 }}>
                 <img src={bandjam} style={{ width: 500, maxHeight: 500 }} />
               </div>
