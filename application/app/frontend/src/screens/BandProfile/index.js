@@ -10,7 +10,9 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  Spinner
+  Spinner,
+  Label,
+  FormText
 } from "reactstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -76,24 +78,6 @@ const BandProfilePage = props => {
           role: "Lead Guitarist",
           img:
             "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
-        },
-        {
-          name: "John lenon",
-          role: "Lead Guitarist",
-          img:
-            "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
-        },
-        {
-          name: "John lenon",
-          role: "Lead Guitarist",
-          img:
-            "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
-        },
-        {
-          name: "John lenon",
-          role: "Lead Guitarist",
-          img:
-            "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
         }
       ]);
       setMusicRep([
@@ -138,7 +122,7 @@ const BandProfilePage = props => {
   }, [bandName]);
 
   const isBandAdmin = () => {
-    return true;
+    return false;
   };
   const isBandMember = () => {
     return false;
@@ -163,6 +147,8 @@ const BandProfilePage = props => {
         "I am a band manager! I have managed 3 bands: QQP, Leads and Bandit-C. To get in tough email me at kwatson@abc.abc"
     }
   ]);
+
+  const [sendInviteModal, setSendInviteModal] = useState(false);
 
   return (
     <div style={{ backgroundColor: "#ffffff" }}>
@@ -248,7 +234,7 @@ const BandProfilePage = props => {
                 </div>
               ) : (
                 <>
-                  {band.isLookingForMember && (
+                  {userObj && band.isLookingForMember && (
                     <div
                       className="divShadow"
                       style={{
@@ -267,6 +253,9 @@ const BandProfilePage = props => {
                         This band is looking for a new Member
                       </div>
                       <Button
+                        onClick={() => {
+                          setSendInviteModal(true);
+                        }}
                         style={{
                           backgroundColor: "#CB0086",
                           fontSize: 18,
@@ -537,6 +526,41 @@ const BandProfilePage = props => {
           ***
           ***
           */}
+
+          <Modal
+            isOpen={sendInviteModal}
+            toggle={() => setSendInviteModal(!sendInviteModal)}
+            backdrop="static"
+          >
+            <ModalHeader toggle={() => setSendInviteModal(!sendInviteModal)}>
+              Send Invitation to join this band
+            </ModalHeader>
+            <ModalBody>
+              {false ? (
+                <></>
+              ) : (
+                <div>
+                  <span style={{ fontWeight: "600", fontSize: 17 }}>
+                    Type a descriptive message for the band admin.
+                  </span>
+                  <br />
+                  You may want to include your previous experiences, your
+                  current location and contact information
+                  <Input
+                    type="textarea"
+                    style={{ marginTop: 10, minHeight: 200 }}
+                  />
+                  <FormText color="muted">Max 250 words</FormText>
+                  <Button
+                    color="success"
+                    style={{ float: "right", marginTop: 10 }}
+                  >
+                    Send
+                  </Button>
+                </div>
+              )}
+            </ModalBody>
+          </Modal>
 
           <Modal
             isOpen={invitationModal}
