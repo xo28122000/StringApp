@@ -21,15 +21,33 @@ const createBand = async (req, res) => {
     const imgUrl =
       "https://csc648-string.s3-us-west-1.amazonaws.com/" + fileName;
 
-    await bandQueries.createBand(
+    let newBand = await bandQueries.createBand(
       req.body.name,
       imgUrl,
+      JSON.stringify([]), //list of links as a JSON object
       JSON.stringify(req.body.location),
       req.body.latitude,
       req.body.longitude,
       req.body.genre,
-      1,
-      req.user.userId
+      true
+    );
+
+    //console.log("just created band: " + newBand);
+
+    let today = new Date();
+
+    let dd = String(today.getDate()).padStart(2, "0");
+    let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    let yyyy = today.getFullYear();
+
+    today = yyyy + "-" + mm + "-" + dd;
+
+    await bandQueries.createMember(
+      true,
+      "Band Admin",
+      today,
+      req.user.userId,
+      newBand.insertId
     );
 
     await awsS3.clearFile(req.file);
@@ -238,10 +256,10 @@ const isMember = async (req, res) => {
   console.log("member: " + member);
 
   if (member == true) {
-    console.log("isMember is returning true");
+    //console.log("isMember is returning true");
     return true;
   } else {
-    console.log("isMember is returning false");
+    //console.log("isMember is returning false");
     return false;
   }
 };

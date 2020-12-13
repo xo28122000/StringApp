@@ -5,17 +5,16 @@ let bandQueries = {};
 bandQueries.createBand = (
   name,
   imgUrl,
+  links,
   location,
   locationLat,
   locationLong,
   genre,
-  isLookingForMember,
-  userId
+  isLookingForMember
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO BAND (name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${imgUrl}', '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,
-      `INSERT INTO BANDMEMBERS (isBandAdmin, role, datejoined, userId, bandId) VALUES ('1', 'not specified', GETDATE(), '${userId}','LAST_INSERT_ID()')`,
+      `INSERT INTO BAND (name, logoImageUrl, links, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${imgUrl}', '${links}' '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -25,7 +24,6 @@ bandQueries.createBand = (
         }
       }
     );
-    //`INSERT INTO BANDMEMBERS (isBandAdmin, bandId) VALUES (1, LAST_INSERT_ID())`,
   });
 };
 

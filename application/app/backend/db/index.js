@@ -43,6 +43,7 @@ pool.getConnection(async function (err, connection) {
       "name varchar(100) NOT NULL, " +
       "profileImageUrl varchar(150) DEFAULT 'notProvidedByUser', " +
       "phoneNumber varchar(15) DEFAULT 'not specified', " +
+      "links varchar(500), " +
       "location varchar(500) DEFAULT '1600 Pennsylvania Ave NW, Washington DC 20500', " +
       "locationLat decimal(30,15) DEFAULT 38.8976675, " +
       "locationLong decimal(30,15) DEFAULT -77.0387679, " +
@@ -60,6 +61,7 @@ pool.getConnection(async function (err, connection) {
       "name varchar(100) NOT NULL UNIQUE, " +
       "numMembers INT DEFAULT 1, " +
       "logoImageUrl varchar(500), " +
+      "links varchar(500), " +
       "description varchar(500), " +
       "location varchar(500), " +
       "locationLat decimal(30,15), " +
