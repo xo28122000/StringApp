@@ -87,21 +87,21 @@ const createEvent = (req, res) => {
 };
 
 const getBands = (req, res) => {
-  if (!req.body.userId) {
+  if (!req.body.bandId) {
     console.log(req.body);
     return res.send({ success: false, error: "title field missing" });
   }
   bandQueries
-    .getBands(req.body.userId)
+    .getBands(req.body.bandId)
     .then(retObj => {
-      console.log("successful retrieval of bands from userId");
+      console.log("successful retrieval of bands from bandId");
       return res.send({ success: true, result: retObj });
     })
     .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving bands from userId"
+        error: "internal error retrieving bands from bandId"
       });
     });
   //TODO need to verify if isUser, and get userId from table first
