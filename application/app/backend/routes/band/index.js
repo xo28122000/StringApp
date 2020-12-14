@@ -98,7 +98,9 @@ bandRouter.post("/createEvent", bandController.createEvent);
 
 bandRouter.post("/searchEvents", bandController.searchEvents);
 
-bandRouter.post("/getBands", bandController.getBands);
+bandRouter.post("/getBandFrombandId", bandController.getBandFrombandId);
+
+bandRouter.post("/getBandFrombandname", bandController.getBandFrombandname);
 
 bandRouter.post("/getBandInfo", bandController.getBandInfo);
 

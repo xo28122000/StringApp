@@ -54,10 +54,25 @@ bandQueries.createEvent = (
 
 //TODO fix this SQL query:
 //need to join the query - userId -> band member, bandId from band member, then bands from bands with bandID
-bandQueries.getBands = userId => {
+bandQueries.getBandFrombandId = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `select from Band where userId = '${userId}'`,
+      `select * from Band where bandId = '${bandId}'`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+bandQueries.getBandFrombandname = name => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `select * from Band where name = '${name}'`,
       (err, results) => {
         if (err) {
           return reject(err);
