@@ -246,7 +246,18 @@ const getBandMembers = (req, res) => {
     return res.send({ success: false, error: "bandId field missing" });
   }
 
-  bandQueries.getBandMembers(req.body.bandId);
+  bandQueries
+    .getBandMembers(req.body.bandId)
+    .then((retObj) => {
+      return res.send({ success: true, result: retObj });
+    })
+    .catch((err) => {
+      //console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error retrieving al members of a band from bandId",
+      });
+    });
 };
 
 //controller for getting all posts of a band given a band id
@@ -255,7 +266,18 @@ const getBandPosts = (req, res) => {
     return res.send({ success: false, error: "bandId field missing" });
   }
 
-  bandQueries.getBandPosts(req.body.bandId);
+  bandQueries
+    .getBandPosts(req.body.bandId)
+    .then((retObj) => {
+      return res.send({ success: true, result: retObj });
+    })
+    .catch((err) => {
+      //console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error retrieving posts of a band from bandId",
+      });
+    });
 };
 
 //controller for getting all repertoire of a band given a band id
@@ -264,7 +286,18 @@ const getBandRep = (req, res) => {
     return res.send({ success: false, error: "bandId field missing" });
   }
 
-  bandQueries.getBandRep(req.body.bandId);
+  bandQueries
+    .getBandRep(req.body.bandId)
+    .then((retObj) => {
+      return res.send({ success: true, result: retObj });
+    })
+    .catch((err) => {
+      //console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error retrieving repertoire from bandId",
+      });
+    });
 };
 
 //controller for getting all events of a band given a band id
@@ -273,7 +306,18 @@ const getEvents = (req, res) => {
     return res.send({ success: false, error: "bandId field missing" });
   }
 
-  bandQueries.getEvents(req.body.bandId);
+  bandQueries
+    .getEvents(req.body.bandId)
+    .then((retObj) => {
+      return res.send({ success: true, result: retObj });
+    })
+    .catch((err) => {
+      //console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error retrieving events from bandId",
+      });
+    });
 };
 
 const isMember = async (req, res) => {
