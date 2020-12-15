@@ -18,26 +18,31 @@ const storage = multer.diskStorage({
   },
 });
 
+//for uploading files using multer
 const upload = multer({
+  //multer settings
   storage: storage,
   fileFilter: (req, file, cb) => {
+    let ext = path.extname(file.originalname);
     //should validate file format input - must be jpg, jpeg, or png
-    if (
-      file.mimetype == "image/jpg" ||
-      file.mimetype == "image/jpeg" ||
-      file.mimetype == "image/png"
-    ) {
+    if (ext == ".jpg" || ext == ".jpeg" || ext == ".png") {
       cb(null, true);
     } else {
       cb(null, false);
       return cb(new Error("Only .jpg, .jpeg, or .png formats allowed"));
     }
   },
+  limits: {
+    fileSize: 8 * 1024 * 1024, //for 8 MB image size limit
+  },
 });
+
+/** 
 
 const imageSizeCheck = (req, res, next) => {
   const maxSize = 8 * 1024 * 1024; //for 8 MB
-
+  /** 
+  //TODO not working right now
   //validate file size
   if (req.file.buffer.byteLength >= maxSize) {
     //if size too large
@@ -50,15 +55,19 @@ const imageSizeCheck = (req, res, next) => {
     //go on to the next file in stack call
     next();
   }
+  next();
 };
+
+*/
 
 let bandRouter = express.Router();
 
+//route definition for creating a new band
 bandRouter.post(
   "/createBand",
   isUser,
-  imageSizeCheck,
-  upload.single("imageFile"),
+  //imageSizeCheck,
+  upload.single("file"),
   async (req, res, next) => {
     try {
       req.body.location = JSON.parse(req.body.location);
@@ -110,22 +119,40 @@ bandRouter.post(
   bandController.createBand
 );
 
+//route definition for creating a new event
 bandRouter.post("/createEvent", isUser, geocode, bandController.createEvent);
 
+//route definition for creating a new set entry
 bandRouter.post("/createSetEntry", isUser, bandController.createSetEntry);
 
+//route definition for creating a new member of a band
 bandRouter.post("/createMember", isUser, bandController.createMember);
 
+//route definition for creating a new band post
 bandRouter.post("/createBandPost", isUser, bandController.createBandPost);
 
+//route definition for getting all the bands that someone is a member of
 bandRouter.post("/getBands", bandController.getBands);
 
+//route definition for getting the information about a band
 bandRouter.post("/getBandInfo", bandController.createEvent);
 
-bandRouter.get("/getBandMembers", bandController.getBandMembers);
+//route definition for getting the members of a band
+bandRouter.post("/getBandMembers", bandController.getBandMembers);
 
+//route definition for getting all posts of a specific band
+bandRouter.post("/getBandPosts", bandController.getBandPosts);
+
+//route definition for getting all the repertoire of a specific band
+bandRouter.post("/getBandRep", bandController.getBandRep);
+
+//route definition for getting all the events of a specific band
+bandRouter.post("/getEvents", bandController.getEvents);
+
+//route definition for searching for (a) band(s)
 bandRouter.post("/searchBands", geocode, bandController.searchBands);
 
+//route definition for searching for (an) event(s)
 bandRouter.post("/searchEvents", bandController.searchEvents);
 
 module.exports = bandRouter;

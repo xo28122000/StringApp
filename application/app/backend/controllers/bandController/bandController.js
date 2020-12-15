@@ -2,6 +2,7 @@ const bandQueries = require("../../db/queries/band.js");
 const awsS3 = require("../../lib/aws/s3");
 const isUser = require("../../helpers/middlewares/isUser.js");
 
+//controller for creating a band
 const createBand = async (req, res) => {
   if (!req.body.name || !req.body.location || !req.file || !req.body.genre) {
     // console.log(req.file);
@@ -58,6 +59,7 @@ const createBand = async (req, res) => {
   }
 };
 
+//controller to create a new band post
 const createBandPost = (req, res) => {
   if (!req.user) {
     //is a registered user
@@ -83,6 +85,7 @@ const createBandPost = (req, res) => {
 };
 
 //TODO need to test
+//controller for creating a new event
 const createEvent = (req, res) => {
   if (
     !req.body.title ||
@@ -134,6 +137,7 @@ const createEvent = (req, res) => {
   }
 };
 
+//controller for creating a new member of a band
 const createMember = (req, res) => {
   if (!req.user) {
     return res.send({
@@ -161,29 +165,32 @@ const createMember = (req, res) => {
     });
 };
 
+//controller for creating a new set entry for an event
 const createSetEntry = (req, res) => {
-  if (!req.user) {
-    //is a registered user
-    return res.send({ success: false, error: "error in userId field" });
-  }
-
   let member = isMember(req, res);
-  if (member) {
+  if (member == true) {
     console.log("member: " + member);
-    bandQueries.createSetEntry(
-      req.body.songName,
-      req.body.runTime,
-      req.body.eventId
-    );
-    return res.send({ success: true });
+    bandQueries
+      .createSetEntry(req.body.songName, req.body.runTime, req.body.eventId)
+      .then((retObj) => {
+        return res.send({ success: true });
+      })
+      .catch((err) => {
+        return res.send({
+          success: false,
+          error: "internal error creating a band Set Entry",
+        });
+      });
   } else {
     return res.send({
       success: false,
-      error: "internal error creating Set Entry",
+      error:
+        "not a member of the band for which Set Entry is attempting to be created",
     });
   }
 };
 
+//controller for getting all bands a user is a member of
 const getBands = (req, res) => {
   if (!req.body.userId) {
     return res.send({ success: false, error: "title field missing" });
@@ -217,6 +224,7 @@ const getBands = (req, res) => {
   */
 };
 
+//controller for getting band information from a band id
 const getBandInfo = (req, res) => {
   if (!req.body.bandId) {
     return res.send({ success: false, error: "bandId field missing" });
@@ -232,6 +240,7 @@ const getBandInfo = (req, res) => {
   bandQueries.getBandInfo(search.bandId);
 };
 
+//controller for getting all members of a band given a band id
 const getBandMembers = (req, res) => {
   if (!req.body.bandId) {
     return res.send({ success: false, error: "bandId field missing" });
@@ -240,30 +249,55 @@ const getBandMembers = (req, res) => {
   bandQueries.getBandMembers(req.body.bandId);
 };
 
+//controller for getting all posts of a band given a band id
+const getBandPosts = (req, res) => {
+  if (!req.body.bandId) {
+    return res.send({ success: false, error: "bandId field missing" });
+  }
+
+  bandQueries.getBandPosts(req.body.bandId);
+};
+
+//controller for getting all repertoire of a band given a band id
+const getBandRep = (req, res) => {
+  if (!req.body.bandId) {
+    return res.send({ success: false, error: "bandId field missing" });
+  }
+
+  bandQueries.getBandRep(req.body.bandId);
+};
+
+//controller for getting all events of a band given a band id
+const getEvents = (req, res) => {
+  if (!req.body.bandId) {
+    return res.send({ success: false, error: "bandId field missing" });
+  }
+
+  bandQueries.getEvents(req.body.bandId);
+};
+
 const isMember = async (req, res) => {
   //internal helper function for band membership verification
   //console.log("called inside isMember");
   if (!req.body.bandId) {
-    return res.send({ success: false, error: "bandId field missing" });
+    console.log("bandId field missing");
   } else if (!req.user) {
-    return res.send({
-      success: false,
-      error: "Must be a logged in user to proceed.",
-    });
+    //console.log("Must be a logged in user to proceed.");
   }
 
   let member = await bandQueries.isMember(req.user.userId, req.body.bandId);
   console.log("member: " + member);
 
   if (member == true) {
-    //console.log("isMember is returning true");
+    console.log("isMember is returning true");
     return true;
   } else {
-    //console.log("isMember is returning false");
+    console.log("isMember is returning false");
     return false;
   }
 };
 
+//controller for searching for a band given different criteria
 const searchBands = (req, res) => {
   var search = {
     name: req.body.name ? req.body.name + "%" : "%",
@@ -291,6 +325,7 @@ const searchBands = (req, res) => {
     });
 };
 
+//controller for searching for an event given certain criteria
 const searchEvents = (req, res) => {
   if (!req.body.title) {
     return res.send({ success: false, error: "title field missing" });
@@ -325,6 +360,9 @@ module.exports = {
   getBands,
   getBandInfo,
   getBandMembers,
+  getBandPosts,
+  getBandRep,
+  getEvents,
   isMember,
   searchBands,
   searchEvents,

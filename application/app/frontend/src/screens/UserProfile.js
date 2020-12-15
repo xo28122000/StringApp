@@ -16,7 +16,7 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from "reactstrap";
 
 import { Redirect } from "react-router-dom";
@@ -26,7 +26,7 @@ import {
   faUser,
   faMapMarkerAlt,
   faMusic,
-  faPlus
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 import user5 from "../assets/bandProfile/user5.jpg";
@@ -34,7 +34,7 @@ import user5 from "../assets/bandProfile/user5.jpg";
 const axios = require("axios");
 
 const UserProfileScreen = () => {
-  const userObj = useSelector(state => state.userObj);
+  const userObj = useSelector((state) => state.userObj);
 
   const [createBandModal, setCreateBandModal] = useState(false);
   const toggleCreateBandModal = () => setCreateBandModal(!createBandModal);
@@ -53,11 +53,11 @@ const UserProfileScreen = () => {
         street: "100 font blvd",
         city: "San Francisco",
         state: "California",
-        zip: "94132"
+        zip: "94132",
       }),
       numOfMembers: 2,
       logoImageUrl:
-        "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c0a56608-0770-4f53-9b4a-f0b30bf8f781/d8t4ar0-e7a0416b-86ac-4b86-b5dc-c9b70d97d1cd.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvYzBhNTY2MDgtMDc3MC00ZjUzLTliNGEtZjBiMzBiZjhmNzgxXC9kOHQ0YXIwLWU3YTA0MTZiLTg2YWMtNGI4Ni1iNWRjLWM5YjcwZDk3ZDFjZC5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.zni4bjOaGJ7smAuVQugAxbDM4R1qtbhDHFzQJ1hH1hI"
+        "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c0a56608-0770-4f53-9b4a-f0b30bf8f781/d8t4ar0-e7a0416b-86ac-4b86-b5dc-c9b70d97d1cd.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvYzBhNTY2MDgtMDc3MC00ZjUzLTliNGEtZjBiMzBiZjhmNzgxXC9kOHQ0YXIwLWU3YTA0MTZiLTg2YWMtNGI4Ni1iNWRjLWM5YjcwZDk3ZDFjZC5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.zni4bjOaGJ7smAuVQugAxbDM4R1qtbhDHFzQJ1hH1hI",
     },
     {
       name: "admBand 2",
@@ -66,11 +66,11 @@ const UserProfileScreen = () => {
         street: "150 font blvd",
         city: "San Francisco",
         state: "California",
-        zip: "94132"
+        zip: "94132",
       }),
       numOfMembers: 3,
       logoImageUrl:
-        "https://static.tvtropes.org/pmwiki/pub/images/92962-the-beatles-1-the-bea_41.jpg"
+        "https://static.tvtropes.org/pmwiki/pub/images/92962-the-beatles-1-the-bea_41.jpg",
     },
     {
       name: "admBand 3",
@@ -79,12 +79,12 @@ const UserProfileScreen = () => {
         street: "16 Holloway Ave",
         city: "San Francisco",
         state: "California",
-        zip: "94132"
+        zip: "94132",
       }),
       numOfMembers: 1,
       logoImageUrl:
-        "https://image.shutterstock.com/image-vector/rock-music-poster-old-school-260nw-742278952.jpg"
-    }
+        "https://image.shutterstock.com/image-vector/rock-music-poster-old-school-260nw-742278952.jpg",
+    },
   ]);
 
   const createBand = () => {
@@ -125,7 +125,7 @@ const UserProfileScreen = () => {
           street: createBandStreet,
           city: createBandCity,
           state: createBandState,
-          zip: createBandZip
+          zip: createBandZip,
         })
       );
       formData.append("genre", genre);
@@ -134,17 +134,17 @@ const UserProfileScreen = () => {
       axios
         .post("/api/band/createBand", formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
-          }
+            "Content-Type": "multipart/form-data",
+          },
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.success) {
             toggleCreateBandModal();
           } else {
             alert("Invalid value in one or multiple fields.");
           }
         })
-        .catch(err => {
+        .catch((err) => {
           alert("Some error occured. Please try again later.");
         });
     }
@@ -166,7 +166,7 @@ const UserProfileScreen = () => {
 
           fontSize: 45,
           fontWeight: 700,
-          color: "#ffffff"
+          color: "#ffffff",
         }}
       >
         John Lennon
@@ -177,7 +177,7 @@ const UserProfileScreen = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <div
@@ -188,7 +188,7 @@ const UserProfileScreen = () => {
               borderStyle: "solid",
               borderColor: "#ffffff",
               overflow: "hidden",
-              marginTop: -100
+              marginTop: -100,
             }}
           >
             <img style={{ width: 250, maxHeight: 250 }} src={user5} />
@@ -202,7 +202,7 @@ const UserProfileScreen = () => {
               justifyContent: "center",
               alignItems: "center",
               flexWrap: "wrap",
-              backgroundColor: "#ffffff"
+              backgroundColor: "#ffffff",
             }}
           >
             <div
@@ -210,7 +210,7 @@ const UserProfileScreen = () => {
                 fontSize: 18,
                 fontWeight: 500,
                 paddingLeft: 40,
-                paddingRight: 40
+                paddingRight: 40,
               }}
             >
               <div style={{ marginBottom: 10, overflowx: "hidden" }}>
@@ -256,7 +256,7 @@ const UserProfileScreen = () => {
               flexWrap: "wrap",
               fontSize: 20,
               paddingLeft: 20,
-              paddingRight: 20
+              paddingRight: 20,
             }}
           >
             <Badge
@@ -268,7 +268,7 @@ const UserProfileScreen = () => {
                 paddingRight: 30,
                 color: "#FFFFFF",
                 backgroundColor: "#CB0086",
-                borderRadius: 20
+                borderRadius: 20,
               }}
             >
               <FontAwesomeIcon icon={faMusic} style={{ marginRight: 4 }} />
@@ -283,7 +283,7 @@ const UserProfileScreen = () => {
                 paddingLeft: 30,
                 paddingRight: 30,
                 color: "#0B0B0B",
-                backgroundColor: "#FF9900"
+                backgroundColor: "#FF9900",
               }}
             >
               <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />
@@ -297,7 +297,7 @@ const UserProfileScreen = () => {
                 paddingLeft: 30,
                 paddingRight: 30,
                 color: "#8A8A8A",
-                backgroundColor: "#FFFFFF"
+                backgroundColor: "#FFFFFF",
               }}
             >
               <FontAwesomeIcon
@@ -314,7 +314,7 @@ const UserProfileScreen = () => {
               display: "flex",
               alignItems: "center",
               paddingRight: 20,
-              paddingLeft: 20
+              paddingLeft: 20,
             }}
           >
             <span style={{ fontSize: 35, fontWeight: 600, marginRight: 10 }}>
@@ -325,7 +325,7 @@ const UserProfileScreen = () => {
                 backgroundColor: "#000000",
                 borderRadius: 25,
                 height: 50,
-                width: 50
+                width: 50,
               }}
               onClick={() => {
                 toggleCreateBandModal();
@@ -340,10 +340,10 @@ const UserProfileScreen = () => {
                 marginTop: 20,
                 display: "flex",
                 alignItems: "center",
-                flexWrap: "wrap"
+                flexWrap: "wrap",
               }}
             >
-              {bands.map(band => (
+              {bands.map((band) => (
                 <BandCard key={band.name} {...band} />
               ))}
             </div>
@@ -378,7 +378,7 @@ const UserProfileScreen = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              marginBottom: 20
+              marginBottom: 20,
             }}
           >
             Band's Genre:
@@ -391,7 +391,7 @@ const UserProfileScreen = () => {
                 {genre ? genre : "All"}
               </DropdownToggle>
               <DropdownMenu>
-                {genreOptions.map(genreOption => (
+                {genreOptions.map((genreOption) => (
                   <DropdownItem
                     key={genreOption}
                     onClick={() => {
@@ -412,7 +412,7 @@ const UserProfileScreen = () => {
               placeholder="street"
               style={{
                 borderRadius: 25,
-                margin: 5
+                margin: 5,
               }}
             />
             <div style={{ display: "flex" }}>
@@ -421,7 +421,7 @@ const UserProfileScreen = () => {
                 placeholder="city"
                 style={{
                   borderRadius: 25,
-                  margin: 5
+                  margin: 5,
                 }}
               />
 
@@ -430,7 +430,7 @@ const UserProfileScreen = () => {
                 placeholder="state"
                 style={{
                   borderRadius: 25,
-                  margin: 5
+                  margin: 5,
                 }}
               />
 
@@ -439,7 +439,7 @@ const UserProfileScreen = () => {
                 placeholder="zip"
                 style={{
                   borderRadius: 25,
-                  margin: 5
+                  margin: 5,
                 }}
               />
             </div>
@@ -449,10 +449,10 @@ const UserProfileScreen = () => {
             <Input
               id="createBandLogoImg"
               type="file"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, image/jpg"
               placeholder="zip"
               style={{
-                marginLeft: 10
+                marginLeft: 10,
               }}
             />
           </div>
@@ -461,7 +461,7 @@ const UserProfileScreen = () => {
               style={{
                 fontSize: 18,
                 backgroundColor: "#000000",
-                borderRadius: 10
+                borderRadius: 10,
               }}
               onClick={() => {
                 createBand();

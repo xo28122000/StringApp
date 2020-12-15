@@ -7,6 +7,7 @@ stringAccountQueries.register = (
   name,
   profileImageUrl,
   phoneNumber,
+  links,
   location,
   locationLat,
   locationLong,
@@ -15,18 +16,19 @@ stringAccountQueries.register = (
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO STRINGACCOUNT VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
+      `INSERT INTO STRINGACCOUNT VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
       [
         email,
         passwordHash,
         name,
         profileImageUrl,
         phoneNumber,
+        links,
         location,
         locationLat,
         locationLong,
         role,
-        genre
+        genre,
       ],
       (err, results) => {
         if (err) {
@@ -42,7 +44,7 @@ stringAccountQueries.register = (
 stringAccountQueries.getUser = (email, passwordHash) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `Select userId, email, password, name, profileImageUrl, phoneNumber, location, locationLat, locationLong, role, genre from STRINGACCOUNT where email like ?`,
+      `Select userId, email, password, name, profileImageUrl, phoneNumber, links, location, locationLat, locationLong, role, genre from STRINGACCOUNT where email like ?`,
       [email, passwordHash],
       (err, results) => {
         if (err) {
@@ -56,7 +58,7 @@ stringAccountQueries.getUser = (email, passwordHash) => {
   });
 };
 
-stringAccountQueries.getUserFromId = userId => {
+stringAccountQueries.getUserFromId = (userId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select userId, email, name, profileImageUrl, phoneNumber, location, locationLat, locationLong, role, genre from STRINGACCOUNT where userId = ?`,

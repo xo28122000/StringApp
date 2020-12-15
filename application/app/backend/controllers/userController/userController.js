@@ -3,6 +3,8 @@ const isUser = require("../../helpers/middlewares/isUser.js");
 const awsS3 = require("../../lib/aws/s3");
 
 //TODO fix this
+//is this a duplicate of getAccount (see below)
+//if so, need to remove
 const account = (req, res) => {
   if (isUser()) {
     return res.send({
@@ -17,6 +19,7 @@ const account = (req, res) => {
   }
 };
 
+//controller for changing name of user account
 const changeName = (req, res) => {
   if (!req.body.newName) {
     return res.send({
@@ -39,6 +42,7 @@ const changeName = (req, res) => {
     });
 };
 
+//controller for changing role of user account
 const changeRole = (req, res) => {
   if (!req.body.newRole) {
     return res.send({
@@ -61,6 +65,7 @@ const changeRole = (req, res) => {
     });
 };
 
+//controller for changing phone number of user account
 const changePhone = (req, res) => {
   if (!req.body.phoneNumber) {
     return res.send({
@@ -83,6 +88,7 @@ const changePhone = (req, res) => {
     });
 };
 
+//controller for getting events of a band
 const getEvent = (req, res) => {
   if (!req.body.bandId) {
     //console.log(req.body);
@@ -102,6 +108,7 @@ const getEvent = (req, res) => {
     });
 };
 
+//controller for getting account information from a specific account
 const getAccount = (req, res) => {
   if (isUser()) {
     return res.send({

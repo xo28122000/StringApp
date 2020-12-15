@@ -100,12 +100,44 @@ bandQueries.createSetEntry = (songName, runTime, eventId) => {
   });
 };
 
+bandQueries.getEvents = (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `Select * from EVENTS where bandId = ?`,
+      [bandId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 //TODO fix this SQL query:
 //need to join the query - userId -> band member, bandId from band member, then bands from bands with bandID
 bandQueries.getBands = (userId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `select from BAND where userId = '${userId}'`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+bandQueries.getBandInfo = (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `Select bandId, name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember from BAND where bandId = ?`,
+      [bandId],
       (err, results) => {
         if (err) {
           return reject(err);
@@ -132,8 +164,40 @@ bandQueries.getBandMembers = (bandId) => {
   });
 };
 
+bandQueries.getBandPosts = (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `Select * from BANDPOSTS where bandId = ?`,
+      [bandId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+bandQueries.getBandRep = (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `Select * from REPERTOIRE where bandId = ?`,
+      [bandId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 bandQueries.isMember = (userId, bandId) => {
-  //console.log("isMember: userId = " + userId + ", bandId: " + bandId);
+  console.log("isMember: userId = " + userId + ", bandId: " + bandId);
 
   let flag = false;
 
@@ -142,22 +206,22 @@ bandQueries.isMember = (userId, bandId) => {
       `SELECT EXISTS(SELECT 1 from BANDMEMBERS where (userId = '${userId}' AND bandId = '${bandId}') LIMIT 1)`,
       (err, results) => {
         if (err) {
-          // console.log(err);
+          console.log("error in the first if: " + err);
           return reject(err);
         } else {
-          // console.log(results);
+          console.log("in the else, results: " + results);
           let r = JSON.parse(JSON.stringify(results));
-          // console.log(r);
+          console.log("r object is: " + r);
           for (var key in results[0]) {
             r.result = results[0][key];
           }
           // console.log(r);
           if (r.result < 1) {
-            // console.log("resolve: " + resolve);
+            console.log("resolve: " + resolve);
             return resolve(false);
           } else {
-            // console.log("resolve: " + resolve);
-            // console.log("inside the else");
+            console.log("resolve: " + resolve);
+            console.log("inside the else");
             flag = true;
             return resolve(true);
           }
@@ -220,22 +284,6 @@ bandQueries.searchEvents = (title, date, location) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select * from EVENTS where title like '${title}' OR date <= '${date}' OR location like '${location}'`,
-      (err, results) => {
-        if (err) {
-          return reject(err);
-        } else {
-          return resolve(results);
-        }
-      }
-    );
-  });
-};
-
-bandQueries.getBandInfo = (bandId) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      `Select bandId, name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember from BAND where bandId = ?`,
-      [bandId],
       (err, results) => {
         if (err) {
           return reject(err);
