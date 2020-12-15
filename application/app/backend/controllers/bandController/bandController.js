@@ -86,19 +86,19 @@ const createEvent = (req, res) => {
     });
 };
 
-const getBands = (req, res) => {
+const getBandFromId = (req, res) => {
   if (!req.body.bandId) {
     console.log(req.body);
     return res.send({ success: false, error: "title field missing" });
   }
   bandQueries
-    .getBands(req.body.bandId)
+    .getBandFromId(req.body.bandId)
     .then(retObj => {
       console.log("successful retrieval of bands from bandId");
       return res.send({ success: true, result: retObj });
     })
     .catch(err => {
-      //console.log(err);
+      console.log(err);
       return res.send({
         success: false,
         error: "internal error retrieving bands from bandId"
@@ -120,6 +120,26 @@ const getBands = (req, res) => {
   }
   */
 };
+
+const getBandFromName = (req, res) => {
+  if (!req.body.name) {
+    console.log(req.body);
+    return res.send({ success: false, error: "title field missing" });
+  }
+  bandQueries
+    .getBandFromName(req.body.name)
+    .then(retObj => {
+      console.log("successful retrieval of bands from band name");
+      return res.send({ success: true, result: retObj });
+    })
+    .catch(err => {
+      console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error retrieving bands from band name"
+      });
+    });
+  };
 
 const getBandInfo = (req, res) => {
   if (!req.body.bandId) {
@@ -207,7 +227,8 @@ const getEventList = (req, res) => {
 module.exports = {
   createBand,
   createEvent,
-  getBands,
+  getBandFromId,
+  getBandFromName,
   getBandInfo,
   searchBands,
   searchEvents,
