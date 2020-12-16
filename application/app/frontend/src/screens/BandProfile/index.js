@@ -34,11 +34,10 @@ import user2 from "../../assets/bandProfile/user2.jpg";
 import user3 from "../../assets/bandProfile/user3.jpg";
 import bandPostImage from "../../assets/bandProfile/bandPost.jpg";
 
-import { useLocation, useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const BandProfilePage = props => {
-  const location = useLocation();
   const { bandName } = useParams();
   const history = useHistory();
   const userObj = useSelector(store => store.userObj);
@@ -86,6 +85,18 @@ const BandProfilePage = props => {
           link: "www.eirshugfhyisjikao.com",
           genre: "Rock",
           duration: "2:06"
+        },
+        {
+          name: "The Beatles - Hey Jude",
+          link: "www.eirshugfhyisjikao.com",
+          genre: "Rock",
+          duration: "2:06"
+        },
+        {
+          name: "The Beatles - Hey Jude",
+          link: "www.eirshugfhyisjikao.com",
+          genre: "Rock",
+          duration: "2:06"
         }
       ]);
       setPosts([
@@ -125,11 +136,10 @@ const BandProfilePage = props => {
     return false;
   };
   const isBandMember = () => {
-    return false;
+    return true;
   };
 
   const [invitationModal, setInvitationModal] = useState(false);
-  const toggleInvitationModal = () => setInvitationModal(!invitationModal);
 
   const [invitations, setInvitations] = useState([
     {
@@ -149,6 +159,16 @@ const BandProfilePage = props => {
   ]);
 
   const [sendInviteModal, setSendInviteModal] = useState(false);
+  const [addLinkModal, setAddLinkModal] = useState(false);
+  const [deleteLinkModal, setDeleteLinkModal] = useState(false);
+  const [deleteLink, setDeleteLink] = useState(null);
+  const [editBandModal, setEditBandModal] = useState(false);
+  const [deleteEventModal, setDeleteEventModal] = useState(false);
+  const [deleteEvent, setDeleteEvent] = useState(null);
+
+  const [addRepModal, setAddRepModal] = useState(null);
+  const [addPostModal, setAddPostModal] = useState(null);
+  const [addEventModal, setAddEventModal] = useState(null);
 
   return (
     <div style={{ backgroundColor: "#ffffff" }}>
@@ -176,7 +196,7 @@ const BandProfilePage = props => {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
-                  alignItems: "flex-start",
+                  alignItems: "stretch",
                   width: 300,
                   padding: 20,
                   backgroundColor: "#ffffff"
@@ -184,10 +204,51 @@ const BandProfilePage = props => {
               >
                 {band.links.map(linkObj => (
                   <div>
-                    <span style={{ fontWeight: 600 }}>{linkObj.key}:</span>{" "}
-                    {linkObj.link}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                      }}
+                    >
+                      <div style={{ fontWeight: 600, marginRight: 5 }}>
+                        {linkObj.key}:
+                      </div>
+                      <div>{linkObj.link}</div>
+                      {isBandMember() && (
+                        <Button
+                          onClick={() => {
+                            setDeleteLink(linkObj);
+                            setDeleteLinkModal(true);
+                          }}
+                          color="danger"
+                          style={{
+                            height: 30,
+                            width: 30,
+                            borderRadius: 15,
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"
+                          }}
+                        >
+                          x
+                        </Button>
+                      )}
+                    </div>
                   </div>
                 ))}
+
+                {isBandMember() && (
+                  <Button
+                    onClick={() => {
+                      setAddLinkModal(true);
+                    }}
+                    color="primary"
+                    style={{ marginTop: 10, width: "100%" }}
+                  >
+                    Add Link
+                  </Button>
+                )}
               </div>
 
               {isBandAdmin() ? (
@@ -225,7 +286,9 @@ const BandProfilePage = props => {
                   </div>
                   <div style={{ marginTop: 20 }}>
                     <Button
-                      onClick={() => toggleInvitationModal()}
+                      onClick={() => {
+                        setInvitationModal(!invitationModal);
+                      }}
                       style={{ backgroundColor: "#000000" }}
                     >
                       View invitations
@@ -233,41 +296,43 @@ const BandProfilePage = props => {
                   </div>
                 </div>
               ) : (
-                <>
-                  {userObj && band.isLookingForMember && (
-                    <div
-                      className="divShadow"
-                      style={{
-                        marginTop: 10,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlign: "center",
-                        width: 300,
-                        padding: 20,
-                        backgroundColor: "#ffffff"
-                      }}
-                    >
-                      <div style={{ marginBottom: 10 }}>
-                        This band is looking for a new Member
-                      </div>
-                      <Button
-                        onClick={() => {
-                          setSendInviteModal(true);
-                        }}
+                !isBandMember() && (
+                  <>
+                    {userObj && band.isLookingForMember && (
+                      <div
+                        className="divShadow"
                         style={{
-                          backgroundColor: "#CB0086",
-                          fontSize: 18,
-                          paddingRight: 20,
-                          paddingLeft: 20
+                          marginTop: 10,
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          textAlign: "center",
+                          width: 300,
+                          padding: 20,
+                          backgroundColor: "#ffffff"
                         }}
                       >
-                        Apply
-                      </Button>
-                    </div>
-                  )}
-                </>
+                        <div style={{ marginBottom: 10 }}>
+                          This band is looking for a new Member
+                        </div>
+                        <Button
+                          onClick={() => {
+                            setSendInviteModal(true);
+                          }}
+                          style={{
+                            backgroundColor: "#CB0086",
+                            fontSize: 18,
+                            paddingRight: 20,
+                            paddingLeft: 20
+                          }}
+                        >
+                          Apply
+                        </Button>
+                      </div>
+                    )}
+                  </>
+                )
               )}
             </div>
             <div
@@ -414,10 +479,29 @@ const BandProfilePage = props => {
             }}
           >
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
-              Music Repertoir
+              Music Repertoir{" "}
+              {isBandMember() && (
+                <Button
+                  onClick={() => {
+                    setAddRepModal(true);
+                  }}
+                  color="primary"
+                  style={{ marginLeft: 30 }}
+                >
+                  Add New Repertoir
+                </Button>
+              )}
             </div>
             {musicRep ? (
-              <Container style={{ fontSize: 18, overflowX: "auto" }}>
+              <Container
+                style={{
+                  fontSize: 18,
+                  overflowX: "auto",
+                  maxHeight: 350,
+                  overflowY: "auto",
+                  padding: 40
+                }}
+              >
                 <Row
                   style={{
                     marginBottom: 30,
@@ -436,8 +520,14 @@ const BandProfilePage = props => {
                     Duration
                   </Col>
                 </Row>
+
                 {musicRep.map((rep, i) => (
-                  <MusicRepItem {...rep} key={i} index={i} />
+                  <MusicRepItem
+                    {...rep}
+                    key={i}
+                    index={i}
+                    isBandMember={isBandMember()}
+                  />
                 ))}
               </Container>
             ) : (
@@ -461,7 +551,18 @@ const BandProfilePage = props => {
             }}
           >
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
-              Posts
+              Posts{" "}
+              {isBandMember() && (
+                <Button
+                  onClick={() => {
+                    setAddPostModal(true);
+                  }}
+                  color="primary"
+                  style={{ marginLeft: 30 }}
+                >
+                  Add New Post
+                </Button>
+              )}
             </div>
 
             {posts ? (
@@ -474,7 +575,11 @@ const BandProfilePage = props => {
                 }}
               >
                 {posts.map((post, i) => (
-                  <BandPostItem key={i} {...post} />
+                  <BandPostItem
+                    key={i}
+                    {...post}
+                    isBandMember={isBandMember()}
+                  />
                 ))}
               </div>
             ) : (
@@ -497,7 +602,14 @@ const BandProfilePage = props => {
             }}
           >
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
-              Events
+              Events{" "}
+              {isBandMember() && (
+                <Button  onClick={() => {
+                  setAddEventModal(true);
+                }} color="primary" style={{ marginLeft: 30 }}>
+                  Add New Event
+                </Button>
+              )}
             </div>
             {events ? (
               <div
@@ -510,6 +622,26 @@ const BandProfilePage = props => {
               >
                 {events.map((event, i) => (
                   <div key={i}>
+                    {isBandMember() && (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          marginBottom: -20,
+                          marginRight: 25
+                        }}
+                      >
+                        <Button
+                          color="danger"
+                          onClick={() => {
+                            setDeleteEvent(event);
+                            setDeleteEventModal(true);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    )}
                     <EventCard {...event} />
                   </div>
                 ))}
@@ -518,6 +650,29 @@ const BandProfilePage = props => {
               <ReloadPage value="band events" />
             )}
           </div>
+
+          {isBandMember() && (
+            <div
+              style={{
+                position: "fixed",
+                bottom: 0,
+                right: 0,
+                padding: 20,
+                borderRadius: 20,
+                backgroundColor: "rgba(255,255,255,0.8)"
+              }}
+            >
+              <Button
+                onClick={() => {
+                  setEditBandModal(true);
+                }}
+                color="primary"
+                style={{ fontSize: 18 }}
+              >
+                Edit Band Info
+              </Button>
+            </div>
+          )}
 
           {/* 
           ***
@@ -563,11 +718,80 @@ const BandProfilePage = props => {
           </Modal>
 
           <Modal
-            isOpen={invitationModal}
-            toggle={toggleInvitationModal}
+            isOpen={addLinkModal}
+            toggle={() => setAddLinkModal(!addLinkModal)}
             backdrop="static"
           >
-            <ModalHeader toggle={toggleInvitationModal}>
+            <ModalHeader toggle={() => setAddLinkModal(!addLinkModal)}>
+              Add link to your band
+            </ModalHeader>
+            <ModalBody>
+              <div style={{ display: "flex" }}>
+                <Input
+                  placeholder="key. Ex: youtube"
+                  style={{ marginTop: 10 }}
+                />
+                :
+                <Input
+                  placeholder="Link. Ex: www.youtube.com/"
+                  style={{ marginTop: 10 }}
+                />
+              </div>
+
+              <Button color="success" style={{ float: "right", marginTop: 10 }}>
+                Add Link
+              </Button>
+            </ModalBody>
+          </Modal>
+
+          <Modal
+            isOpen={deleteLinkModal}
+            toggle={() => setDeleteLinkModal(!deleteLinkModal)}
+            backdrop="static"
+          >
+            <ModalBody
+              style={{
+                textAlign: "center",
+                paddingTop: 40,
+                paddingBottom: 40,
+                fontSize: 18,
+                fontWeight: 600
+              }}
+            >
+              Are you sure you want to delete "{deleteLink && deleteLink.key}"
+              link?
+              <div
+                style={{
+                  marginTop: 20,
+                  display: "flex",
+                  justifyContent: "space-around"
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    setDeleteLinkModal(!deleteLinkModal);
+                  }}
+                  color="dark"
+                >
+                  Cancel
+                </Button>
+                <Button color="danger">Delete Link</Button>
+              </div>
+            </ModalBody>
+          </Modal>
+
+          <Modal
+            isOpen={invitationModal}
+            toggle={() => {
+              setInvitationModal(!invitationModal);
+            }}
+            backdrop="static"
+          >
+            <ModalHeader
+              toggle={() => {
+                setInvitationModal(!invitationModal);
+              }}
+            >
               New Member Applications
             </ModalHeader>
             <ModalBody>
@@ -617,6 +841,42 @@ const BandProfilePage = props => {
                     </div>
                   </div>
                 ))}
+              </div>
+            </ModalBody>
+          </Modal>
+
+          <Modal
+            isOpen={deleteEventModal}
+            toggle={() => setDeleteEventModal(!deleteEventModal)}
+            backdrop="static"
+          >
+            <ModalBody
+              style={{
+                textAlign: "center",
+                paddingTop: 40,
+                paddingBottom: 40,
+                fontSize: 18,
+                fontWeight: 600
+              }}
+            >
+              Are you sure you want to delete "
+              {deleteEvent && deleteEvent.title}" event?
+              <div
+                style={{
+                  marginTop: 20,
+                  display: "flex",
+                  justifyContent: "space-around"
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    setDeleteEventModal(!deleteEventModal);
+                  }}
+                  color="dark"
+                >
+                  Cancel
+                </Button>
+                <Button color="danger">Delete Event</Button>
               </div>
             </ModalBody>
           </Modal>
