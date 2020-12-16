@@ -28,6 +28,7 @@ const createBand = async (req, res) => {
       imgUrl,
       JSON.stringify([]), //list of links as a JSON object
       JSON.stringify(req.body.location),
+      req.body.description,
       req.body.latitude,
       req.body.longitude,
       req.body.genre,
@@ -63,27 +64,27 @@ const createBand = async (req, res) => {
 
 //controller to create a new band post
 const createBandPost = (req, res) => {
-  if (!req.user) {
+  if (!req.body.bandId) {
     //is a registered user
-    return res.send({ success: false, error: "error in userId field" });
+    return res.send({ success: false, error: "bandId field missing" });
   }
 
-  let member = isMember(req, res);
-
-  if (member) {
-    bandQueries.createBandPost(
+  bandQueries
+    .createBandPost(
       req.body.media,
       req.body.title,
       req.body.description,
       req.body.bandId
-    );
-    return res.send({ success: true });
-  } else {
-    return res.send({
-      success: false,
-      error: "internal error creating Band Post"
+    )
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error when trying to create Band Post",
+      });
     });
-  }
 };
 
 //TODO need to test
@@ -102,41 +103,30 @@ const createEvent = (req, res) => {
   ) {
     return res.send({
       success: false,
-      error: "fields missing for createEvent"
+      error: "fields missing for createEvent",
     });
   }
-
-  let member = isMember(req, res);
-
-  console.log("member: " + member);
-  if (member) {
-    bandQueries
-      .createEvent(
-        req.body.title,
-        req.body.description,
-        req.body.date,
-        req.body.startTime,
-        req.body.endTime,
-        req.body.location,
-        req.body.locationLat,
-        req.body.locationLong,
-        req.body.bandId
-      )
-      .then(retObj => {
-        return res.send({ success: true });
-      })
-      .catch(err => {
-        return res.send({
-          success: false,
-          error: "internal error when trying to create event"
-        });
+  bandQueries
+    .createEvent(
+      req.body.title,
+      req.body.description,
+      req.body.date,
+      req.body.startTime,
+      req.body.endTime,
+      req.body.location,
+      req.body.locationLat,
+      req.body.locationLong,
+      req.body.bandId
+    )
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error when trying to create event",
       });
-  } else {
-    return res.send({
-      success: false,
-      error: "internal error creating Event"
     });
-  }
 };
 
 //controller for creating a new member of a band
@@ -144,7 +134,7 @@ const createMember = (req, res) => {
   if (!req.user) {
     return res.send({
       success: false,
-      error: "Must be a logged in user to proceed."
+      error: "Must be a logged in user to proceed.",
     });
   }
 
@@ -156,13 +146,49 @@ const createMember = (req, res) => {
       req.user.userId,
       req.body.bandId
     )
-    .then(retObj => {
+    .then((retObj) => {
       return res.send({ success: true });
     })
-    .catch(err => {
+    .catch((err) => {
       return res.send({
         success: false,
-        error: "internal error creating a band member"
+        error: "internal error creating a band member",
+      });
+    });
+};
+
+//controller for adding a repertoire entry to a band
+const createRep = (req, res) => {
+  if (!req.body.bandId) {
+    return res.send({ success: false, error: "bandId field missing" });
+  }
+  if (
+    !req.body.songName ||
+    !req.body.runTime ||
+    !req.body.genre ||
+    !req.body.link
+  ) {
+    return res.send({
+      success: false,
+      error: "fields missing for adding repertoire",
+    });
+  }
+
+  bandQueries
+    .createRep(
+      req.body.songName,
+      req.body.runTime,
+      req.body.genre,
+      req.body.link,
+      req.body.bandId
+    )
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error creating a band Repertoire Entry",
       });
     });
 };
@@ -171,13 +197,79 @@ const createMember = (req, res) => {
 const createSetEntry = (req, res) => {
   bandQueries
     .createSetEntry(req.body.songName, req.body.runTime, req.body.eventId)
-    .then(retObj => {
+    .then((retObj) => {
       return res.send({ success: true });
     })
-    .catch(err => {
+    .catch((err) => {
       return res.send({
         success: false,
-        error: "internal error creating a band Set Entry"
+        error: "internal error creating a band Set Entry",
+      });
+    });
+};
+
+//controller for deleting a band post
+const deleteBandPost = (req, res) => {
+  if (!req.body.bandPostId) {
+    return res.send({
+      success: false,
+      error: "fields missing for deleting Band Post",
+    });
+  }
+
+  bandQueries
+    .deleteBandPost(req.body.bandPostId)
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error deleting a Band Post",
+      });
+    });
+};
+
+//controller for deleting an event
+const deleteEvent = (req, res) => {
+  if (!req.body.eventId) {
+    return res.send({
+      success: false,
+      error: "fields missing for deleting Event",
+    });
+  }
+
+  bandQueries
+    .deleteEvent(req.body.eventId)
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error deleting a band Event",
+      });
+    });
+};
+
+//controller for deleting a band's repertoire entry
+const deleteRep = (req, res) => {
+  if (!req.body.repId) {
+    return res.send({
+      success: false,
+      error: "fields missing for deleting repertoire",
+    });
+  }
+
+  bandQueries
+    .deleteRep(req.body.repId)
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error deleting a band Rep Entry",
       });
     });
 };
@@ -192,7 +284,7 @@ const getBandFromId = (req, res) => {
     .then(retObj => {
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
+    .catch((err) => {
       //console.log(err);
       return res.send({
         success: false,
@@ -259,7 +351,7 @@ const getBandInfo = (req, res) => {
     type: req.body.type ? req.body.type : "%",
     numMembers: req.body.numMembers ? req.body.numMembers : "%",
     */
-    bandId: req.body.bandId ? req.body.bandId : "%"
+    bandId: req.body.bandId ? req.body.bandId : "%",
   };
 
   bandQueries.getBandInfo(search.bandId);
@@ -290,14 +382,14 @@ const getBandPosts = (req, res) => {
 
   bandQueries
     .getBandPosts(req.body.bandId)
-    .then(retObj => {
+    .then((retObj) => {
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
+    .catch((err) => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving posts of a band from bandId"
+        error: "internal error retrieving posts of a band from bandId",
       });
     });
 };
@@ -310,14 +402,14 @@ const getBandRep = (req, res) => {
 
   bandQueries
     .getBandRep(req.body.bandId)
-    .then(retObj => {
+    .then((retObj) => {
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
+    .catch((err) => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving repertoire from bandId"
+        error: "internal error retrieving repertoire from bandId",
       });
     });
 };
@@ -325,20 +417,20 @@ const getBandRep = (req, res) => {
 //controller for getting all events of a band given a band id
 const getEvents = (req, res) => {
   if (!req.body.bandId) {
-    console.log(req.body);
+    //console.log(req.body);
     return res.send({ success: false, error: "title field missing" });
   }
   bandQueries
     .getEvents(req.body.bandId)
-    .then(retObj => {
-      console.log("successful retrieval of band events from bandId");
+    .then((retObj) => {
+      //console.log("successful retrieval of band events from bandId");
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
-      console.log(err);
+    .catch((err) => {
+      //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving band events from bandId"
+        error: "internal error retrieving band events from bandId",
       });
     });
 };
@@ -352,7 +444,7 @@ const searchBands = (req, res) => {
     locationLong: req.body.locationLong ? req.body.locationLong : null,
     isLookingForMember: req.body.isLookingForMember
       ? req.body.isLookingForMember
-      : 0
+      : 0,
   };
 
   bandQueries
@@ -363,10 +455,10 @@ const searchBands = (req, res) => {
       search.locationLong,
       search.isLookingForMember
     )
-    .then(retObj => {
+    .then((retObj) => {
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
+    .catch((err) => {
       return res.send({ success: false, error: "internal error" });
     });
 };
@@ -380,29 +472,33 @@ const searchEvents = (req, res) => {
   var search = {
     name: req.body.title ? req.body.title + "%" : "%",
     date: req.body.date ? req.body.date : "%",
-    location: req.body.location ? req.body.location : "%"
+    location: req.body.location ? req.body.location : "%",
     //location
   };
 
   userQueries
     .searchEvents(search.name, search.date, search.location)
-    .then(retObj => {
+    .then((retObj) => {
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
+    .catch((err) => {
       return res.send({
         success: false,
-        error: "internal error searching for events"
+        error: "internal error searching for events",
       });
     });
 };
 
 module.exports = {
+  createRep,
   createBand,
   createBandPost,
   createEvent,
   createSetEntry,
   createMember,
+  deleteBandPost,
+  deleteEvent,
+  deleteRep,
   getBandFromId,
   getBandFromName,
   getBandMembers,
@@ -411,5 +507,5 @@ module.exports = {
   getBandRep,
   getEvents,
   searchBands,
-  searchEvents
+  searchEvents,
 };

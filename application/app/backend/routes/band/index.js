@@ -2,7 +2,7 @@ const express = require("express");
 
 const nodeGeocoder = require("node-geocoder");
 const geoCoder = nodeGeocoder({
-  provider: "openstreetmap"
+  provider: "openstreetmap",
 });
 
 const bandController = require("../../controllers/bandController/bandController.js");
@@ -14,15 +14,15 @@ const multer = require("multer");
 const geocode = require("../../helpers/middlewares/geocode.js");
 const storage = multer.diskStorage({
   destination: "backend/uploads",
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, file.originalname);
-  }
+  },
 });
 
 //for uploading files using multer
 const upload = multer({
   //multer settings
-  storage: storage
+  storage: storage,
   // fileFilter: (req, file, cb) => {
   //   let ext = path.extname(file.originalname);
   //   //should validate file format input - must be jpg, jpeg, or png
@@ -88,7 +88,7 @@ bandRouter.post(
           city: req.body.location.city,
           state: req.body.location.state,
           postalcode: req.body.location.zip,
-          country: "United States"
+          country: "United States",
         });
         if (
           retObj.length <= 0 ||
@@ -101,7 +101,7 @@ bandRouter.post(
           req.body.location = {
             street: retObj[0].streetName,
             city: retObj[0].city ? retObj[0].city : req.body.location.city,
-            state: retObj[0].state
+            state: retObj[0].state,
           };
           req.body.latitude = retObj[0].latitude;
           req.body.longitude = retObj[0].longitude;
@@ -115,7 +115,7 @@ bandRouter.post(
       await awsS3.clearFile(req.file);
       return res.send({
         success: false,
-        error: "no location provided by user"
+        error: "no location provided by user",
       });
     }
   },
@@ -127,7 +127,16 @@ bandRouter.post(
 );
 
 //route definition for creating a new event
-bandRouter.post("/createEvent", isUser, geocode, bandController.createEvent);
+bandRouter.post(
+  "/createEvent",
+  isUser,
+  isMember,
+  geocode,
+  bandController.createEvent
+);
+
+//route definition for adding an entry to a band's repertoire
+bandRouter.post("/createRep", isUser, isMember, bandController.createRep);
 
 //route definition for creating a new set entry
 bandRouter.post(
@@ -141,7 +150,26 @@ bandRouter.post(
 bandRouter.post("/createMember", isUser, bandController.createMember);
 
 //route definition for creating a new band post
-bandRouter.post("/createBandPost", isUser, bandController.createBandPost);
+bandRouter.post(
+  "/createBandPost",
+  isUser,
+  isMember,
+  bandController.createBandPost
+);
+
+//route definition for deleting a band post
+bandRouter.post(
+  "/deleteBandPost",
+  isUser,
+  isMember,
+  bandController.deleteBandPost
+);
+
+//route definition for deleting a repertoire entry
+bandRouter.post("/deleteRep", isUser, isMember, bandController.deleteRep);
+
+//route definition for deleting a repertoire entry
+bandRouter.post("/deleteEvent", isUser, isMember, bandController.deleteEvent);
 
 //route definition for getting all the bands that someone is a member of
 bandRouter.post("/getBandFromId", bandController.getBandFromId);
