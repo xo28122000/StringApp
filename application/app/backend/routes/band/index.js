@@ -7,6 +7,7 @@ const geoCoder = nodeGeocoder({
 
 const bandController = require("../../controllers/bandController/bandController.js");
 const isUser = require("../../helpers/middlewares/isUser");
+const isMember = require("../../helpers/middlewares/isMember");
 const awsS3 = require("../../lib/aws/s3");
 
 const multer = require("multer");
@@ -123,7 +124,12 @@ bandRouter.post(
 bandRouter.post("/createEvent", isUser, geocode, bandController.createEvent);
 
 //route definition for creating a new set entry
-bandRouter.post("/createSetEntry", isUser, bandController.createSetEntry);
+bandRouter.post(
+  "/createSetEntry",
+  isUser,
+  isMember,
+  bandController.createSetEntry
+);
 
 //route definition for creating a new member of a band
 bandRouter.post("/createMember", isUser, bandController.createMember);

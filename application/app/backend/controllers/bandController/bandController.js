@@ -167,27 +167,17 @@ const createMember = (req, res) => {
 
 //controller for creating a new set entry for an event
 const createSetEntry = (req, res) => {
-  let member = isMember(req, res);
-  if (member == true) {
-    console.log("member: " + member);
-    bandQueries
-      .createSetEntry(req.body.songName, req.body.runTime, req.body.eventId)
-      .then((retObj) => {
-        return res.send({ success: true });
-      })
-      .catch((err) => {
-        return res.send({
-          success: false,
-          error: "internal error creating a band Set Entry",
-        });
+  bandQueries
+    .createSetEntry(req.body.songName, req.body.runTime, req.body.eventId)
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error creating a band Set Entry",
       });
-  } else {
-    return res.send({
-      success: false,
-      error:
-        "not a member of the band for which Set Entry is attempting to be created",
     });
-  }
 };
 
 //controller for getting all bands a user is a member of
@@ -320,27 +310,6 @@ const getEvents = (req, res) => {
     });
 };
 
-const isMember = async (req, res) => {
-  //internal helper function for band membership verification
-  //console.log("called inside isMember");
-  if (!req.body.bandId) {
-    console.log("bandId field missing");
-  } else if (!req.user) {
-    //console.log("Must be a logged in user to proceed.");
-  }
-
-  let member = await bandQueries.isMember(req.user.userId, req.body.bandId);
-  console.log("member: " + member);
-
-  if (member == true) {
-    console.log("isMember is returning true");
-    return true;
-  } else {
-    console.log("isMember is returning false");
-    return false;
-  }
-};
-
 //controller for searching for a band given different criteria
 const searchBands = (req, res) => {
   var search = {
@@ -407,7 +376,6 @@ module.exports = {
   getBandPosts,
   getBandRep,
   getEvents,
-  isMember,
   searchBands,
   searchEvents,
 };

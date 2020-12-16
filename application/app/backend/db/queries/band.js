@@ -87,12 +87,14 @@ bandQueries.createMember = (isBandAdmin, role, dateJoined, userId, bandId) => {
 bandQueries.createSetEntry = (songName, runTime, eventId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO SETS (songName, runTime, eventId) VALUES('${songName}', '${runTime}', '${eventId}')`,
+      `INSERT INTO SETS (songName, runTime, eventId) VALUES(?, ?, ?)`,
+      [songName, runTime, eventId],
       (err, results) => {
         if (err) {
+          console.log("error: " + err);
           return reject(err);
         } else {
-          //console.log(results);
+          console.log(results);
           return resolve(results);
         }
       }
@@ -196,44 +198,20 @@ bandQueries.getBandRep = (bandId) => {
   });
 };
 
-bandQueries.isMember = (userId, bandId) => {
-  console.log("isMember: userId = " + userId + ", bandId: " + bandId);
-
-  let flag = false;
-
-  const promiseMember = new Promise((resolve, reject) => {
+bandQueries.isMember = async (userId, bandId) => {
+  return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT EXISTS(SELECT 1 from BANDMEMBERS where (userId = '${userId}' AND bandId = '${bandId}') LIMIT 1)`,
+      `SELECT EXISTS(SELECT 1 from BANDMEMBERS where (userId = ? AND bandId = ?) LIMIT 1)`,
+      [userId, bandId],
       (err, results) => {
         if (err) {
-          console.log("error in the first if: " + err);
+          //console.log("error: " + err);
           return reject(err);
         } else {
-          console.log("in the else, results: " + results);
-          let r = JSON.parse(JSON.stringify(results));
-          console.log("r object is: " + r);
-          for (var key in results[0]) {
-            r.result = results[0][key];
-          }
-          // console.log(r);
-          if (r.result < 1) {
-            console.log("resolve: " + resolve);
-            return resolve(false);
-          } else {
-            console.log("resolve: " + resolve);
-            console.log("inside the else");
-            flag = true;
-            return resolve(true);
-          }
+          return resolve(results);
         }
       }
     );
-  });
-
-  promiseMember.then((value) => {
-    // console.log("hit then of isMember promise query function");
-    // console.log("flag: " + flag);
-    return flag;
   });
 };
 
