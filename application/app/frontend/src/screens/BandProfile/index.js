@@ -230,6 +230,7 @@ const BandProfilePage = props => {
   const genreOptions = ["Rock", "Acoustic", "Jazz", "Pop", "Hip Hop", "Other"];
   const [genreDDOpen, setGenreDDOpen] = useState(false);
   const [genre, setGenre] = useState("Rock");
+  const [repGenre, setRepGenre] = useState("Acoustic");
 
   return (
     <div style={{ backgroundColor: "#ffffff" }}>
@@ -1147,11 +1148,30 @@ const BandProfilePage = props => {
                 style={{ marginBottom: 20 }}
                 placeholder="Link to this Repertoir. (ex: https://code-404.xyz/)"
               />
-              <Input
-                id="addRepGenre"
-                style={{ marginBottom: 20 }}
-                placeholder="Genre of this Repertoir"
-              />
+              <Label>Repertoir Genre:</Label>
+              <Dropdown
+                isOpen={genreDDOpen}
+                toggle={() => {
+                  setGenreDDOpen(!genreDDOpen);
+                }}
+                style={{ marginLeft: 20, marginBottom: 20 }}
+              >
+                <DropdownToggle caret style={{ backgroundColor: "#000000" }}>
+                  {repGenre ? repGenre : "-"}
+                </DropdownToggle>
+                <DropdownMenu>
+                  {genreOptions.map(genreOption => (
+                    <DropdownItem
+                      key={genreOption}
+                      onClick={() => {
+                        setRepGenre(genreOption);
+                      }}
+                    >
+                      {genreOption}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
               Duration of this Repertoir
               <div
                 style={{
@@ -1184,7 +1204,7 @@ const BandProfilePage = props => {
                 onClick={() => {
                   let name = document.getElementById("addRepName").value;
                   let link = document.getElementById("addRepLink").value;
-                  let genre = document.getElementById("addRepGenre").value;
+
                   let DurationMin = document.getElementById("addRepDurationMin")
                     .value;
                   let DurationSec = document.getElementById("addRepDurationSec")
@@ -1193,7 +1213,7 @@ const BandProfilePage = props => {
                     .post("/api/band/createRep", {
                       songName: name,
                       runTime: DurationMin + ":" + DurationSec,
-                      genre,
+                      genre: repGenre,
                       link,
                       bandId: band.bandId
                     })
