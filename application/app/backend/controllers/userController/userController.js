@@ -207,36 +207,93 @@ const getUserBand = (req, res) => {
   }
   bandQueries
     .getUserBand(req.body.userId)
-    .then(retObj => {
+    .then((retObj) => {
       //console.log("successful retrieval of bands and its related information from bandId");
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
+    .catch((err) => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving band informations from userId"
+        error: "internal error retrieving band informations from userId",
       });
     });
 };
 
 //controller for editing profile of the registered users
 const editUserInfo = (req, res) => {
-  if (!req.body.name || !req.body.email || !req.body.password || !req.body.profileImageUrl || !req.body.phoneNumber || !req.body.location || !req.body.role || !req.body.genre) {
+  if (
+    !req.body.name ||
+    !req.body.email ||
+    !req.body.password ||
+    !req.body.profileImageUrl ||
+    !req.body.phoneNumber ||
+    !req.body.location ||
+    !req.body.role ||
+    !req.body.genre
+  ) {
     //console.log(req.body);
     return res.send({ success: false, error: "title field missing" });
   }
-  bandQueries
-    .editUserInfo(req.body.userId, req.body.name, req.body.email, req.body.password, req.body.profileImageUrl, req.body.phoneNumber, req.body.location, req.body.role, req.body.genre)
-    .then(retObj => {
+  userQueries
+    .editUserInfo(
+      req.body.userId,
+      req.body.name,
+      req.body.email,
+      req.body.password,
+      req.body.profileImageUrl,
+      req.body.phoneNumber,
+      req.body.location,
+      req.body.role,
+      req.body.genre
+    )
+    .then((retObj) => {
       //console.log("successful editing of user info from userId");
       return res.send({ success: true, result: retObj });
     })
-    .catch(err => {
+    .catch((err) => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error editing user informations from userId"
+        error: "internal error editing user informations from userId",
+      });
+    });
+};
+
+//controller for sending invite from registered users
+const sendInvite = (req, res) => {
+  if (!req.user.userId || !req.band.bandId) {
+    //console.log(req.body);
+    return res.send({ success: false, error: "field(s) missing" });
+  }
+
+  let sentByBand = 0;
+
+  let today = new Date();
+
+  let dd = String(today.getDate()).padStart(2, "0");
+  let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  let yyyy = today.getFullYear();
+
+  today = yyyy + "-" + mm + "-" + dd;
+
+  userQueries
+    .sendInvite(
+      req.body.message,
+      today,
+      sentByBand,
+      req.user.userId,
+      req.body.bandId
+    )
+    .then((retObj) => {
+      //console.log("successful editing of user info from userId");
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      //console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error sending invite from user",
       });
     });
 };
@@ -252,4 +309,5 @@ module.exports = {
   getAccount,
   getUserBand,
   editUserInfo,
+  sendInvite,
 };

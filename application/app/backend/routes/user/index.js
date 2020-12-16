@@ -24,11 +24,15 @@ userRouter.post("/getUserBand", isUser, userController.getUserBand);
 
 //route definition for editing all the user related information
 userRouter.post("/editUserInfo", isUser, userController.editUserInfo);
+
 //route definition for deleting a link from a user profile
 userRouter.post("/deleteLink", isUser, userController.deleteLink);
 
 //TODO this should probably be in band - change this?
 userRouter.post("/getEvent", userController.getEvent);
+
+//route definition for sending an invite from a logged in user
+userRouter.post("/sendInvite", isUser, userController.sendInvite);
 
 //is the below necessary?
 //userRouter.post("/getEvent", searchEventsLimiter, userController.getBands);

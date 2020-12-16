@@ -143,4 +143,20 @@ userQueries.editUserInfo = (userId) => {
   });
 };
 
+userQueries.sendInvite = (message, today, sentByBand, userId, bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `INSERT INTO INVITATIONS (message, dateSent, sentByBand, userId, bandId) VALUES (?, ?, ?, ?, ?)`,
+      [message, today, sentByBand, userId, bandId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 module.exports = userQueries;
