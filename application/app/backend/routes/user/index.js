@@ -16,6 +16,9 @@ userRouter.put("/changePhone", isUser, userController.changePhone);
 //route definition for changing a logged in user's defined account role
 userRouter.put("/changeRole", isUser, userController.changeRole);
 
+//route definition for adding a link to a user profile
+userRouter.post("/createLink", isUser, userController.createLink);
+
 //TODO this should probably be in band - change this?
 userRouter.post("/getEvent", userController.getEvent);
 

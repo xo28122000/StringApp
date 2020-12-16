@@ -88,6 +88,69 @@ const changePhone = (req, res) => {
     });
 };
 
+//controller for adding a link to a user account
+const createLink = (req, res) => {
+  if (!req.body.link || !req.user) {
+    return res.send({ success: false, error: "missing field(s)" });
+  }
+
+  let currentLinks = await userQueries.getLink(req.user.userId);
+  let currentLength = currentLinks.length;
+
+  if(currentLength >= 400){
+    return res.send({success: false, error: "too many links, or links too long"});
+  }
+
+  currentLinks = JSON.parse(currentLinks);
+  currentLinks.push(req.body.link);
+  currentLinks = JSON.stringify(currentLinks);
+
+  userQueries
+    .createLink(req.user.userId, currentLinks)
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error when trying to add link",
+      });
+    });
+};
+
+//controller for deleting a link from a user account
+const deleteLink = (req, res) => {
+  if (!req.body.link || !req.user) {
+    return res.send({ success: false, error: "missing field(s)" });
+  }
+
+  let currentLinks = await userQueries.getLink(req.user.userId);
+
+  currentLinks = JSON.parse(currentLinks);
+
+  for(item in currentLinks){
+    if(currentLinks[item][key] == req.body.link.key){
+      if(currentLinks[item][link] == req.body.link.link){
+        currentLinks.splice(item, 1);
+        break;
+      }
+    }
+  }
+  currentLinks = JSON.stringify(currentLinks);
+
+  userQueries
+    .createLink(req.user.userId, currentLinks)
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error when trying to add link",
+      });
+    });
+}
+
 //controller for getting events of a band
 const getEvent = (req, res) => {
   if (!req.body.bandId) {
@@ -134,6 +197,8 @@ module.exports = {
   changeName,
   changePhone,
   changeRole,
+  createLink,
+  deleteLink,
   getEvent,
   getAccount,
 };

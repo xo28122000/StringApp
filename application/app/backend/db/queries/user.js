@@ -62,10 +62,42 @@ userQueries.changeRole = (userId, newRole) => {
   });
 };
 
+userQueries.createLink = (userId, links) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE STRINGACCOUNT SET links = ? WHERE userId = ?`,
+      [links, userId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 userQueries.getEvent = (eventId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * EVENTS where eventId like '${eventId}'`,
+      `SELECT * FROM EVENTS where eventId like '${eventId}'`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+userQueries.getLink = async (userId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT links FROM STRINGACCOUNT where userId like ?`,
+      [userId],
       (err, results) => {
         if (err) {
           return reject(err);
