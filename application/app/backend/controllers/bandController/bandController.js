@@ -182,20 +182,20 @@ const createSetEntry = (req, res) => {
 };
 
 //controller for getting all bands a user is a member of
-const getBands = (req, res) => {
-  if (!req.body.userId) {
+const getBandFromId = (req, res) => {
+  if (!req.body.bandId) {
     return res.send({ success: false, error: "title field missing" });
   }
   bandQueries
-    .getBands(req.body.userId)
-    .then(retObj => {
+    .getBandFromId(req.body.bandId)
+    .then((retObj) => {
       return res.send({ success: true, result: retObj });
     })
     .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving bands from userId"
+        error: "internal error retrieving bands from bandId",
       });
     });
   //TODO need to verify if isUser, and get userId from table first
@@ -214,6 +214,24 @@ const getBands = (req, res) => {
   }
   */
 };
+
+const getBandFromName = (req, res) => {
+  if (!req.body.name) {
+    return res.send({ success: false, error: "title field missing" });
+  }
+  bandQueries
+    .getBandFromName(req.body.bandId)
+    .then((retObj) => {
+      return res.send({ success: true, result: retObj });
+    })
+    .catch((err) => {
+      //console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error retrieving bands from band name",
+      });
+    });
+  };
 
 //controller for getting band information from a band id
 const getBandInfo = (req, res) => {
@@ -234,22 +252,24 @@ const getBandInfo = (req, res) => {
 //controller for getting all members of a band given a band id
 const getBandMembers = (req, res) => {
   if (!req.body.bandId) {
-    return res.send({ success: false, error: "bandId field missing" });
+    console.log(req.body);
+    return res.send({ success: false, error: "title field missing" });
   }
-
   bandQueries
     .getBandMembers(req.body.bandId)
     .then(retObj => {
+      console.log("successful retrieval of band members from bandId");
       return res.send({ success: true, result: retObj });
     })
     .catch(err => {
-      //console.log(err);
+      console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving al members of a band from bandId"
+        error: "internal error retrieving band members from bandId"
       });
     });
 };
+
 
 //controller for getting all posts of a band given a band id
 const getBandPosts = (req, res) => {
@@ -294,19 +314,20 @@ const getBandRep = (req, res) => {
 //controller for getting all events of a band given a band id
 const getEvents = (req, res) => {
   if (!req.body.bandId) {
-    return res.send({ success: false, error: "bandId field missing" });
+    console.log(req.body);
+    return res.send({ success: false, error: "title field missing" });
   }
-
   bandQueries
     .getEvents(req.body.bandId)
     .then(retObj => {
+      console.log("successful retrieval of band events from bandId");
       return res.send({ success: true, result: retObj });
     })
     .catch(err => {
-      //console.log(err);
+      console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving events from bandId"
+        error: "internal error retrieving band events from bandId"
       });
     });
 };
@@ -371,9 +392,10 @@ module.exports = {
   createEvent,
   createSetEntry,
   createMember,
-  getBands,
-  getBandInfo,
+  getBandFromId,
+  getBandFromName,
   getBandMembers,
+  getBandInfo,
   getBandPosts,
   getBandRep,
   getEvents,

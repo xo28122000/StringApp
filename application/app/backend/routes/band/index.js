@@ -144,13 +144,15 @@ bandRouter.post("/createMember", isUser, bandController.createMember);
 bandRouter.post("/createBandPost", isUser, bandController.createBandPost);
 
 //route definition for getting all the bands that someone is a member of
-bandRouter.post("/getBands", bandController.getBands);
+bandRouter.post("/getBandFromId", bandController.getBandFromId);
 
-//route definition for getting the information about a band
-bandRouter.post("/getBandInfo", bandController.createEvent);
+bandRouter.post("/getBandFromName", bandController.getBandFromName);
 
 //route definition for getting the members of a band
 bandRouter.post("/getBandMembers", bandController.getBandMembers);
+
+//route definition for getting the information about a band
+bandRouter.post("/getBandInfo", bandController.createEvent);
 
 //route definition for getting all posts of a specific band
 bandRouter.post("/getBandPosts", bandController.getBandPosts);

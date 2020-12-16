@@ -106,8 +106,9 @@ bandQueries.createSetEntry = (songName, runTime, eventId) => {
 bandQueries.getEvents = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `Select * from EVENTS where bandId = ?`,
-      [bandId],
+      `SELECT E.bandId, E.eventId, E.title, E.description, E.date, E.startTime, E.endTime, E.location, E.locationLat, E.locationLong 
+      FROM StringApp.BAND B, StringApp.EVENTS E
+      WHERE B.bandId = E.bandId B.bandId = '${bandId}';`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -119,12 +120,25 @@ bandQueries.getEvents = bandId => {
   });
 };
 
-//TODO fix this SQL query:
-//need to join the query - userId -> band member, bandId from band member, then bands from bands with bandID
-bandQueries.getBands = userId => {
+bandQueries.getBandFromId = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `select from BAND where userId = '${userId}'`,
+      `select * from Band where bandId = '${bandId}'`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+bandQueries.getBandFromName = name => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `select * from Band where name = '${name}'`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -155,7 +169,9 @@ bandQueries.getBandInfo = bandId => {
 bandQueries.getBandMembers = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * from BANDMEMBERS where (bandId = '${bandId}')`,
+      `SELECT BM.bandId, BM.bandMemberId, BM.isBandAdmin, BM.dateJoined, BM.userId
+      FROM StringApp.BANDMEMBERS BM, StringApp.BAND B
+      WHERE BM.bandId = B.bandId AND B.bandId = '${bandId}';`,
       (err, results) => {
         if (err) {
           return reject(err);
