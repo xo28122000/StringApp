@@ -313,19 +313,20 @@ const getBandRep = (req, res) => {
 //controller for getting all events of a band given a band id
 const getEvents = (req, res) => {
   if (!req.body.bandId) {
-    return res.send({ success: false, error: "bandId field missing" });
+    console.log(req.body);
+    return res.send({ success: false, error: "title field missing" });
   }
-
   bandQueries
     .getEvents(req.body.bandId)
-    .then((retObj) => {
+    .then(retObj => {
+      console.log("successful retrieval of band events from bandId");
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
-      //console.log(err);
+    .catch(err => {
+      console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving events from bandId",
+        error: "internal error retrieving band events from bandId"
       });
     });
 };
