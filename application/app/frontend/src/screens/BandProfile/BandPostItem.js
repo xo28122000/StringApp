@@ -1,6 +1,7 @@
 import React from "react";
 import bandPostImage from "../../assets/bandProfile/bandPost.jpg";
 import { Card, Modal, ModalBody, Button } from "reactstrap";
+import Axios from "axios";
 const BandPostItem = props => {
   const [deletePostModal, setDeletePostModal] = React.useState(false);
   return (
@@ -38,16 +39,19 @@ const BandPostItem = props => {
           zIndex: 1
         }}
       >
-        <div
-          style={{
-            maxHeight: 250,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center"
-          }}
-        >
-          <img src={bandPostImage} style={{ width: 250, maxHeight: 250 }} />
-        </div>
+        {props.media && (
+          <div
+            style={{
+              maxHeight: 250,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center"
+            }}
+          >
+            <img src={props.media} style={{ width: 250, maxHeight: 250 }} />
+          </div>
+        )}
+
         <div style={{ padding: 30, paddingTop: 10 }}>
           <div
             style={{
@@ -95,7 +99,20 @@ const BandPostItem = props => {
             >
               Cancel
             </Button>
-            <Button color="danger">Delete Post</Button>
+            <Button
+              onClick={() => {
+                Axios.post("/api/band/deleteBandPost", {
+                  bandPostId: props.bandPostId
+                })
+                  .then(res => {
+                    console.log(res.data);
+                  })
+                  .catch(err => {});
+              }}
+              color="danger"
+            >
+              Delete Post
+            </Button>
           </div>
         </ModalBody>
       </Modal>

@@ -81,7 +81,7 @@ userQueries.createLink = async (userId, links) => {
 userQueries.getEvent = (eventId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * FROM EVENTS where eventId like '${eventId}'`,
+      `SELECT * FROM EVENTS where eventId = '${eventId}'`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -96,7 +96,7 @@ userQueries.getEvent = (eventId) => {
 userQueries.getLink = async (userId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT links FROM STRINGACCOUNT where userId like ?`,
+      `SELECT links FROM STRINGACCOUNT where userId = ?`,
       [userId],
       (err, results) => {
         if (err) {

@@ -94,7 +94,11 @@ const createLink = async (req, res) => {
     return res.send({ success: false, error: "missing field(s)" });
   }
 
-  let currentLinks = await userQueries.getLink(req.user.userId);
+  let retObj = await userQueries.getLink(req.user.userId);
+  if(retObj.length !=1){
+    return res.send({ success: false, error: "incorrect userid" });
+  }
+  currentLinks = retObj[0].links
   let currentLength = currentLinks.length;
 
   if (currentLength >= 400) {

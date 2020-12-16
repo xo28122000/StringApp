@@ -38,7 +38,11 @@ import { useParams, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const axios = require("axios");
-
+function validateUrl(value) {
+  return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(
+    value
+  );
+}
 const BandProfilePage = props => {
   const { bandName } = useParams();
   const history = useHistory();
@@ -778,19 +782,50 @@ const BandProfilePage = props => {
               Add link to your band
             </ModalHeader>
             <ModalBody>
-              <div style={{ display: "flex" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: 20,
+                  fontWeight: 600,
+                  marginTop: 10
+                }}
+              >
                 <Input
+                  id="addLinkKey"
                   placeholder="key. Ex: youtube"
-                  style={{ marginTop: 10 }}
+                  style={{ marginRight: 5 }}
                 />
-                :
+                {" : "}
                 <Input
+                  id="addLinkLink"
                   placeholder="Link. Ex: www.youtube.com/"
-                  style={{ marginTop: 10 }}
+                  style={{ marginLeft: 5 }}
                 />
               </div>
 
-              <Button color="success" style={{ float: "right", marginTop: 10 }}>
+              <Button
+                onClick={() => {
+                  let key = document.getElementById("addLinkKey").value;
+                  let link = document.getElementById("addLinkLink").value;
+                  // TODO: add validateUrl(link)
+                  if (key && link && key.length > 0 && link.length > 0) {
+                    // TODO: change this to band add link route
+                    // axios
+                    //   .post("/api/user/createLink", {
+                    //     link: { key: key, link: link }
+                    //   })
+                    //   .then(res => {
+                    //     console.log(res.data);
+                    //   })
+                    //   .catch(err => {});
+                  } else {
+                    alert("please enter a key and a valid link");
+                  }
+                }}
+                color="primary"
+                style={{ float: "right", marginTop: 10 }}
+              >
                 Add Link
               </Button>
             </ModalBody>
@@ -993,8 +1028,202 @@ const BandProfilePage = props => {
                   max={60}
                 />
               </div>
-              <Button onclick={() => {}} color="primary">
+              <Button
+                onClick={() => {
+                  let name = document.getElementById("addRepName").value;
+                  let link = document.getElementById("addRepLink").value;
+                  let genre = document.getElementById("addRepGenre").value;
+                  let DurationMin = document.getElementById("addRepDurationMin")
+                    .value;
+                  let DurationSec = document.getElementById("addRepDurationSec")
+                    .value;
+                  axios
+                    .post("/api/band/createRep", {
+                      songName: name,
+                      runTime: DurationMin + ":" + DurationSec,
+                      genre,
+                      link,
+                      bandId: band.bandId
+                    })
+                    .then(res => {
+                      console.log(res.data);
+                    })
+                    .catch(err => {});
+                }}
+                color="primary"
+              >
                 Add Repertoir
+              </Button>
+            </ModalBody>
+          </Modal>
+
+          <Modal
+            isOpen={addPostModal}
+            toggle={() => {
+              setAddPostModal(!addPostModal);
+            }}
+            backdrop="static"
+          >
+            <ModalHeader
+              toggle={() => {
+                setAddPostModal(!addPostModal);
+              }}
+            >
+              Add new Post to your band
+            </ModalHeader>
+            <ModalBody>
+              <Input
+                id="addPostTitle"
+                style={{ marginBottom: 20 }}
+                placeholder="Title of this Post"
+              />
+              <Input
+                id="addPostDescription"
+                type="textarea"
+                style={{ marginBottom: 20 }}
+                placeholder="Description for this Post"
+              />
+              <Input
+                id="addPostMedia"
+                placeholder="Link to an image for this Post."
+              />
+              <FormText
+                color="muted"
+                style={{ marginBottom: 20, marginLeft: 20 }}
+              >
+                Example: https://www.sfsu.edu/SFState_logo_color.jpg
+                <br /> We will soon add support for uploading images and videos.
+              </FormText>
+
+              <Button
+                onClick={() => {
+                  let title = document.getElementById("addPostTitle").value;
+                  let description = document.getElementById(
+                    "addPostDescription"
+                  ).value;
+                  let media = document.getElementById("addPostMedia").value;
+
+                  axios
+                    .post("/api/band/createBandPost", {
+                      media,
+                      title,
+                      description,
+                      bandId: band.bandId
+                    })
+                    .then(res => {
+                      console.log(res.data);
+                    })
+                    .catch(err => {});
+                }}
+                color="primary"
+              >
+                Add Post
+              </Button>
+            </ModalBody>
+          </Modal>
+
+          {/* {
+      //     title: "LowKey Sessions",
+      //     description:
+      //       "We are planning a lowkey event to happen this Wednesday and would for you to join us! We will be playing some of our famous tracks and then will be taking public requests!",
+      //     date: "Sept 21 2020",
+      //     startTime: "8:30 pm",
+      //     endTime: "10:30 pm",
+      //     genre: "mellow",
+      //     bandId: "3423342344",
+      //     bandName: "Beatles",
+      //     loc: {
+      //       street: "100 font blvd",
+      //       city: "San Francisco",
+      //       state: "California",
+      //       zip: "94132"
+      //     }
+      //   } */}
+
+          <Modal
+            isOpen={addEventModal}
+            toggle={() => {
+              setAddEventModal(!addEventModal);
+            }}
+            backdrop="static"
+          >
+            <ModalHeader
+              toggle={() => {
+                setAddEventModal(!addEventModal);
+              }}
+            >
+              Add new Event to your band
+            </ModalHeader>
+            <ModalBody>
+              <Input
+                id="addEventTitle"
+                style={{ marginBottom: 20 }}
+                placeholder="Title of this Event"
+              />
+              <Input
+                id="addEventDescription"
+                type="textarea"
+                style={{ marginBottom: 20 }}
+                placeholder="Description for this Event"
+              />
+              <Input
+                id="addEventDate"
+                type="date"
+                style={{ marginBottom: 20 }}
+                placeholder="Date of this Event"
+              />
+              <Input
+                id="addEventStartTime"
+                type="time"
+                style={{ marginBottom: 20 }}
+                placeholder="Start time of this Event"
+              />
+              <Input
+                id="addEventEndTime"
+                type="time"
+                style={{ marginBottom: 20 }}
+                placeholder="End time of this Event"
+              />
+              <div style={{ marginBottom: 20 }}>
+                <div style={{ display: "flex" }}>Location:</div>
+                <div style={{ marginLeft: 20, marginRight: 20 }}>
+                  <Input
+                    id="addEventStreet"
+                    placeholder="street"
+                    style={{
+                      margin: 5
+                    }}
+                  />
+                  <div style={{ display: "flex" }}>
+                    <Input
+                      id="addEventCity"
+                      placeholder="city"
+                      style={{
+                        margin: 5
+                      }}
+                    />
+
+                    <Input
+                      id="addEventState"
+                      placeholder="state"
+                      style={{
+                        margin: 5
+                      }}
+                    />
+
+                    <Input
+                      id="addEventZip"
+                      placeholder="zip"
+                      style={{
+                        margin: 5
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <Button onclick={() => {}} color="primary">
+                Add Event
               </Button>
             </ModalBody>
           </Modal>

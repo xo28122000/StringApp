@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic } from "@fortawesome/free-solid-svg-icons";
+import Axios from "axios";
 
 const MusicRepItem = props => {
   const [deleteModal, setDeleteModal] = useState(false);
@@ -24,7 +25,7 @@ const MusicRepItem = props => {
       >
         <Col xs="1">{props.index + 1}.</Col>
         <Col xs="6" style={{ minWidth: 180 }}>
-          <div>{props.name}</div>
+          <div>{props.songName}</div>
           <div style={{ fontSize: 13, color: "#CB0086" }}>{props.link}</div>
         </Col>
         <Col xs="3" style={{ textAlign: "center", minWidth: 150 }}>
@@ -42,7 +43,7 @@ const MusicRepItem = props => {
           </Badge>
         </Col>
         <Col xs="2" style={{ textAlign: "center", minWidth: 100 }}>
-          {props.duration}
+          {props.runTime}
         </Col>
       </Row>
       {props.isBandMember && (
@@ -77,7 +78,7 @@ const MusicRepItem = props => {
                 fontWeight: 600
               }}
             >
-              Are you sure you want to delete "{props.name}" rep entry?
+              Are you sure you want to delete "{props.songName}" rep entry?
               <div
                 style={{
                   marginTop: 20,
@@ -93,7 +94,18 @@ const MusicRepItem = props => {
                 >
                   Cancel
                 </Button>
-                <Button color="danger">Delete rep entry</Button>
+                <Button
+                  onClick={() => {
+                    Axios.post("/api/band/deleteRep", { repId: props.repId })
+                      .then(res => {
+                        console.log(res.data);
+                      })
+                      .catch(err => {});
+                  }}
+                  color="danger"
+                >
+                  Delete rep entry
+                </Button>
               </div>
             </ModalBody>
           </Modal>
