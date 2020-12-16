@@ -104,6 +104,8 @@ bandRouter.post("/getBandFromName", bandController.getBandFromName);
 
 bandRouter.post("/getBandMembers", bandController.getBandMembers);
 
+bandRouter.post("/getEvents", bandController.getEvents);
+
 bandRouter.post("/getBandInfo", bandController.getBandInfo);
 
 bandRouter.post("/getEventlist", bandController.getEventList);

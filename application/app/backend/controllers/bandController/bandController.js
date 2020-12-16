@@ -161,6 +161,26 @@ const getBandFromName = (req, res) => {
       });
   };
 
+  const getEvents = (req, res) => {
+    if (!req.body.bandId) {
+      console.log(req.body);
+      return res.send({ success: false, error: "title field missing" });
+    }
+    bandQueries
+      .getEvents(req.body.bandId)
+      .then(retObj => {
+        console.log("successful retrieval of band events from bandId");
+        return res.send({ success: true, result: retObj });
+      })
+      .catch(err => {
+        console.log(err);
+        return res.send({
+          success: false,
+          error: "internal error retrieving band events from bandId"
+        });
+      });
+  };
+
 const getBandInfo = (req, res) => {
   if (!req.body.bandId) {
     console.log(req.body);
@@ -250,6 +270,7 @@ module.exports = {
   getBandFromId,
   getBandFromName,
   getBandMembers,
+  getEvents,
   getBandInfo,
   searchBands,
   searchEvents,

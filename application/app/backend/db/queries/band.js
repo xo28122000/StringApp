@@ -101,6 +101,23 @@ bandQueries.getBandMembers = bandId => {
   });
 };
 
+bandQueries.getEvents = bandId => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT E.bandId, E.eventId, E.title, E.description, E.date, E.startTime, E.endTime, E.location, E.locationLat, E.locationLong 
+      FROM StringApp.BAND B, StringApp.EVENTS E
+      WHERE B.bandId = E.bandId AND B.bandId = '${bandId}';`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 bandQueries.searchBands = (
   name,
   genre,
