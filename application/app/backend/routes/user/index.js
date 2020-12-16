@@ -22,6 +22,9 @@ userRouter.post("/createLink", isUser, userController.createLink);
 //route definition for getting all the bands of a user and its related information
 userRouter.post("/getUserBand", isUser, userController.getUserBand);
 
+//route definition for editing all the user related information
+userRouter.post("/editUserInfo", isUser, userController.editUserInfo);
+
 //TODO this should probably be in band - change this?
 userRouter.post("/getEvent", userController.getEvent);
 

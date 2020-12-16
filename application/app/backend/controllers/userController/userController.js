@@ -220,6 +220,27 @@ const getUserBand = (req, res) => {
     });
 };
 
+//controller for editing profile of the registered users
+const editUserInfo = (req, res) => {
+  if (!req.body.name || !req.body.email || !req.body.password || !req.body.profileImageUrl || !req.body.phoneNumber || !req.body.location || !req.body.role || !req.body.genre) {
+    //console.log(req.body);
+    return res.send({ success: false, error: "title field missing" });
+  }
+  bandQueries
+    .editUserInfo(req.body.userId, req.body.name, req.body.email, req.body.password, req.body.profileImageUrl, req.body.phoneNumber, req.body.location, req.body.role, req.body.genre)
+    .then(retObj => {
+      //console.log("successful editing of user info from userId");
+      return res.send({ success: true, result: retObj });
+    })
+    .catch(err => {
+      //console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error editing user informations from userId"
+      });
+    });
+};
+
 module.exports = {
   account,
   changeName,
@@ -230,4 +251,5 @@ module.exports = {
   getEvent,
   getAccount,
   getUserBand,
+  editUserInfo,
 };

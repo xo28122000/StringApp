@@ -126,4 +126,21 @@ userQueries.getUserBand = (userId) => {
   });
 };
 
+userQueries.editUserInfo = (userId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE  StringApp.STRINGACCOUNT SA
+      SET SA.name = '${name}', SA.email = '${email}', SA.password = '${password}', SA.profileImageUrl = '${profileImageUrl}', SA.phoneNumber = '${phoneNumber}', SA.location = '${location}', SA.role = '${role}', SA.genre = '${genre}'
+      WHERE SA.userId = '${userId}' ;`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 module.exports = userQueries;
