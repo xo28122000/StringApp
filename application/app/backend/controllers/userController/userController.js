@@ -89,7 +89,7 @@ const changePhone = (req, res) => {
 };
 
 //controller for adding a link to a user account
-const createLink = (req, res) => {
+const createLink = async (req, res) => {
   if (!req.body.link || !req.user) {
     return res.send({ success: false, error: "missing field(s)" });
   }
@@ -97,8 +97,11 @@ const createLink = (req, res) => {
   let currentLinks = await userQueries.getLink(req.user.userId);
   let currentLength = currentLinks.length;
 
-  if(currentLength >= 400){
-    return res.send({success: false, error: "too many links, or links too long"});
+  if (currentLength >= 400) {
+    return res.send({
+      success: false,
+      error: "too many links, or links too long",
+    });
   }
 
   currentLinks = JSON.parse(currentLinks);
@@ -119,7 +122,7 @@ const createLink = (req, res) => {
 };
 
 //controller for deleting a link from a user account
-const deleteLink = (req, res) => {
+const deleteLink = async (req, res) => {
   if (!req.body.link || !req.user) {
     return res.send({ success: false, error: "missing field(s)" });
   }
@@ -128,9 +131,9 @@ const deleteLink = (req, res) => {
 
   currentLinks = JSON.parse(currentLinks);
 
-  for(item in currentLinks){
-    if(currentLinks[item][key] == req.body.link.key){
-      if(currentLinks[item][link] == req.body.link.link){
+  for (item in currentLinks) {
+    if (currentLinks[item][key] == req.body.link.key) {
+      if (currentLinks[item][link] == req.body.link.link) {
         currentLinks.splice(item, 1);
         break;
       }
@@ -149,7 +152,7 @@ const deleteLink = (req, res) => {
         error: "internal error when trying to add link",
       });
     });
-}
+};
 
 //controller for getting events of a band
 const getEvent = (req, res) => {

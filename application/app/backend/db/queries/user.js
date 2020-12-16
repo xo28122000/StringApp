@@ -62,7 +62,7 @@ userQueries.changeRole = (userId, newRole) => {
   });
 };
 
-userQueries.createLink = (userId, links) => {
+userQueries.createLink = async (userId, links) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `UPDATE STRINGACCOUNT SET links = ? WHERE userId = ?`,
