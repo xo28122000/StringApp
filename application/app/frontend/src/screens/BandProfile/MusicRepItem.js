@@ -98,7 +98,11 @@ const MusicRepItem = props => {
                   onClick={() => {
                     Axios.post("/api/band/deleteRep", { repId: props.repId })
                       .then(res => {
-                        console.log(res.data);
+                        if (res.data.success) {
+                          window.location.reload();
+                        } else {
+                          alert("Failed to delete. Please try again!");
+                        }
                       })
                       .catch(err => {});
                   }}
