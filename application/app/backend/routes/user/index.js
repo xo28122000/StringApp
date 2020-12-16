@@ -19,6 +19,9 @@ userRouter.put("/changeRole", isUser, userController.changeRole);
 //route definition for adding a link to a user profile
 userRouter.post("/createLink", isUser, userController.createLink);
 
+//route definition for getting all the bands of a user and its related information
+userRouter.post("/getUserBand", isUser, userController.getUserBand);
+
 //TODO this should probably be in band - change this?
 userRouter.post("/getEvent", userController.getEvent);
 

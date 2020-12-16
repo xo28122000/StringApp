@@ -199,6 +199,27 @@ const getAccount = (req, res) => {
     });
 };
 
+//controller for getting all bands of a user and its related information
+const getUserBand = (req, res) => {
+  if (!req.body.userId) {
+    //console.log(req.body);
+    return res.send({ success: false, error: "title field missing" });
+  }
+  bandQueries
+    .getUserBand(req.body.userId)
+    .then(retObj => {
+      //console.log("successful retrieval of bands and its related information from bandId");
+      return res.send({ success: true, result: retObj });
+    })
+    .catch(err => {
+      //console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error retrieving band informations from userId"
+      });
+    });
+};
+
 module.exports = {
   account,
   changeName,
@@ -208,4 +229,5 @@ module.exports = {
   deleteLink,
   getEvent,
   getAccount,
+  getUserBand,
 };

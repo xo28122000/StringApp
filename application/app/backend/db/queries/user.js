@@ -109,4 +109,21 @@ userQueries.getLink = async (userId) => {
   });
 };
 
+userQueries.getUserBand = (userId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT BM.bandId, BM.bandMemberId, BM.role, BM.isBandAdmin, BM.dateJoined, BM.userId, SA.email, SA.name, SA.profileImageUrl
+      FROM StringApp.BANDMEMBERS BM, StringApp.BAND B, StringApp.STRINGACCOUNT SA
+      WHERE BM.bandId = B.bandId AND SA.userId = '${userId}' AND BM.userId = SA.userId;`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 module.exports = userQueries;

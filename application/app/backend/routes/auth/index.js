@@ -26,6 +26,7 @@ authRouter.post(
   function(req, res, next) {
     passport.authenticate("user-register", function(error, user, info) {
       if (error) {
+        console.log(error) 
         return res.send({ success: false });
       }
       if (!user) {
