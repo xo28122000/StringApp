@@ -84,6 +84,23 @@ bandQueries.getBandFromName = name => {
   });
 };
 
+bandQueries.getBandMembers = bandId => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT BM.bandId, BM.bandMemberId, BM.isBandAdmin, BM.dateJoined, BM.userId
+      FROM StringApp.BANDMEMBERS BM, StringApp.BAND B
+      WHERE BM.bandId = B.bandId AND B.bandId = '${bandId}';`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 bandQueries.searchBands = (
   name,
   genre,

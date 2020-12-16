@@ -72,7 +72,7 @@ pool.getConnection(async function (err, connection) {
       "bandMemberId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
       "isBandAdmin BOOLEAN, " +
       "role varchar(45), " +
-      "dateJoined varchar(45), " + //TODO shouldn't this be a DATE, like in the invitations table?
+      "dateJoined DATE, " + 
       "userId INT, " +
       "bandId INT, " +
       "FOREIGN KEY (userId) REFERENCES stringaccount(userId) ON UPDATE CASCADE ON DELETE CASCADE, " +
