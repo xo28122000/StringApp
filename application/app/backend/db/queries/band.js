@@ -121,10 +121,10 @@ bandQueries.getEvents = (bandId) => {
 
 //TODO fix this SQL query:
 //need to join the query - userId -> band member, bandId from band member, then bands from bands with bandID
-bandQueries.getBands = (userId) => {
+bandQueries.getBandFromId = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `select from BAND where userId = '${userId}'`,
+      `select * from Band where bandId = '${bandId}'`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -135,6 +135,22 @@ bandQueries.getBands = (userId) => {
     );
   });
 };
+
+bandQueries.getBandFromName = name => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `select * from Band where name = '${name}'`,
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 
 bandQueries.getBandInfo = (bandId) => {
   return new Promise((resolve, reject) => {
@@ -152,10 +168,12 @@ bandQueries.getBandInfo = (bandId) => {
   });
 };
 
-bandQueries.getBandMembers = (bandId) => {
+bandQueries.getBandMembers = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * from BANDMEMBERS where (bandId = '${bandId}')`,
+      `SELECT BM.bandId, BM.bandMemberId, BM.isBandAdmin, BM.dateJoined, BM.userId
+      FROM StringApp.BANDMEMBERS BM, StringApp.BAND B
+      WHERE BM.bandId = B.bandId AND B.bandId = '${bandId}';`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -166,6 +184,7 @@ bandQueries.getBandMembers = (bandId) => {
     );
   });
 };
+
 
 bandQueries.getBandPosts = (bandId) => {
   return new Promise((resolve, reject) => {
