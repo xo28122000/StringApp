@@ -63,6 +63,9 @@ const imageSizeCheck = (req, res, next) => {
 
 let bandRouter = express.Router();
 
+//route definition for a band accepting invitations
+bandRouter.post("/acceptInvite", isUser, bandController.acceptInvite);
+
 //route definition for creating a new band
 bandRouter.post(
   "/createBand",
@@ -129,8 +132,13 @@ bandRouter.post(
 //route definition for creating a new band post
 bandRouter.post("/createBandPost", isUser, bandController.createBandPost);
 
+//TODO THERE ARE TWO HERE
 //route definition for creating a new event
 bandRouter.post("/createEvent", isUser, geocode, bandController.createEvent);
+
+//TODO THERE ARE TWO HERE
+//route definition for getting the information about a band
+bandRouter.post("/getBandInfo", bandController.createEvent);
 
 //route definition for adding a link to a user profile
 bandRouter.post("/createLink", isUser, bandController.createLink);
@@ -152,6 +160,9 @@ bandRouter.post("/deleteBandPost", isUser, bandController.deleteBandPost);
 
 //route definition for deleting a repertoire entry
 bandRouter.post("/deleteEvent", isUser, bandController.deleteEvent);
+
+//route definition for deleting an invitation
+bandRouter.post("/deleteInvite", isUser, bandController.deleteInvite);
 
 //route definition for deleting a link from a user profile
 bandRouter.post("/deleteLink", isUser, bandController.deleteLink);
@@ -225,9 +236,6 @@ bandRouter.post("/getBandFromName", bandController.getBandFromName);
 //route definition for getting the members of a band
 bandRouter.post("/getBandMembers", bandController.getBandMembers);
 
-//route definition for getting the information about a band
-bandRouter.post("/getBandInfo", bandController.createEvent);
-
 //route definition for getting all posts of a specific band
 bandRouter.post("/getBandPosts", bandController.getBandPosts);
 
@@ -236,6 +244,9 @@ bandRouter.post("/getBandRep", bandController.getBandRep);
 
 //route definition for getting all the events of a specific band
 bandRouter.post("/getEvents", bandController.getEvents);
+
+//route definition for getting all invites in a band
+bandRouter.post("/getInvites", isUser, bandController.getInvites);
 
 //route definition for getting if a band is looking for members or not
 bandRouter.post(

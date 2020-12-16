@@ -111,7 +111,8 @@ bandQueries.createLink = async (bandId, links) => {
 bandQueries.createMember = (isBandAdmin, role, dateJoined, userId, bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO BANDMEMBERS (isBandAdmin, role, dateJoined, userId, bandId) VALUES('${isBandAdmin}', '${role}', '${dateJoined}', '${userId}', '${bandId}')`,
+      `INSERT INTO BANDMEMBERS (isBandAdmin, role, dateJoined, userId, bandId) VALUES(?, ?, ?, ?, ?)`,
+      [isBandAdmin, role, dateJoined, userId, bandId],
       (err, results) => {
         if (err) {
           return reject(err);
@@ -223,6 +224,25 @@ bandQueries.deleteBand = (bandId) => {
     pool.query(
       `DELETE FROM BAND WHERE bandId = ?`,
       [bandId],
+      (err, results) => {
+        if (err) {
+          //console.log("error: " + err);
+          return reject(err);
+        } else {
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//deletes a band by bandId from band table
+bandQueries.deleteInvite = (inviteId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `DELETE FROM INVITATIONS WHERE inviteId = ?`,
+      [inviteId],
       (err, results) => {
         if (err) {
           //console.log("error: " + err);
@@ -413,6 +433,25 @@ bandQueries.getLink = async (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT links FROM BAND where bandId = ?`,
+      [bandId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//gets all invites for a band from invitations table
+bandQueries.getInvites = async (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT I.message, I.dateSent, I.userId, I.bandId, SA.name
+      FROM StringApp.INVITATIONS I, StringApp.STRINGACCOUNT SA
+      WHERE I.bandId = ?;`,
       [bandId],
       (err, results) => {
         if (err) {

@@ -3,6 +3,50 @@ const stringAccountQueries = require("../../db/queries/stringAccount.js");
 const awsS3 = require("../../lib/aws/s3");
 const isUser = require("../../helpers/middlewares/isUser.js");
 
+//controller to accept an invitation and create a new band member
+const acceptInvite = async (req, res) => {
+  if (!req.body.bandId || !req.body.inviteId) {
+    //is a registered user
+    return res.send({ success: false, error: "field(s) missing" });
+  }
+
+  let today = new Date();
+
+  let dd = String(today.getDate()).padStart(2, "0");
+  let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  let yyyy = today.getFullYear();
+
+  today = yyyy + "-" + mm + "-" + dd;
+
+  bandQueries
+    .createMember(
+      0, //is NOT a band admin
+      "-",
+      today,
+      req.user.userId,
+      req.body.bandId
+    )
+    .then((retObj) => {
+      bandQueries
+        .deleteInvite(req.body.inviteId)
+        .then((retObj) => {
+          return res.send({ success: true });
+        })
+        .catch((err) => {
+          return res.send({
+            success: false,
+            error: "internal error when trying to delete accepted Invitation",
+          });
+        });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error when trying to accept Invitation",
+      });
+    });
+};
+
 //controller for creating a band
 const createBand = async (req, res) => {
   if (!req.body.name || !req.body.location || !req.file || !req.body.genre) {
@@ -341,6 +385,25 @@ const deleteBand = async (req, res) => {
     });
 };
 
+//controller for deleting an invite
+const deleteInvite = async (req, res) => {
+  if (!req.body.inviteId) {
+    return res.send({ success: false, error: "missing inviteId field" });
+  }
+
+  bandQueries
+    .deleteInvite(req.body.inviteId)
+    .then((retObj) => {
+      return res.send({ success: true });
+    })
+    .catch((err) => {
+      return res.send({
+        success: false,
+        error: "internal error when trying to delete invitation",
+      });
+    });
+};
+
 //controller for deleting a member from a band
 const deleteMember = async (req, res) => {
   if (!req.body.bandMemberId || !req.body.bandId) {
@@ -583,6 +646,27 @@ const getEvents = (req, res) => {
     });
 };
 
+//controller for getting all invitations of a band given a band id
+const getInvites = (req, res) => {
+  if (!req.body.bandId) {
+    //console.log(req.body);
+    return res.send({ success: false, error: "bandId field missing" });
+  }
+  bandQueries
+    .getInvites(req.body.bandId)
+    .then((retObj) => {
+      //console.log("successful retrieval of band events from bandId");
+      return res.send({ success: true, result: retObj });
+    })
+    .catch((err) => {
+      //console.log(err);
+      return res.send({
+        success: false,
+        error: "internal error retrieving band invitations from bandId",
+      });
+    });
+};
+
 //controller for getting all events of a band given a band id
 const getIsLookingForMembers = async (req, res) => {
   if (!req.body.bandId) {
@@ -703,6 +787,7 @@ const setIsLookingForMembers = (req, res) => {
 };
 
 module.exports = {
+  acceptInvite,
   createRep,
   createBand,
   createBandPost,
@@ -713,6 +798,7 @@ module.exports = {
   deleteBand,
   deleteBandPost,
   deleteEvent,
+  deleteInvite,
   deleteLink,
   deleteMember,
   deleteRep,
@@ -724,6 +810,7 @@ module.exports = {
   getBandPosts,
   getBandRep,
   getEvents,
+  getInvites,
   getIsLookingForMembers,
   searchBands,
   searchEvents,
