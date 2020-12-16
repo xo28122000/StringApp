@@ -6,6 +6,7 @@ bandQueries.createBand = (
   name,
   imgUrl,
   links,
+  description,
   location,
   locationLat,
   locationLong,
@@ -14,7 +15,18 @@ bandQueries.createBand = (
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO BAND (name, logoImageUrl, links, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${imgUrl}', '${links}', '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,
+      `INSERT INTO BAND (name, logoImageUrl, links, description, location, locationLat, locationLong, genre, isLookingForMember) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        name,
+        imgUrl,
+        links,
+        description,
+        location,
+        locationLat,
+        locationLong,
+        genre,
+        isLookingForMember,
+      ],
       (err, results) => {
         if (err) {
           return reject(err);
@@ -30,7 +42,8 @@ bandQueries.createBand = (
 bandQueries.createBandPost = (mediaLocation, title, description, bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO BANDPOSTS (media, title, description, bandId) VALUES('${mediaLocation}', '${title}', '${description}', '${bandId}')`,
+      `INSERT INTO BANDPOSTS (media, title, description, bandId) VALUES(?, ?, ?, ?)`,
+      [mediaLocation, title, description, bandId],
       (err, results) => {
         if (err) {
           return reject(err);
@@ -56,7 +69,18 @@ bandQueries.createEvent = (
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO EVENTS (title, description, date, startTime, endTime, location, locationLat, locationLong, bandId) VALUES('${title}', '${description}', '${date}', '${startTime}', '${endTime}', '${location}', '${locationLat}', '${locationLong}', '${bandId}')`,
+      `INSERT INTO EVENTS (title, description, date, startTime, endTime, location, locationLat, locationLong, bandId) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        title,
+        description,
+        date,
+        startTime,
+        endTime,
+        location,
+        locationLat,
+        locationLong,
+        bandId,
+      ],
       (err, results) => {
         if (err) {
           return reject(err);
@@ -84,7 +108,25 @@ bandQueries.createMember = (isBandAdmin, role, dateJoined, userId, bandId) => {
   });
 };
 
-//TODO problems with foreign key
+bandQueries.createRep = (songName, runTime, genre, link, bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `INSERT INTO REPERTOIRE (songName, runTime, genre, link, bandId) VALUES(?, ?, ?, ?, ?)`,
+      [songName, runTime, genre, link, bandId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//TODO problems with foreign key in testing
+//creates a set entry in sets table
 bandQueries.createSetEntry = (songName, runTime, eventId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -103,7 +145,64 @@ bandQueries.createSetEntry = (songName, runTime, eventId) => {
   });
 };
 
-bandQueries.getEvents = bandId => {
+//deletes a Band Post by Id from bandposts table
+bandQueries.deleteEvent = (bandPostId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `DELETE FROM BANDPOSTS WHERE bandPostId = ?`,
+      [bandPostId],
+      (err, results) => {
+        if (err) {
+          //console.log("error: " + err);
+          return reject(err);
+        } else {
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//deletes an event by Id from events table
+bandQueries.deleteEvent = (eventId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `DELETE FROM EVENTS WHERE eventId = ?`,
+      [eventId],
+      (err, results) => {
+        if (err) {
+          //console.log("error: " + err);
+          return reject(err);
+        } else {
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//deletes an entry by Id from Repertoire table
+bandQueries.deleteRep = (repId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `DELETE FROM REPERTOIRE WHERE repId = ?`,
+      [repId],
+      (err, results) => {
+        if (err) {
+          //console.log("error: " + err);
+          return reject(err);
+        } else {
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+bandQueries.getEvents = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT E.bandId, E.eventId, E.title, E.description, E.date, E.startTime, E.endTime, E.location, E.locationLat, E.locationLong 
@@ -120,7 +219,7 @@ bandQueries.getEvents = bandId => {
   });
 };
 
-bandQueries.getBandFromId = bandId => {
+bandQueries.getBandFromId = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `select * from Band where bandId = '${bandId}'`,
@@ -135,22 +234,19 @@ bandQueries.getBandFromId = bandId => {
   });
 };
 
-bandQueries.getBandFromName = name => {
+bandQueries.getBandFromName = (name) => {
   return new Promise((resolve, reject) => {
-    pool.query(
-      `select * from Band where name = '${name}'`,
-      (err, results) => {
-        if (err) {
-          return reject(err);
-        } else {
-          return resolve(results);
-        }
+    pool.query(`select * from Band where name = '${name}'`, (err, results) => {
+      if (err) {
+        return reject(err);
+      } else {
+        return resolve(results);
       }
-    );
+    });
   });
 };
 
-bandQueries.getBandInfo = bandId => {
+bandQueries.getBandInfo = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select bandId, name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember from BAND where bandId = ?`,
@@ -166,7 +262,7 @@ bandQueries.getBandInfo = bandId => {
   });
 };
 
-bandQueries.getBandMembers = bandId => {
+bandQueries.getBandMembers = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT BM.bandId, BM.bandMemberId, BM.isBandAdmin, BM.dateJoined, BM.userId
@@ -183,7 +279,7 @@ bandQueries.getBandMembers = bandId => {
   });
 };
 
-bandQueries.getBandPosts = bandId => {
+bandQueries.getBandPosts = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select * from BANDPOSTS where bandId = ?`,
@@ -199,13 +295,30 @@ bandQueries.getBandPosts = bandId => {
   });
 };
 
-bandQueries.getBandRep = bandId => {
+bandQueries.getBandRep = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select * from REPERTOIRE where bandId = ?`,
       [bandId],
       (err, results) => {
         if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+bandQueries.isBandAdmin = async (userId, bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT EXISTS(SELECT 1 from BANDMEMBERS where (userId = ? AND bandId = ? AND isBandAdmin = 1) LIMIT 1)`,
+      [userId, bandId],
+      (err, results) => {
+        if (err) {
+          //console.log("error: " + err);
           return reject(err);
         } else {
           return resolve(results);
