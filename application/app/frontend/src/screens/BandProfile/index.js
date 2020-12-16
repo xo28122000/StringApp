@@ -16,7 +16,8 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  UncontrolledTooltip
 } from "reactstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -56,102 +57,104 @@ const BandProfilePage = props => {
   const [musicRep, setMusicRep] = useState(null);
   const [posts, setPosts] = useState(null);
   const [events, setEvents] = useState(null);
-  useEffect(async () => {
-    if (!bandName) {
-      history.goBack();
-    } else {
-      // todo: axios call to get the band
-      // setBand({
-      //   bandId: "someid",
-      //   name: "band name",
-      //   numMembers: 2,
-      //   logoImageUrl:
-      //     "https://upload.wikimedia.org/wikipedia/commons/8/89/The_Band_%281969%29.png",
-      //   location: {
-      //     street: "some street",
-      //     city: "San Francisco",
-      //     state: "CA",
-      //     country: "United States"
-      //   },
-      //   locationLat: 32432.423423,
-      //   locationLong: 32432.423423,
-      //   genre: "some genre",
-      //   isLookingForMember: true,
-      //   links: [{ key: "some key", link: "www.key.com" }],
-      //   description:
-      //     'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.'
-      // });
-      // setBandMembers([
-      //   {
-      //     name: "John lenon",
-      //     role: "Lead Guitarist",
-      //     img:
-      //       "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
-      //   }
-      // ]);
-      // setMusicRep([
-      //   {
-      //     name: "The Beatles - Hey Jude",
-      //     link: "www.eirshugfhyisjikao.com",
-      //     genre: "Rock",
-      //     duration: "2:06"
-      //   },
-      //   {
-      //     name: "The Beatles - Hey Jude",
-      //     link: "www.eirshugfhyisjikao.com",
-      //     genre: "Rock",
-      //     duration: "2:06"
-      //   },
-      //   {
-      //     name: "The Beatles - Hey Jude",
-      //     link: "www.eirshugfhyisjikao.com",
-      //     genre: "Rock",
-      //     duration: "2:06"
-      //   }
-      // ]);
-      // setPosts([
-      //   {
-      //     bandPostId: 2112,
-      //     media: "www.eirshugfhyisjikao.com",
-      //     title: "some band title",
-      //     description: "some band long long description"
-      //   }
-      // ]);
-      // setEvents([
-      //   {
-      //     title: "LowKey Sessions",
-      //     description:
-      //       "We are planning a lowkey event to happen this Wednesday and would for you to join us! We will be playing some of our famous tracks and then will be taking public requests!",
-      //     date: "Sept 21 2020",
-      //     startTime: "8:30 pm",
-      //     endTime: "10:30 pm",
-      //     genre: "mellow",
-      //     bandId: "3423342344",
-      //     bandName: "Beatles",
-      //     loc: {
-      //       street: "100 font blvd",
-      //       city: "San Francisco",
-      //       state: "California",
-      //       zip: "94132"
-      //     }
-      //   }
-      // ]);
-      try {
-        let res = await axios.post("/api/band/getBandFromName", {
-          name: bandName
-        });
-        if (res.data.success) {
-          setBand(res.data.band);
-          setGenre(res.data.band.genre);
+  useEffect(() => {
+    (async () => {
+      if (!bandName) {
+        history.goBack();
+      } else {
+        // todo: axios call to get the band
+        // setBand({
+        //   bandId: "someid",
+        //   name: "band name",
+        //   numMembers: 2,
+        //   logoImageUrl:
+        //     "https://upload.wikimedia.org/wikipedia/commons/8/89/The_Band_%281969%29.png",
+        //   location: {
+        //     street: "some street",
+        //     city: "San Francisco",
+        //     state: "CA",
+        //     country: "United States"
+        //   },
+        //   locationLat: 32432.423423,
+        //   locationLong: 32432.423423,
+        //   genre: "some genre",
+        //   isLookingForMember: true,
+        //   links: [{ key: "some key", link: "www.key.com" }],
+        //   description:
+        //     'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.'
+        // });
+        // setBandMembers([
+        //   {
+        //     name: "John lenon",
+        //     role: "Lead Guitarist",
+        //     img:
+        //       "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
+        //   }
+        // ]);
+        // setMusicRep([
+        //   {
+        //     name: "The Beatles - Hey Jude",
+        //     link: "www.eirshugfhyisjikao.com",
+        //     genre: "Rock",
+        //     duration: "2:06"
+        //   },
+        //   {
+        //     name: "The Beatles - Hey Jude",
+        //     link: "www.eirshugfhyisjikao.com",
+        //     genre: "Rock",
+        //     duration: "2:06"
+        //   },
+        //   {
+        //     name: "The Beatles - Hey Jude",
+        //     link: "www.eirshugfhyisjikao.com",
+        //     genre: "Rock",
+        //     duration: "2:06"
+        //   }
+        // ]);
+        // setPosts([
+        //   {
+        //     bandPostId: 2112,
+        //     media: "www.eirshugfhyisjikao.com",
+        //     title: "some band title",
+        //     description: "some band long long description"
+        //   }
+        // ]);
+        // setEvents([
+        //   {
+        //     title: "LowKey Sessions",
+        //     description:
+        //       "We are planning a lowkey event to happen this Wednesday and would for you to join us! We will be playing some of our famous tracks and then will be taking public requests!",
+        //     date: "Sept 21 2020",
+        //     startTime: "8:30 pm",
+        //     endTime: "10:30 pm",
+        //     genre: "mellow",
+        //     bandId: "3423342344",
+        //     bandName: "Beatles",
+        //     loc: {
+        //       street: "100 font blvd",
+        //       city: "San Francisco",
+        //       state: "California",
+        //       zip: "94132"
+        //     }
+        //   }
+        // ]);
+        try {
+          let res = await axios.post("/api/band/getBandFromName", {
+            name: bandName
+          });
+          if (res.data.success) {
+            setBand(res.data.band);
+            setGenre(res.data.band.genre);
+          }
+        } catch (err) {
+          console.log(err);
         }
-      } catch (err) {
-        console.log(err);
       }
-    }
+    })();
   }, [bandName]);
 
   useEffect(() => {
-    const getAll = async () => {
+    (async () => {
       if (band) {
         try {
           let res;
@@ -184,16 +187,24 @@ const BandProfilePage = props => {
           console.log(err);
         }
       }
-    };
-    getAll();
+    })();
     //
   }, [band]);
 
+  // TODO: change to state variables
   const isBandAdmin = () => {
-    return false;
+    if (userObj && bandMembers) {
+      return true;
+    } else {
+      return false;
+    }
   };
   const isBandMember = () => {
-    return true;
+    if (userObj && bandMembers) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const [invitationModal, setInvitationModal] = useState(false);
@@ -231,6 +242,9 @@ const BandProfilePage = props => {
   const [genreDDOpen, setGenreDDOpen] = useState(false);
   const [genre, setGenre] = useState("Rock");
   const [repGenre, setRepGenre] = useState("Acoustic");
+
+  const [leaveBandModal, setLeaveBandModal] = useState(null);
+  const [deleteBandModal, setDeleteBandModal] = useState(null);
 
   return (
     <div style={{ backgroundColor: "#ffffff" }}>
@@ -335,17 +349,29 @@ const BandProfilePage = props => {
                       justifyContent: "flex-start"
                     }}
                   >
-                    Looking for new Members:
+                    Looking for new Members:{" "}
                     <Input
                       type="checkbox"
-                      checked={true}
+                      id="helpLookingForMember"
+                      checked={band.isLookingForMember}
                       style={{
                         position: "relative",
                         margin: 0,
                         marginLeft: 10
                       }}
+                      onClick={() => {
+                        // make axios call to change the islooking for member in db and refresh page
+                      }}
                     />
                   </div>
+
+                  <UncontrolledTooltip
+                    placement="right"
+                    target="helpLookingForMember"
+                  >
+                    Checking this will allow non members users of this band to send invitations to join.<br />
+                    The band admin will be able to accept or reject the invitation.
+                  </UncontrolledTooltip>
                   <div style={{ marginTop: 20 }}>
                     <Button
                       onClick={() => {
@@ -480,7 +506,31 @@ const BandProfilePage = props => {
                   backgroundColor: "#ffffff"
                 }}
               >
-                <div style={{ fontSize: 35, fontWeight: 700 }}>Members</div>
+                <div style={{ fontSize: 35, fontWeight: 700 }}>
+                  Members{" "}
+                  {isBandAdmin() ? (
+                    <Button
+                      onClick={() => {
+                        setDeleteBandModal(true);
+                      }}
+                      color="danger"
+                      style={{ marginLeft: 30 }}
+                    >
+                      Delete Band
+                    </Button>
+                  ) : isBandMember() ? (
+                    <Button
+                      onClick={() => {
+                        setLeaveBandModal(true);
+                      }}
+                      color="danger"
+                      style={{ marginLeft: 30 }}
+                    >
+                      Leave Band
+                    </Button>
+                  ) : null}
+                </div>
+
                 <div
                   style={{
                     display: "flex",
@@ -1405,6 +1455,88 @@ const BandProfilePage = props => {
               <Button onclick={() => {}} color="primary">
                 Add Event
               </Button>
+            </ModalBody>
+          </Modal>
+
+          {/* leave/delete Band modals */}
+
+          <Modal
+            isOpen={deleteBandModal}
+            toggle={() => setDeleteBandModal(!deleteBandModal)}
+            backdrop="static"
+          >
+            <ModalBody
+              style={{
+                textAlign: "center",
+                paddingTop: 40,
+                paddingBottom: 40,
+                fontSize: 18,
+                fontWeight: 600
+              }}
+            >
+              Are you sure you want to delete this Band?
+              <br />
+              This action is irreversable.
+              <br />
+              Removing this band will result in removing all Members, Repertoir
+              entries, Posts and Events related to this band.
+              <div
+                style={{
+                  marginTop: 20,
+                  display: "flex",
+                  justifyContent: "space-around"
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    setDeleteBandModal(!deleteBandModal);
+                  }}
+                  color="dark"
+                >
+                  Cancel
+                </Button>
+                <Button color="danger">Delete Band</Button>
+              </div>
+            </ModalBody>
+          </Modal>
+
+          <Modal
+            isOpen={leaveBandModal}
+            toggle={() => setLeaveBandModal(!leaveBandModal)}
+            backdrop="static"
+          >
+            <ModalBody
+              style={{
+                textAlign: "center",
+                paddingTop: 40,
+                paddingBottom: 40,
+                fontSize: 18,
+                fontWeight: 600
+              }}
+            >
+              Are you sure you want to leave this Band?
+              <br />
+              This action is irreversable.
+              <br />
+              To re-enter you will have to send a join invite which shall be
+              accepted by the band Admin.
+              <div
+                style={{
+                  marginTop: 20,
+                  display: "flex",
+                  justifyContent: "space-around"
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    setLeaveBandModal(!leaveBandModal);
+                  }}
+                  color="dark"
+                >
+                  Cancel
+                </Button>
+                <Button color="danger">Delete Band</Button>
+              </div>
             </ModalBody>
           </Modal>
         </>
