@@ -28,9 +28,6 @@ const BandCard = props => {
           borderRadius: 0,
           borderWidth: 0
         }}
-        onClick={() => {
-          goToBandPage();
-        }}
       >
         <div
           style={{

@@ -52,7 +52,7 @@ const EventCard = props => {
             textAlign: "center"
           }}
         >
-          <Link to={"/band?" + props.bandName} target="_blank">
+          <Link to={"/band/" + props.bandName} target="_blank">
             {props.bandName}
           </Link>
         </div>

@@ -153,326 +153,336 @@ const UserProfileScreen = () => {
 
   return (
     <div style={{ backgroundColor: "#E5E5E5" }}>
-      {!userObj && <Redirect to="/" />}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#000000",
-
-          padding: 50,
-          paddingRight: 20,
-          paddingLeft: 20,
-
-          fontSize: 45,
-          fontWeight: 700,
-          color: "#ffffff"
-        }}
-      >
-        John Lennon
-      </div>
-      <Row style={{ margin: 0, marginTop: 10, padding: 30 }}>
-        <Col
-          lg={4}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-        >
+      {userObj ? (
+        <>
           <div
             style={{
-              height: 250,
-              borderRadius: 125,
-              borderWidth: 5,
-              borderStyle: "solid",
-              borderColor: "#ffffff",
-              overflow: "hidden",
-              marginTop: -100
-            }}
-          >
-            <img style={{ width: 250, maxHeight: 250 }} src={user5} />
-          </div>
-          <div
-            className="divShadow"
-            style={{
-              marginTop: 30,
-              padding: 20,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              flexWrap: "wrap",
-              backgroundColor: "#ffffff"
-            }}
-          >
-            <div
-              style={{
-                fontSize: 18,
-                fontWeight: 500,
-                paddingLeft: 40,
-                paddingRight: 40
-              }}
-            >
-              <div style={{ marginBottom: 10, overflowx: "hidden" }}>
-                Instagram:
-                <a href="#" style={{ marginLeft: 5 }}>
-                  http://www.link.com
-                </a>
-              </div>
-              <div style={{ marginBottom: 10, overflowx: "hidden" }}>
-                Twitter:
-                <a href="#" style={{ marginLeft: 5 }}>
-                  http://www.link.com
-                </a>
-              </div>
-              <div style={{ marginBottom: 10, overflowx: "hidden" }}>
-                Youtube:
-                <a href="#" style={{ marginLeft: 5 }}>
-                  http://www.link.com
-                </a>
-              </div>
-              <div style={{ marginBottom: 10, overflowx: "hidden" }}>
-                Spotify:
-                <a href="#" style={{ marginLeft: 5 }}>
-                  http://www.link.com
-                </a>
-              </div>
-              <div style={{ marginBottom: 10, overflowx: "hidden" }}>
-                Apple music:
-                <a href="#" style={{ marginLeft: 5 }}>
-                  http://www.link.com
-                </a>
-              </div>
-            </div>
-          </div>
-        </Col>
-        <Col lg={8} style={{ paddingRight: 20, paddingLeft: 20 }}>
-          <Row
-            style={{
-              marginTop: 20,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexWrap: "wrap",
-              fontSize: 20,
-              paddingLeft: 20,
-              paddingRight: 20
-            }}
-          >
-            <Badge
-              className="divShadow"
-              style={{
-                margin: 10,
-                padding: 10,
-                paddingLeft: 30,
-                paddingRight: 30,
-                color: "#FFFFFF",
-                backgroundColor: "#CB0086",
-                borderRadius: 20
-              }}
-            >
-              <FontAwesomeIcon icon={faMusic} style={{ marginRight: 4 }} />
-              Rock
-            </Badge>
+              backgroundColor: "#000000",
 
-            <Badge
-              className="divShadow"
-              style={{
-                margin: 10,
-                padding: 10,
-                paddingLeft: 30,
-                paddingRight: 30,
-                color: "#0B0B0B",
-                backgroundColor: "#FF9900"
-              }}
-            >
-              <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />
-              Band Manager
-            </Badge>
-            <Badge
-              className="divShadow"
-              style={{
-                margin: 10,
-                padding: 10,
-                paddingLeft: 30,
-                paddingRight: 30,
-                color: "#8A8A8A",
-                backgroundColor: "#FFFFFF"
-              }}
-            >
-              <FontAwesomeIcon
-                icon={faMapMarkerAlt}
-                style={{ marginRight: 4 }}
-              />
-              San Francisco
-            </Badge>
-          </Row>
-
-          <div
-            style={{
-              marginTop: 50,
-              display: "flex",
-              alignItems: "center",
+              padding: 50,
               paddingRight: 20,
-              paddingLeft: 20
+              paddingLeft: 20,
+
+              fontSize: 45,
+              fontWeight: 700,
+              color: "#ffffff"
             }}
           >
-            <span style={{ fontSize: 35, fontWeight: 600, marginRight: 10 }}>
-              Bands
-            </span>
-            <Button
-              style={{
-                backgroundColor: "#000000",
-                borderRadius: 25,
-                height: 50,
-                width: 50
-              }}
-              onClick={() => {
-                toggleCreateBandModal();
-              }}
-            >
-              <FontAwesomeIcon icon={faPlus} style={{ marginRight: 4 }} />
-            </Button>
+            {userObj.name}
           </div>
-          <div>
-            <div
+          <Row style={{ margin: 0, marginTop: 10, padding: 30 }}>
+            <Col
+              lg={4}
               style={{
-                marginTop: 20,
                 display: "flex",
-                alignItems: "center",
-                flexWrap: "wrap"
+                flexDirection: "column",
+                alignItems: "center"
               }}
             >
-              {bands.map(band => (
-                <BandCard key={band.name} {...band} />
-              ))}
-            </div>
-          </div>
-        </Col>
-      </Row>
-
-      <Modal
-        isOpen={createBandModal}
-        toggle={toggleCreateBandModal}
-        backdrop="static"
-      >
-        <ModalHeader toggle={toggleCreateBandModal}>Create band</ModalHeader>
-        <ModalBody>
-          <div style={{ marginBottom: 20 }}>
-            <Input
-              id="createBandName"
-              placeholder="Name of your Band"
-              style={{ borderRadius: 20 }}
-            />
-          </div>
-          <div style={{ marginBottom: 20 }}>
-            <Input
-              type="textarea"
-              id="createBandDescription"
-              placeholder="some description about your band"
-              style={{ borderRadius: 20 }}
-            />
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: 20
-            }}
-          >
-            Band's Genre:
-            <Dropdown
-              isOpen={createBandGenreDDOpen}
-              toggle={toggleCreateBandGenreDDOpen}
-              style={{ marginLeft: 20 }}
-            >
-              <DropdownToggle caret style={{ backgroundColor: "#000000" }}>
-                {genre ? genre : "All"}
-              </DropdownToggle>
-              <DropdownMenu>
-                {genreOptions.map(genreOption => (
-                  <DropdownItem
-                    key={genreOption}
-                    onClick={() => {
-                      setGenre(genreOption === "All" ? null : genreOption);
+              <div
+                style={{
+                  height: 250,
+                  borderRadius: 125,
+                  borderWidth: 5,
+                  borderStyle: "solid",
+                  borderColor: "#ffffff",
+                  overflow: "hidden",
+                  marginTop: -100
+                }}
+              >
+                <img style={{ width: 250, maxHeight: 250 }} src={user5} />
+              </div>
+              <div
+                className="divShadow"
+                style={{
+                  marginTop: 30,
+                  padding: 20,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  backgroundColor: "#ffffff"
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 500,
+                    paddingLeft: 40,
+                    paddingRight: 40
+                  }}
+                >
+                  <div style={{ marginBottom: 10, overflowx: "hidden" }}>
+                    Instagram:
+                    <a href="#" style={{ marginLeft: 5 }}>
+                      http://www.link.com
+                    </a>
+                  </div>
+                  <div style={{ marginBottom: 10, overflowx: "hidden" }}>
+                    Twitter:
+                    <a href="#" style={{ marginLeft: 5 }}>
+                      http://www.link.com
+                    </a>
+                  </div>
+                  <div style={{ marginBottom: 10, overflowx: "hidden" }}>
+                    Youtube:
+                    <a href="#" style={{ marginLeft: 5 }}>
+                      http://www.link.com
+                    </a>
+                  </div>
+                  <div style={{ marginBottom: 10, overflowx: "hidden" }}>
+                    Spotify:
+                    <a href="#" style={{ marginLeft: 5 }}>
+                      http://www.link.com
+                    </a>
+                  </div>
+                  <div style={{ marginBottom: 10, overflowx: "hidden" }}>
+                    Apple music:
+                    <a href="#" style={{ marginLeft: 5 }}>
+                      http://www.link.com
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </Col>
+            <Col lg={8} style={{ paddingRight: 20, paddingLeft: 20 }}>
+              <Row
+                style={{
+                  marginTop: 20,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  fontSize: 20,
+                  paddingLeft: 20,
+                  paddingRight: 20
+                }}
+              >
+                <Badge
+                  className="divShadow"
+                  style={{
+                    margin: 10,
+                    padding: 10,
+                    paddingLeft: 30,
+                    paddingRight: 30,
+                    color: "#FFFFFF",
+                    backgroundColor: "#CB0086",
+                    borderRadius: 20
+                  }}
+                >
+                  <FontAwesomeIcon icon={faMusic} style={{ marginRight: 4 }} />
+                  {userObj.genre}
+                </Badge>
+                <Badge
+                  className="divShadow"
+                  style={{
+                    margin: 10,
+                    padding: 10,
+                    paddingLeft: 30,
+                    paddingRight: 30,
+                    color: "#0B0B0B",
+                    backgroundColor: "#FF9900"
+                  }}
+                >
+                  <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />
+                  {userObj.role}
+                </Badge>
+                {userObj.location && userObj.location.city && (
+                  <Badge
+                    className="divShadow"
+                    style={{
+                      margin: 10,
+                      padding: 10,
+                      paddingLeft: 30,
+                      paddingRight: 30,
+                      color: "#8A8A8A",
+                      backgroundColor: "#FFFFFF"
                     }}
                   >
-                    {genreOption}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-          </div>
+                    <FontAwesomeIcon
+                      icon={faMapMarkerAlt}
+                      style={{ marginRight: 4 }}
+                    />
+                    {userObj.location.city}
+                  </Badge>
+                )}
+              </Row>
 
-          <div style={{ display: "flex" }}>Band's Location:</div>
-          <div style={{ marginLeft: 20, marginRight: 20 }}>
-            <Input
-              id="createBandStreet"
-              placeholder="street"
-              style={{
-                borderRadius: 25,
-                margin: 5
-              }}
-            />
-            <div style={{ display: "flex" }}>
-              <Input
-                id="createBandCity"
-                placeholder="city"
+              <div
                 style={{
-                  borderRadius: 25,
-                  margin: 5
+                  marginTop: 50,
+                  display: "flex",
+                  alignItems: "center",
+                  paddingRight: 20,
+                  paddingLeft: 20
                 }}
-              />
+              >
+                <span
+                  style={{ fontSize: 35, fontWeight: 600, marginRight: 10 }}
+                >
+                  Bands
+                </span>
+                <Button
+                  style={{
+                    backgroundColor: "#000000",
+                    borderRadius: 25,
+                    height: 50,
+                    width: 50
+                  }}
+                  onClick={() => {
+                    toggleCreateBandModal();
+                  }}
+                >
+                  <FontAwesomeIcon icon={faPlus} style={{ marginRight: 4 }} />
+                </Button>
+              </div>
+              <div>
+                <div
+                  style={{
+                    marginTop: 20,
+                    display: "flex",
+                    alignItems: "center",
+                    flexWrap: "wrap"
+                  }}
+                >
+                  {bands.map(band => (
+                    <BandCard key={band.name} {...band} />
+                  ))}
+                </div>
+              </div>
+            </Col>
+          </Row>
 
-              <Input
-                id="createBandState"
-                placeholder="state"
-                style={{
-                  borderRadius: 25,
-                  margin: 5
-                }}
-              />
+          <Modal
+            isOpen={createBandModal}
+            toggle={toggleCreateBandModal}
+            backdrop="static"
+          >
+            <ModalHeader toggle={toggleCreateBandModal}>
+              Create band
+            </ModalHeader>
+            <ModalBody>
+              <div style={{ marginBottom: 20 }}>
+                <Input
+                  id="createBandName"
+                  placeholder="Name of your Band"
+                  style={{ borderRadius: 20 }}
+                />
+              </div>
+              <div style={{ marginBottom: 20 }}>
+                <Input
+                  type="textarea"
+                  id="createBandDescription"
+                  placeholder="some description about your band"
+                  style={{ borderRadius: 20 }}
+                />
+              </div>
 
-              <Input
-                id="createBandZip"
-                placeholder="zip"
+              <div
                 style={{
-                  borderRadius: 25,
-                  margin: 5
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: 20
                 }}
-              />
-            </div>
-          </div>
-          <div style={{ marginTop: 20, marginBottom: 20 }}>
-            <div style={{ marginBottom: 5 }}>Band's Logo:</div>
-            <Input
-              id="createBandLogoImg"
-              type="file"
-              accept="image/png, image/jpeg, image/jpg"
-              placeholder="zip"
-              style={{
-                marginLeft: 10
-              }}
-            />
-          </div>
-          <div style={{ display: "flex", justifyContent: "flex-end" }}>
-            <Button
-              style={{
-                fontSize: 18,
-                backgroundColor: "#000000",
-                borderRadius: 10
-              }}
-              onClick={() => {
-                createBand();
-              }}
-            >
-              Create Band!
-            </Button>
-          </div>
-        </ModalBody>
-      </Modal>
+              >
+                Band's Genre:
+                <Dropdown
+                  isOpen={createBandGenreDDOpen}
+                  toggle={toggleCreateBandGenreDDOpen}
+                  style={{ marginLeft: 20 }}
+                >
+                  <DropdownToggle caret style={{ backgroundColor: "#000000" }}>
+                    {genre ? genre : "All"}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {genreOptions.map(genreOption => (
+                      <DropdownItem
+                        key={genreOption}
+                        onClick={() => {
+                          setGenre(genreOption === "All" ? null : genreOption);
+                        }}
+                      >
+                        {genreOption}
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
+
+              <div style={{ display: "flex" }}>Band's Location:</div>
+              <div style={{ marginLeft: 20, marginRight: 20 }}>
+                <Input
+                  id="createBandStreet"
+                  placeholder="street"
+                  style={{
+                    borderRadius: 25,
+                    margin: 5
+                  }}
+                />
+                <div style={{ display: "flex" }}>
+                  <Input
+                    id="createBandCity"
+                    placeholder="city"
+                    style={{
+                      borderRadius: 25,
+                      margin: 5
+                    }}
+                  />
+
+                  <Input
+                    id="createBandState"
+                    placeholder="state"
+                    style={{
+                      borderRadius: 25,
+                      margin: 5
+                    }}
+                  />
+
+                  <Input
+                    id="createBandZip"
+                    placeholder="zip"
+                    style={{
+                      borderRadius: 25,
+                      margin: 5
+                    }}
+                  />
+                </div>
+              </div>
+              <div style={{ marginTop: 20, marginBottom: 20 }}>
+                <div style={{ marginBottom: 5 }}>Band's Logo:</div>
+                <Input
+                  id="createBandLogoImg"
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg"
+                  placeholder="zip"
+                  style={{
+                    marginLeft: 10
+                  }}
+                />
+              </div>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button
+                  style={{
+                    fontSize: 18,
+                    backgroundColor: "#000000",
+                    borderRadius: 10
+                  }}
+                  onClick={() => {
+                    createBand();
+                  }}
+                >
+                  Create Band!
+                </Button>
+              </div>
+            </ModalBody>
+          </Modal>
+        </>
+      ) : (
+        <Redirect to="/explore" />
+      )}
     </div>
   );
 };

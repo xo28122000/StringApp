@@ -12,23 +12,25 @@ const BandMemberItem = props => {
         padding: 25
       }}
     >
-      <div
-        style={{
-          width: 150,
-          height: 150,
-          borderRadius: 130,
-          marginBottom: 10
-        }}
-      >
-        <img
-          src={props.img}
+      {props.img && (
+        <div
           style={{
-            width: 130,
-            maxHeight: 130,
-            borderRadius: 130
+            width: 150,
+            height: 150,
+            borderRadius: 130,
+            marginBottom: 10
           }}
-        />
-      </div>
+        >
+          <img
+            src={props.profileImageUrl}
+            style={{
+              width: 130,
+              maxHeight: 130,
+              borderRadius: 130
+            }}
+          />
+        </div>
+      )}
 
       <Badge
         style={{
