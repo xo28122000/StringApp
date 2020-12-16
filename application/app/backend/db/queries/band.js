@@ -84,6 +84,7 @@ bandQueries.createMember = (isBandAdmin, role, dateJoined, userId, bandId) => {
   });
 };
 
+//TODO problems with foreign key
 bandQueries.createSetEntry = (songName, runTime, eventId) => {
   return new Promise((resolve, reject) => {
     pool.query(
