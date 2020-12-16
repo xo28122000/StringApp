@@ -12,7 +12,11 @@ import {
   ModalBody,
   Spinner,
   Label,
-  FormText
+  FormText,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from "reactstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -138,6 +142,7 @@ const BandProfilePage = props => {
         });
         if (res.data.success) {
           setBand(res.data.band);
+          setGenre(res.data.band.genre);
         }
       } catch (err) {
         console.log(err);
@@ -221,6 +226,11 @@ const BandProfilePage = props => {
   const [addRepModal, setAddRepModal] = useState(null);
   const [addPostModal, setAddPostModal] = useState(null);
   const [addEventModal, setAddEventModal] = useState(null);
+
+  const genreOptions = ["Rock", "Acoustic", "Jazz", "Pop", "Hip Hop", "Other"];
+  const [genreDDOpen, setGenreDDOpen] = useState(false);
+  const [genre, setGenre] = useState("Rock");
+  const [repGenre, setRepGenre] = useState("Acoustic");
 
   return (
     <div style={{ backgroundColor: "#ffffff" }}>
@@ -412,7 +422,8 @@ const BandProfilePage = props => {
                     color: "#000000"
                   }}
                 >
-                  <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />3
+                  <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />
+                  {band.numMembers}
                 </Badge>
                 <Badge
                   className="divShadow"
@@ -968,6 +979,148 @@ const BandProfilePage = props => {
             </ModalBody>
           </Modal>
 
+          <Modal
+            isOpen={editBandModal}
+            toggle={() => {
+              setEditBandModal(!editBandModal);
+            }}
+            backdrop="static"
+          >
+            <ModalHeader
+              toggle={() => {
+                setEditBandModal(!editBandModal);
+              }}
+            >
+              Edit Band Info
+            </ModalHeader>
+            <ModalBody>
+              <Label>Band's Name</Label>
+              <Input
+                id="editBandName"
+                style={{ marginBottom: 20 }}
+                placeholder="Band name"
+                defaultValue={band.name}
+              />
+
+              <Label>Band's Genre:</Label>
+              <Dropdown
+                isOpen={genreDDOpen}
+                toggle={() => {
+                  setGenreDDOpen(!genreDDOpen);
+                }}
+                style={{ marginLeft: 20, marginBottom: 20 }}
+              >
+                <DropdownToggle caret style={{ backgroundColor: "#000000" }}>
+                  {genre ? genre : "All"}
+                </DropdownToggle>
+                <DropdownMenu>
+                  {genreOptions.map(genreOption => (
+                    <DropdownItem
+                      key={genreOption}
+                      onClick={() => {
+                        setGenre(genreOption === "All" ? null : genreOption);
+                      }}
+                    >
+                      {genreOption}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
+
+              <Label>Band's Location:</Label>
+              <div
+                style={{ marginLeft: 20, marginRight: 20, marginBottom: 20 }}
+              >
+                <Input
+                  id="editBandStreet"
+                  placeholder="street"
+                  style={{
+                    margin: 5
+                  }}
+                  defaultValue={
+                    band.location && band.location.street
+                      ? band.location.street
+                      : ""
+                  }
+                />
+                <div style={{ display: "flex" }}>
+                  <Input
+                    id="editBandCity"
+                    placeholder="city"
+                    style={{
+                      margin: 5
+                    }}
+                    defaultValue={
+                      band.location && band.location.city
+                        ? band.location.city
+                        : ""
+                    }
+                  />
+                  <Input
+                    id="editBandState"
+                    placeholder="state"
+                    style={{
+                      margin: 5
+                    }}
+                    defaultValue={
+                      band.location && band.location.state
+                        ? band.location.state
+                        : ""
+                    }
+                  />
+                  <Input
+                    id="editBandZip"
+                    placeholder="zip"
+                    style={{
+                      margin: 5
+                    }}
+                    defaultValue={
+                      band.location && band.location.zip
+                        ? band.location.zip
+                        : ""
+                    }
+                  />
+                </div>
+              </div>
+
+              <Label>Band's Description</Label>
+              <Input
+                id="editBandDesc"
+                type="textarea"
+                style={{ marginBottom: 20, minHeight: 200 }}
+                placeholder="Write something that describes your band"
+                defaultValue={band.description ? band.description : null}
+              />
+
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Button
+                  onClick={() => {
+                    setEditBandModal(false);
+                  }}
+                  color="danger"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    let name = document.getElementById("editBandName");
+                    let street = document.getElementById("editBandStreet");
+                    let city = document.getElementById("editBandCity");
+                    let state = document.getElementById("editBandState");
+                    let zip = document.getElementById("editBandZip");
+                    let description = document.getElementById("editBandDesc");
+                    // genre is a state variable
+
+                    // axios call
+                  }}
+                  color="primary"
+                >
+                  Done
+                </Button>
+              </div>
+            </ModalBody>
+          </Modal>
+
           {/* add modals */}
 
           <Modal
@@ -995,11 +1148,30 @@ const BandProfilePage = props => {
                 style={{ marginBottom: 20 }}
                 placeholder="Link to this Repertoir. (ex: https://code-404.xyz/)"
               />
-              <Input
-                id="addRepGenre"
-                style={{ marginBottom: 20 }}
-                placeholder="Genre of this Repertoir"
-              />
+              <Label>Repertoir Genre:</Label>
+              <Dropdown
+                isOpen={genreDDOpen}
+                toggle={() => {
+                  setGenreDDOpen(!genreDDOpen);
+                }}
+                style={{ marginLeft: 20, marginBottom: 20 }}
+              >
+                <DropdownToggle caret style={{ backgroundColor: "#000000" }}>
+                  {repGenre ? repGenre : "-"}
+                </DropdownToggle>
+                <DropdownMenu>
+                  {genreOptions.map(genreOption => (
+                    <DropdownItem
+                      key={genreOption}
+                      onClick={() => {
+                        setRepGenre(genreOption);
+                      }}
+                    >
+                      {genreOption}
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </Dropdown>
               Duration of this Repertoir
               <div
                 style={{
@@ -1032,7 +1204,7 @@ const BandProfilePage = props => {
                 onClick={() => {
                   let name = document.getElementById("addRepName").value;
                   let link = document.getElementById("addRepLink").value;
-                  let genre = document.getElementById("addRepGenre").value;
+
                   let DurationMin = document.getElementById("addRepDurationMin")
                     .value;
                   let DurationSec = document.getElementById("addRepDurationSec")
@@ -1041,12 +1213,16 @@ const BandProfilePage = props => {
                     .post("/api/band/createRep", {
                       songName: name,
                       runTime: DurationMin + ":" + DurationSec,
-                      genre,
+                      genre: repGenre,
                       link,
                       bandId: band.bandId
                     })
                     .then(res => {
-                      console.log(res.data);
+                      if (res.data.success) {
+                        window.location.reload();
+                      } else {
+                        alert("Please recheck your values and try again.");
+                      }
                     })
                     .catch(err => {});
                 }}
@@ -1111,7 +1287,11 @@ const BandProfilePage = props => {
                       bandId: band.bandId
                     })
                     .then(res => {
-                      console.log(res.data);
+                      if (res.data.success) {
+                        window.location.reload();
+                      } else {
+                        alert("Please recheck your values and try again.");
+                      }
                     })
                     .catch(err => {});
                 }}

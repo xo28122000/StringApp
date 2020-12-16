@@ -105,7 +105,11 @@ const BandPostItem = props => {
                   bandPostId: props.bandPostId
                 })
                   .then(res => {
-                    console.log(res.data);
+                    if (res.data.success) {
+                      window.location.reload();
+                    } else {
+                      alert("Could not delete this post. Please try again.");
+                    }
                   })
                   .catch(err => {});
               }}
