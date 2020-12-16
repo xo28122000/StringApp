@@ -207,7 +207,7 @@ bandQueries.getEvents = bandId => {
     pool.query(
       `SELECT E.bandId, E.eventId, E.title, E.description, E.date, E.startTime, E.endTime, E.location, E.locationLat, E.locationLong 
       FROM StringApp.BAND B, StringApp.EVENTS E
-      WHERE B.bandId = E.bandId B.bandId = '${bandId}';`,
+      WHERE B.bandId = E.bandId AND B.bandId = '${bandId}';`,
       (err, results) => {
         if (err) {
           return reject(err);

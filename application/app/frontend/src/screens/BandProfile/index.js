@@ -73,61 +73,61 @@ const BandProfilePage = props => {
       //   description:
       //     'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.'
       // });
-      setBandMembers([
-        {
-          name: "John lenon",
-          role: "Lead Guitarist",
-          img:
-            "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
-        }
-      ]);
-      setMusicRep([
-        {
-          name: "The Beatles - Hey Jude",
-          link: "www.eirshugfhyisjikao.com",
-          genre: "Rock",
-          duration: "2:06"
-        },
-        {
-          name: "The Beatles - Hey Jude",
-          link: "www.eirshugfhyisjikao.com",
-          genre: "Rock",
-          duration: "2:06"
-        },
-        {
-          name: "The Beatles - Hey Jude",
-          link: "www.eirshugfhyisjikao.com",
-          genre: "Rock",
-          duration: "2:06"
-        }
-      ]);
-      setPosts([
-        {
-          bandPostId: 2112,
-          media: "www.eirshugfhyisjikao.com",
-          title: "some band title",
-          description: "some band long long description"
-        }
-      ]);
-      setEvents([
-        {
-          title: "LowKey Sessions",
-          description:
-            "We are planning a lowkey event to happen this Wednesday and would for you to join us! We will be playing some of our famous tracks and then will be taking public requests!",
-          date: "Sept 21 2020",
-          startTime: "8:30 pm",
-          endTime: "10:30 pm",
-          genre: "mellow",
-          bandId: "3423342344",
-          bandName: "Beatles",
-          loc: {
-            street: "100 font blvd",
-            city: "San Francisco",
-            state: "California",
-            zip: "94132"
-          }
-        }
-      ]);
+      // setBandMembers([
+      //   {
+      //     name: "John lenon",
+      //     role: "Lead Guitarist",
+      //     img:
+      //       "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f09bdf7b-f817-4111-82f4-a4ff5545cbc4/d1108y8-e558a69c-da90-47f5-992d-c2ffd358f2fb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZjA5YmRmN2ItZjgxNy00MTExLTgyZjQtYTRmZjU1NDVjYmM0XC9kMTEwOHk4LWU1NThhNjljLWRhOTAtNDdmNS05OTJkLWMyZmZkMzU4ZjJmYi5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.lbpb6aNH1rLygd5UoJKG4pboQrq1VYidpxVJp8yQEuc"
+      //   }
+      // ]);
+      // setMusicRep([
+      //   {
+      //     name: "The Beatles - Hey Jude",
+      //     link: "www.eirshugfhyisjikao.com",
+      //     genre: "Rock",
+      //     duration: "2:06"
+      //   },
+      //   {
+      //     name: "The Beatles - Hey Jude",
+      //     link: "www.eirshugfhyisjikao.com",
+      //     genre: "Rock",
+      //     duration: "2:06"
+      //   },
+      //   {
+      //     name: "The Beatles - Hey Jude",
+      //     link: "www.eirshugfhyisjikao.com",
+      //     genre: "Rock",
+      //     duration: "2:06"
+      //   }
+      // ]);
+      // setPosts([
+      //   {
+      //     bandPostId: 2112,
+      //     media: "www.eirshugfhyisjikao.com",
+      //     title: "some band title",
+      //     description: "some band long long description"
+      //   }
+      // ]);
+      // setEvents([
+      //   {
+      //     title: "LowKey Sessions",
+      //     description:
+      //       "We are planning a lowkey event to happen this Wednesday and would for you to join us! We will be playing some of our famous tracks and then will be taking public requests!",
+      //     date: "Sept 21 2020",
+      //     startTime: "8:30 pm",
+      //     endTime: "10:30 pm",
+      //     genre: "mellow",
+      //     bandId: "3423342344",
+      //     bandName: "Beatles",
+      //     loc: {
+      //       street: "100 font blvd",
+      //       city: "San Francisco",
+      //       state: "California",
+      //       zip: "94132"
+      //     }
+      //   }
+      // ]);
       try {
         let res = await axios.post("/api/band/getBandFromName", {
           name: bandName
@@ -140,7 +140,7 @@ const BandProfilePage = props => {
       }
     }
   }, [bandName]);
-  
+
   useEffect(() => {
     const getAll = async () => {
       if (band) {
@@ -150,8 +150,27 @@ const BandProfilePage = props => {
           res = await axios.post("/api/band/getBandMembers", {
             bandId: band.bandId
           });
-          setBandMembers(res.data.bandMembers);
-          // setBandMembers
+          if (res.data.success) {
+            setBandMembers(res.data.bandMembers);
+          }
+          res = await axios.post("/api/band/getBandRep", {
+            bandId: band.bandId
+          });
+          if (res.data.success) {
+            setMusicRep(res.data.result);
+          }
+          res = await axios.post("/api/band/getBandPosts", {
+            bandId: band.bandId
+          });
+          if (res.data.success) {
+            setPosts(res.data.result);
+          }
+          res = await axios.post("/api/band/getEvents", {
+            bandId: band.bandId
+          });
+          if (res.data.success) {
+            setEvents(res.data.result);
+          }
         } catch (err) {
           console.log(err);
         }
