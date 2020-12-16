@@ -14,7 +14,7 @@ bandQueries.createBand = (
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `INSERT INTO BAND (name, logoImageUrl, links, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${imgUrl}', '${links}' '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,
+      `INSERT INTO BAND (name, logoImageUrl, links, location, locationLat, locationLong, genre, isLookingForMember) VALUES('${name}', '${imgUrl}', '${links}', '${location}', '${locationLat}', '${locationLong}', '${genre}', '${isLookingForMember}')`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -103,7 +103,7 @@ bandQueries.createSetEntry = (songName, runTime, eventId) => {
   });
 };
 
-bandQueries.getEvents = (bandId) => {
+bandQueries.getEvents = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select * from EVENTS where bandId = ?`,
@@ -121,7 +121,7 @@ bandQueries.getEvents = (bandId) => {
 
 //TODO fix this SQL query:
 //need to join the query - userId -> band member, bandId from band member, then bands from bands with bandID
-bandQueries.getBands = (userId) => {
+bandQueries.getBands = userId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `select from BAND where userId = '${userId}'`,
@@ -136,7 +136,7 @@ bandQueries.getBands = (userId) => {
   });
 };
 
-bandQueries.getBandInfo = (bandId) => {
+bandQueries.getBandInfo = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select bandId, name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember from BAND where bandId = ?`,
@@ -152,7 +152,7 @@ bandQueries.getBandInfo = (bandId) => {
   });
 };
 
-bandQueries.getBandMembers = (bandId) => {
+bandQueries.getBandMembers = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT * from BANDMEMBERS where (bandId = '${bandId}')`,
@@ -167,7 +167,7 @@ bandQueries.getBandMembers = (bandId) => {
   });
 };
 
-bandQueries.getBandPosts = (bandId) => {
+bandQueries.getBandPosts = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select * from BANDPOSTS where bandId = ?`,
@@ -183,7 +183,7 @@ bandQueries.getBandPosts = (bandId) => {
   });
 };
 
-bandQueries.getBandRep = (bandId) => {
+bandQueries.getBandRep = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select * from REPERTOIRE where bandId = ?`,

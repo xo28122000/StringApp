@@ -2,7 +2,7 @@ const express = require("express");
 
 const nodeGeocoder = require("node-geocoder");
 const geoCoder = nodeGeocoder({
-  provider: "openstreetmap",
+  provider: "openstreetmap"
 });
 
 const bandController = require("../../controllers/bandController/bandController.js");
@@ -14,28 +14,28 @@ const multer = require("multer");
 const geocode = require("../../helpers/middlewares/geocode.js");
 const storage = multer.diskStorage({
   destination: "backend/uploads",
-  filename: function (req, file, cb) {
+  filename: function(req, file, cb) {
     cb(null, file.originalname);
-  },
+  }
 });
 
 //for uploading files using multer
 const upload = multer({
   //multer settings
-  storage: storage,
-  fileFilter: (req, file, cb) => {
-    let ext = path.extname(file.originalname);
-    //should validate file format input - must be jpg, jpeg, or png
-    if (ext == ".jpg" || ext == ".jpeg" || ext == ".png") {
-      cb(null, true);
-    } else {
-      cb(null, false);
-      return cb(new Error("Only .jpg, .jpeg, or .png formats allowed"));
-    }
-  },
-  limits: {
-    fileSize: 8 * 1024 * 1024, //for 8 MB image size limit
-  },
+  storage: storage
+  // fileFilter: (req, file, cb) => {
+  //   let ext = path.extname(file.originalname);
+  //   //should validate file format input - must be jpg, jpeg, or png
+  //   if (ext == ".jpg" || ext == ".jpeg" || ext == ".png") {
+  //     cb(null, true);
+  //   } else {
+  //     cb(null, false);
+  //     return cb(new Error("Only .jpg, .jpeg, or .png formats allowed"));
+  //   }
+  // },
+  // limits: {
+  //   fileSize: 8 * 1024 * 1024, //for 8 MB image size limit
+  // },
 });
 
 /** 
@@ -68,7 +68,8 @@ bandRouter.post(
   "/createBand",
   isUser,
   //imageSizeCheck,
-  upload.single("file"),
+  upload.single("imageFile"),
+
   async (req, res, next) => {
     try {
       req.body.location = JSON.parse(req.body.location);
@@ -78,6 +79,7 @@ bandRouter.post(
       res.send({ success: false, error: "Location is not parsable" });
     }
   },
+
   async (req, res, next) => {
     if (req.body.location) {
       try {
@@ -86,7 +88,7 @@ bandRouter.post(
           city: req.body.location.city,
           state: req.body.location.state,
           postalcode: req.body.location.zip,
-          country: "United States",
+          country: "United States"
         });
         if (
           retObj.length <= 0 ||
@@ -99,7 +101,7 @@ bandRouter.post(
           req.body.location = {
             street: retObj[0].streetName,
             city: retObj[0].city ? retObj[0].city : req.body.location.city,
-            state: retObj[0].state,
+            state: retObj[0].state
           };
           req.body.latitude = retObj[0].latitude;
           req.body.longitude = retObj[0].longitude;
@@ -113,9 +115,13 @@ bandRouter.post(
       await awsS3.clearFile(req.file);
       return res.send({
         success: false,
-        error: "no location provided by user",
+        error: "no location provided by user"
       });
     }
+  },
+  (req, res, next) => {
+    console.log("reaching here");
+    next();
   },
   bandController.createBand
 );

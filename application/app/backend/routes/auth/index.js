@@ -9,8 +9,8 @@ const createStringAccountLimmiter = rateLimit({
   max: 150, // start blocking after 5 requests
   message: {
     success: false,
-    error: "try again after an hour",
-  },
+    error: "try again after an hour"
+  }
 });
 
 let authRouter = express.Router();
@@ -23,16 +23,15 @@ authRouter.post(
     // get geocoordinates
     next();
   },
-  function (req, res, next) {
-    passport.authenticate("user-register", function (error, user, info) {
+  function(req, res, next) {
+    passport.authenticate("user-register", function(error, user, info) {
       if (error) {
-        console.log(error);
         return res.send({ success: false });
       }
       if (!user) {
         return res.send({ success: false });
       }
-      req.logIn(user, (error) => {
+      req.logIn(user, error => {
         if (error) {
           //console.log(error);
           return res.send({ success: false });
@@ -43,15 +42,15 @@ authRouter.post(
   }
 );
 
-authRouter.post("/login", function (req, res, next) {
+authRouter.post("/login", function(req, res, next) {
   //route definition for logging in to a user account
-  passport.authenticate("user-login", function (error, user, info) {
+  passport.authenticate("user-login", function(error, user, info) {
     if (error) {
       return res.send({ success: false });
     } else if (!user) {
       return res.send({ success: false });
     }
-    req.logIn(user, (error) => {
+    req.logIn(user, error => {
       if (error) {
         return res.send({ success: false });
       }

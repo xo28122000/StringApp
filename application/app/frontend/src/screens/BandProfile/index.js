@@ -604,9 +604,13 @@ const BandProfilePage = props => {
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
               Events{" "}
               {isBandMember() && (
-                <Button  onClick={() => {
-                  setAddEventModal(true);
-                }} color="primary" style={{ marginLeft: 30 }}>
+                <Button
+                  onClick={() => {
+                    setAddEventModal(true);
+                  }}
+                  color="primary"
+                  style={{ marginLeft: 30 }}
+                >
                   Add New Event
                 </Button>
               )}
@@ -878,6 +882,72 @@ const BandProfilePage = props => {
                 </Button>
                 <Button color="danger">Delete Event</Button>
               </div>
+            </ModalBody>
+          </Modal>
+
+          {/* add modals */}
+
+          <Modal
+            isOpen={addRepModal}
+            toggle={() => {
+              setAddRepModal(!addRepModal);
+            }}
+            backdrop="static"
+          >
+            <ModalHeader
+              toggle={() => {
+                setAddRepModal(!addRepModal);
+              }}
+            >
+              Add new Repertoir to your band
+            </ModalHeader>
+            <ModalBody>
+              <Input
+                id="addRepName"
+                style={{ marginBottom: 20 }}
+                placeholder="Name of this Repertoir"
+              />
+              <Input
+                id="addRepLink"
+                style={{ marginBottom: 20 }}
+                placeholder="Link to this Repertoir. (ex: https://code-404.xyz/)"
+              />
+              <Input
+                id="addRepGenre"
+                style={{ marginBottom: 20 }}
+                placeholder="Genre of this Repertoir"
+              />
+              Duration of this Repertoir
+              <div
+                style={{
+                  display: "flex",
+                  marginBottom: 20,
+                  marginLeft: 50,
+                  alignItems: "center",
+                  fontSize: 20,
+                  fontWeight: 600
+                }}
+              >
+                <Input
+                  id="addRepDurationMin"
+                  style={{ marginRight: 5 }}
+                  placeholder="minutes"
+                  type="number"
+                  min={0}
+                />
+                {" : "}
+                <Input
+                  id="addRepDurationSec"
+                  style={{ marginLeft: 5 }}
+                  placeholder="seconds"
+                  type="number"
+                  min={0}
+                  max={60}
+                />
+              </div>
+              <Button onclick={() => {}} color="primary">
+                Add Repertoir
+              </Button>
             </ModalBody>
           </Modal>
         </>
