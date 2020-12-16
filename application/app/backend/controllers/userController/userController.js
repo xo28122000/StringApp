@@ -95,10 +95,10 @@ const createLink = async (req, res) => {
   }
 
   let retObj = await userQueries.getLink(req.user.userId);
-  if(retObj.length !=1){
+  if (retObj.length != 1) {
     return res.send({ success: false, error: "incorrect userid" });
   }
-  currentLinks = retObj[0].links
+  currentLinks = retObj[0].links;
   let currentLength = currentLinks.length;
 
   if (currentLength >= 400) {
@@ -153,7 +153,7 @@ const deleteLink = async (req, res) => {
     .catch((err) => {
       return res.send({
         success: false,
-        error: "internal error when trying to add link",
+        error: "internal error when trying to delete link",
       });
     });
 };

@@ -41,14 +41,14 @@ pool.getConnection(async function (err, connection) {
       "email varchar(350) NOT NULL UNIQUE, " +
       "password varchar(200) NOT NULL, " +
       "name varchar(100) NOT NULL, " +
-      "profileImageUrl varchar(150) DEFAULT 'notProvidedByUser', " +
-      "phoneNumber varchar(15) DEFAULT 'not specified', " +
+      "profileImageUrl varchar(150), " +
+      "phoneNumber varchar(15), " +
       "links varchar(500), " +
-      "location varchar(500) DEFAULT 'not specified', " +
+      "location varchar(500), " +
       "locationLat decimal(30,15), " +
       "locationLong decimal(30,15), " +
-      "role varchar(50) DEFAULT 'not yet specified', " +
-      "genre varchar(50) DEFAULT 'not yet specified' " +
+      "role varchar(50), " +
+      "genre varchar(50)" +
       " );",
     function (error, result, fields) {
       //console.log(error);

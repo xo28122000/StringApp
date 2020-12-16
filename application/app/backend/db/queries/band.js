@@ -92,6 +92,22 @@ bandQueries.createEvent = (
   });
 };
 
+bandQueries.createLink = async (bandId, links) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE BAND SET links = ? WHERE bandId = ?`,
+      [links, bandId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 bandQueries.createMember = (isBandAdmin, role, dateJoined, userId, bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -125,7 +141,6 @@ bandQueries.createRep = (songName, runTime, genre, link, bandId) => {
   });
 };
 
-//TODO problems with foreign key in testing
 //creates a set entry in sets table
 bandQueries.createSetEntry = (songName, runTime, eventId) => {
   return new Promise((resolve, reject) => {
@@ -134,10 +149,29 @@ bandQueries.createSetEntry = (songName, runTime, eventId) => {
       [songName, runTime, eventId],
       (err, results) => {
         if (err) {
-          console.log("error: " + err);
+          //console.log("error: " + err);
           return reject(err);
         } else {
-          console.log(results);
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//decrements numMembers in band table for a band identified by bandId
+bandQueries.decrementMember = (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE BAND SET numMembers = (numMembers - 1) WHERE numMembers > 0 AND bandId = ?`,
+      [bandId],
+      (err, results) => {
+        if (err) {
+          //console.log("error: " + err);
+          return reject(err);
+        } else {
+          //console.log(results);
           return resolve(results);
         }
       }
@@ -183,6 +217,44 @@ bandQueries.deleteEvent = (eventId) => {
   });
 };
 
+//deletes a band by bandId from band table
+bandQueries.deleteBand = (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `DELETE FROM BAND WHERE bandId = ?`,
+      [bandId],
+      (err, results) => {
+        if (err) {
+          //console.log("error: " + err);
+          return reject(err);
+        } else {
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//deletes an entry by bandMemberId from bandMembers table
+bandQueries.deleteMember = (bandMemberId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `DELETE FROM BANDMEMBERS WHERE bandMemberId = ?`,
+      [bandMemberId],
+      (err, results) => {
+        if (err) {
+          //console.log("error: " + err);
+          return reject(err);
+        } else {
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 //deletes an entry by Id from Repertoire table
 bandQueries.deleteRep = (repId) => {
   return new Promise((resolve, reject) => {
@@ -195,6 +267,31 @@ bandQueries.deleteRep = (repId) => {
           return reject(err);
         } else {
           //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//edits a band's information in the Band table
+bandQueries.editBandInfo = async (
+  bandId,
+  name,
+  description,
+  location,
+  locationLat,
+  locationLong,
+  genre
+) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE BAND SET name = ?, description = ?, location = ?, locationLat = ?, locationLong = ?, genre = ? WHERE bandId = ?`,
+      [name, description, location, locationLat, locationLong, genre, bandId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
           return resolve(results);
         }
       }
@@ -311,6 +408,59 @@ bandQueries.getBandRep = (bandId) => {
   });
 };
 
+//gets the links field from band table
+bandQueries.getLink = async (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT links FROM BAND where bandId = ?`,
+      [bandId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//returns the isLookingForMembers field from band table
+bandQueries.getIsLookingForMembers = async (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `SELECT isLookingForMember FROM BAND where bandId = ?`,
+      [bandId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//increments numMembers in band table for a band identified by bandId
+bandQueries.incrementMember = (bandId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE BAND SET numMembers = (numMembers + 1) WHERE numMembers > 0 AND bandId = ?`,
+      [bandId],
+      (err, results) => {
+        if (err) {
+          //console.log("error: " + err);
+          return reject(err);
+        } else {
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 bandQueries.isBandAdmin = async (userId, bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -396,6 +546,25 @@ bandQueries.searchEvents = (title, date, location) => {
         if (err) {
           return reject(err);
         } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//sets isLookingForMembers in band table for a band identified by bandId
+bandQueries.setIsLookingForMembers = (bandId, isLooking) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE BAND SET isLookingForMember = ? WHERE bandId = ?`,
+      [isLooking, bandId],
+      (err, results) => {
+        if (err) {
+          //console.log("error: " + err);
+          return reject(err);
+        } else {
+          //console.log(results);
           return resolve(results);
         }
       }
