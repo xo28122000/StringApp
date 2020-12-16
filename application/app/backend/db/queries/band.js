@@ -137,16 +137,13 @@ bandQueries.getBandFromId = bandId => {
 
 bandQueries.getBandFromName = name => {
   return new Promise((resolve, reject) => {
-    pool.query(
-      `select * from Band where name = '${name}'`,
-      (err, results) => {
-        if (err) {
-          return reject(err);
-        } else {
-          return resolve(results);
-        }
+    pool.query(`select * from Band where name = '${name}'`, (err, results) => {
+      if (err) {
+        return reject(err);
+      } else {
+        return resolve(results);
       }
-    );
+    });
   });
 };
 
@@ -169,9 +166,9 @@ bandQueries.getBandInfo = bandId => {
 bandQueries.getBandMembers = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT BM.bandId, BM.bandMemberId, BM.isBandAdmin, BM.dateJoined, BM.userId
-      FROM StringApp.BANDMEMBERS BM, StringApp.BAND B
-      WHERE BM.bandId = B.bandId AND B.bandId = '${bandId}';`,
+      `SELECT BM.bandId, BM.bandMemberId, BM.role, BM.isBandAdmin, BM.dateJoined, BM.userId, SA.email, SA.name, SA.profileImageUrl
+      FROM StringApp.BANDMEMBERS BM, StringApp.BAND B, StringApp.STRINGACCOUNT SA
+      WHERE BM.bandId = B.bandId AND B.bandId = '${bandId}' AND BM.userId = SA.userId;`,
       (err, results) => {
         if (err) {
           return reject(err);

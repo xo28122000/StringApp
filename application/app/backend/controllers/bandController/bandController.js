@@ -1,4 +1,5 @@
 const bandQueries = require("../../db/queries/band.js");
+const stringAccountQueries = require("../../db/queries/stringAccount.js");
 const awsS3 = require("../../lib/aws/s3");
 const isUser = require("../../helpers/middlewares/isUser.js");
 
@@ -188,14 +189,14 @@ const getBandFromId = (req, res) => {
   }
   bandQueries
     .getBandFromId(req.body.bandId)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true, result: retObj });
     })
     .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving bands from bandId",
+        error: "internal error retrieving bands from bandId"
       });
     });
   //TODO need to verify if isUser, and get userId from table first
@@ -220,18 +221,33 @@ const getBandFromName = (req, res) => {
     return res.send({ success: false, error: "title field missing" });
   }
   bandQueries
-    .getBandFromName(req.body.bandId)
-    .then((retObj) => {
-      return res.send({ success: true, result: retObj });
+    .getBandFromName(req.body.name)
+    .then(retObj => {
+      if (retObj.length === 1) {
+        return res.send({
+          success: true,
+          band: {
+            ...retObj[0],
+            links: JSON.parse(retObj[0].links),
+            location: JSON.parse(retObj[0].location)
+          }
+        });
+      } else {
+        return res.send({
+          success: false,
+          error:
+            "no band with this name found or more than one band have this name"
+        });
+      }
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving bands from band name",
+        error: "internal error retrieving bands from band name"
       });
     });
-  };
+};
 
 //controller for getting band information from a band id
 const getBandInfo = (req, res) => {
@@ -250,26 +266,21 @@ const getBandInfo = (req, res) => {
 };
 
 //controller for getting all members of a band given a band id
-const getBandMembers = (req, res) => {
+const getBandMembers = async (req, res) => {
   if (!req.body.bandId) {
-    console.log(req.body);
-    return res.send({ success: false, error: "title field missing" });
+    return res.send({ success: false, error: "bandId field missing" });
   }
-  bandQueries
-    .getBandMembers(req.body.bandId)
-    .then(retObj => {
-      console.log("successful retrieval of band members from bandId");
-      return res.send({ success: true, result: retObj });
-    })
-    .catch(err => {
-      console.log(err);
-      return res.send({
-        success: false,
-        error: "internal error retrieving band members from bandId"
-      });
+  try {
+    let bandMembers = await bandQueries.getBandMembers(req.body.bandId);
+    return res.send({ success: true, bandMembers: bandMembers });
+  } catch (err) {
+    console.log(err);
+    return res.send({
+      success: false,
+      error: "internal error retrieving band members from bandId"
     });
+  }
 };
-
 
 //controller for getting all posts of a band given a band id
 const getBandPosts = (req, res) => {
