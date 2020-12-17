@@ -253,6 +253,9 @@ bandRouter.post(
   bandController.getIsLookingForMembers
 );
 
+//route definition for leaving a band
+bandRouter.post("/leaveBand", geocode, bandController.leaveBand);
+
 //route definition for searching for (a) band(s)
 bandRouter.post("/searchBands", geocode, bandController.searchBands);
 

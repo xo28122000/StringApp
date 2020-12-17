@@ -535,6 +535,25 @@ bandQueries.isMember = async (userId, bandId) => {
   });
 };
 
+//deletes an entry by userId from bandMembers table
+bandQueries.leaveBand = (userId) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `DELETE FROM BANDMEMBERS WHERE userId = ?`,
+      [userId],
+      (err, results) => {
+        if (err) {
+          //console.log("error: " + err);
+          return reject(err);
+        } else {
+          //console.log(results);
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 bandQueries.searchBands = (
   name,
   genre,
