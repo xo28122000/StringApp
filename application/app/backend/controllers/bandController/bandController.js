@@ -532,6 +532,7 @@ const getBandFromId = (req, res) => {
 
 const getBandFromName = (req, res) => {
   if (!req.body.name) {
+    console.log("missing something", req.body);
     return res.send({ success: false, error: "title field missing" });
   }
   bandQueries
@@ -556,7 +557,7 @@ const getBandFromName = (req, res) => {
       }
     })
     .catch(err => {
-      //console.log(err);
+      console.log(err);
       return res.send({
         success: false,
         error: "internal error retrieving bands from band name"
