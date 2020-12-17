@@ -165,16 +165,11 @@ const deleteLink = async (req, res) => {
 
 //controller for editing profile of the registered users
 const editUserInfo = (req, res) => {
-  if (
-    !req.user.userId ||
-    !req.body.name ||
-    !req.body.role ||
-    !req.body.imageURL
-  ) {
+  if (!req.user.userId || !req.body.name || !req.body.role) {
     //console.log(req.body);
     return res.send({ success: false, error: "fields missing" });
   }
-  if (req.body.password) {
+  if (req.body.password && req.body.password.length > 0) {
     //password is present
     const hashedPassword = bcrypt.hashSync(password, 12);
     userQueries
