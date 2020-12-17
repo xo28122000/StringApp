@@ -192,6 +192,7 @@ const BandProfilePage = props => {
   }, [band]);
 
   useEffect(() => {
+    console.log(bandMembers);
     if (bandMembers && userObj) {
       bandMembers.forEach(bandMember => {
         if (bandMember.bandMemberId === userObj.userId) {
@@ -210,22 +211,20 @@ const BandProfilePage = props => {
 
   const [invitationModal, setInvitationModal] = useState(false);
 
-  const [invitations, setInvitations] = useState([
-    {
-      name: "Guy Russell",
-      message:
-        "I am a bass guitarist! I have played for 3 months with a band called ADBC. Please contact me at 8229918920. "
-    },
-    {
-      name: "Dianne Hawkins",
-      message: "I am a lead guitarist! My contact is 8229918920!"
-    },
-    {
-      name: "Kristin Watson",
-      message:
-        "I am a band manager! I have managed 3 bands: QQP, Leads and Bandit-C. To get in tough email me at kwatson@abc.abc"
+  useEffect(() => {
+    if (invitationModal) {
+      axios
+        .post("/api/band/getInvites", { bandId: band.bandId })
+        .then(res => {
+          console.log(res.data);
+          if (res.data.success) {
+            setInvitations(res.data.result);
+          }
+        })
+        .catch(err => {});
     }
-  ]);
+  }, [invitationModal]);
+  const [invitations, setInvitations] = useState([]);
 
   const [sendInviteModal, setSendInviteModal] = useState(false);
   const [addLinkModal, setAddLinkModal] = useState(false);
@@ -850,9 +849,9 @@ const BandProfilePage = props => {
                   <FormText color="muted">Max 1000 characters</FormText>
                   <Button
                     onClick={() => {
-                      let message = document.getElementById(
-                        "sendInviteMessage"
-                      );
+                      let message = document.getElementById("sendInviteMessage")
+                        .value;
+
                       axios
                         .post("/api/user/sendinvite", {
                           bandId: band.bandId,
@@ -860,7 +859,8 @@ const BandProfilePage = props => {
                         })
                         .then(res => {
                           if (res.data.success) {
-                            window.location.reload();
+                            setSendInviteModal(!sendInviteModal);
+                            alert("Successfully sent the invite!");
                           } else {
                             alert(
                               "Error in sending Invite, Please try again later."
@@ -1020,6 +1020,11 @@ const BandProfilePage = props => {
                 as a band member.
               </div>
               <div>
+                {invitations.length === 0 && (
+                  <div style={{ marginTop: 50 ,marginBottom: 50 ,textAlign:"center"}}>
+                    There are not invitations sent to your band.
+                  </div>
+                )}
                 {invitations.map(invitation => (
                   <div
                     className="divShadow"
@@ -1045,11 +1050,45 @@ const BandProfilePage = props => {
                       }}
                     >
                       <Button
+                        onClick={() => {
+                          axios
+                            .post("/api/band/acceptInvite", {
+                              inviteId: invitation.inviteId,
+                              bandId: band.bandId,
+                              userId: invitation.userId
+                            })
+                            .then(res => {
+                              if (res.data.success) {
+                                window.location.reload();
+                              } else {
+                                alert(
+                                  "Error in accepting the invite, Please try again later."
+                                );
+                              }
+                            })
+                            .catch(err => {});
+                        }}
                         style={{ marginRight: 15, backgroundColor: "#000000" }}
                       >
                         Accept
                       </Button>
                       <Button
+                        onClick={() => {
+                          axios
+                            .post("/api/band/deleteInvite", {
+                              inviteId: invitation.inviteId
+                            })
+                            .then(res => {
+                              if (res.data.success) {
+                                window.location.reload();
+                              } else {
+                                alert(
+                                  "Error in deleting the invite, Please try again later."
+                                );
+                              }
+                            })
+                            .catch(err => {});
+                        }}
                         style={{
                           backgroundColor: "#f11313",
                           borderColor: "#f88989"

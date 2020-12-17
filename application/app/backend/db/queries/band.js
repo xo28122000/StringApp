@@ -25,7 +25,7 @@ bandQueries.createBand = (
         locationLat,
         locationLong,
         genre,
-        isLookingForMember,
+        isLookingForMember
       ],
       (err, results) => {
         if (err) {
@@ -79,7 +79,7 @@ bandQueries.createEvent = (
         location,
         locationLat,
         locationLong,
-        bandId,
+        bandId
       ],
       (err, results) => {
         if (err) {
@@ -162,7 +162,7 @@ bandQueries.createSetEntry = (songName, runTime, eventId) => {
 };
 
 //decrements numMembers in band table for a band identified by bandId
-bandQueries.decrementMember = (bandId) => {
+bandQueries.decrementMember = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `UPDATE BAND SET numMembers = (numMembers - 1) WHERE numMembers > 0 AND bandId = ?`,
@@ -181,7 +181,7 @@ bandQueries.decrementMember = (bandId) => {
 };
 
 //deletes a Band Post by Id from bandposts table
-bandQueries.deleteBandPost = (bandPostId) => {
+bandQueries.deleteBandPost = bandPostId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `DELETE FROM BANDPOSTS WHERE bandPostId = ?`,
@@ -200,7 +200,7 @@ bandQueries.deleteBandPost = (bandPostId) => {
 };
 
 //deletes an event by Id from events table
-bandQueries.deleteEvent = (eventId) => {
+bandQueries.deleteEvent = eventId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `DELETE FROM EVENTS WHERE eventId = ?`,
@@ -219,7 +219,7 @@ bandQueries.deleteEvent = (eventId) => {
 };
 
 //deletes a band by bandId from band table
-bandQueries.deleteBand = (bandId) => {
+bandQueries.deleteBand = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `DELETE FROM BAND WHERE bandId = ?`,
@@ -238,7 +238,7 @@ bandQueries.deleteBand = (bandId) => {
 };
 
 //deletes a band by bandId from band table
-bandQueries.deleteInvite = (inviteId) => {
+bandQueries.deleteInvite = inviteId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `DELETE FROM INVITATIONS WHERE inviteId = ?`,
@@ -257,7 +257,7 @@ bandQueries.deleteInvite = (inviteId) => {
 };
 
 //deletes an entry by bandMemberId from bandMembers table
-bandQueries.deleteMember = (bandMemberId) => {
+bandQueries.deleteMember = bandMemberId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `DELETE FROM BANDMEMBERS WHERE bandMemberId = ?`,
@@ -276,7 +276,7 @@ bandQueries.deleteMember = (bandMemberId) => {
 };
 
 //deletes an entry by Id from Repertoire table
-bandQueries.deleteRep = (repId) => {
+bandQueries.deleteRep = repId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `DELETE FROM REPERTOIRE WHERE repId = ?`,
@@ -319,7 +319,7 @@ bandQueries.editBandInfo = async (
   });
 };
 
-bandQueries.getEvents = (bandId) => {
+bandQueries.getEvents = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT E.bandId, E.eventId, E.title, E.description, E.date, E.startTime, E.endTime, E.location, E.locationLat, E.locationLong 
@@ -336,7 +336,7 @@ bandQueries.getEvents = (bandId) => {
   });
 };
 
-bandQueries.getBandFromId = (bandId) => {
+bandQueries.getBandFromId = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `select * from Band where bandId = '${bandId}'`,
@@ -351,7 +351,7 @@ bandQueries.getBandFromId = (bandId) => {
   });
 };
 
-bandQueries.getBandFromName = (name) => {
+bandQueries.getBandFromName = name => {
   return new Promise((resolve, reject) => {
     pool.query(`select * from Band where name = '${name}'`, (err, results) => {
       if (err) {
@@ -363,7 +363,7 @@ bandQueries.getBandFromName = (name) => {
   });
 };
 
-bandQueries.getBandInfo = (bandId) => {
+bandQueries.getBandInfo = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select bandId, name, logoImageUrl, location, locationLat, locationLong, genre, isLookingForMember from BAND where bandId = ?`,
@@ -379,12 +379,12 @@ bandQueries.getBandInfo = (bandId) => {
   });
 };
 
-bandQueries.getBandMembers = (bandId) => {
+bandQueries.getBandMembers = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT BM.bandId, BM.bandMemberId, BM.role, BM.isBandAdmin, BM.dateJoined, BM.userId, SA.email, SA.name, SA.profileImageUrl
-      FROM StringApp.BANDMEMBERS BM, StringApp.BAND B, StringApp.STRINGACCOUNT SA
-      WHERE BM.bandId = B.bandId AND B.bandId = '${bandId}' AND BM.userId = SA.userId;`,
+      FROM StringApp.BANDMEMBERS BM, StringApp.STRINGACCOUNT SA
+      WHERE BM.bandId = '${bandId}' AND BM.userId = SA.userId;`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -396,7 +396,7 @@ bandQueries.getBandMembers = (bandId) => {
   });
 };
 
-bandQueries.getBandPosts = (bandId) => {
+bandQueries.getBandPosts = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select * from BANDPOSTS where bandId = ?`,
@@ -412,7 +412,7 @@ bandQueries.getBandPosts = (bandId) => {
   });
 };
 
-bandQueries.getBandRep = (bandId) => {
+bandQueries.getBandRep = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select * from REPERTOIRE where bandId = ?`,
@@ -429,7 +429,7 @@ bandQueries.getBandRep = (bandId) => {
 };
 
 //gets the links field from band table
-bandQueries.getLink = async (bandId) => {
+bandQueries.getLink = async bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT links FROM BAND where bandId = ?`,
@@ -446,12 +446,12 @@ bandQueries.getLink = async (bandId) => {
 };
 
 //gets all invites for a band from invitations table
-bandQueries.getInvites = async (bandId) => {
+bandQueries.getInvites = async bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT I.message, I.dateSent, I.userId, I.bandId, SA.name
+      `SELECT I.inviteId ,I.message, I.dateSent, I.userId, I.bandId, SA.name
       FROM StringApp.INVITATIONS I, StringApp.STRINGACCOUNT SA
-      WHERE I.bandId = ?;`,
+      WHERE I.bandId = ? AND I.userId = SA.userId;`,
       [bandId],
       (err, results) => {
         if (err) {
@@ -465,7 +465,7 @@ bandQueries.getInvites = async (bandId) => {
 };
 
 //returns the isLookingForMembers field from band table
-bandQueries.getIsLookingForMembers = async (bandId) => {
+bandQueries.getIsLookingForMembers = async bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT isLookingForMember FROM BAND where bandId = ?`,
@@ -482,7 +482,7 @@ bandQueries.getIsLookingForMembers = async (bandId) => {
 };
 
 //increments numMembers in band table for a band identified by bandId
-bandQueries.incrementMember = (bandId) => {
+bandQueries.incrementMember = bandId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `UPDATE BAND SET numMembers = (numMembers + 1) WHERE numMembers > 0 AND bandId = ?`,

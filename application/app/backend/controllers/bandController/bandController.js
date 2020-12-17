@@ -5,7 +5,7 @@ const isUser = require("../../helpers/middlewares/isUser.js");
 
 //controller to accept an invitation and create a new band member
 const acceptInvite = async (req, res) => {
-  if (!req.body.bandId || !req.body.inviteId) {
+  if (!req.body.bandId || !req.body.inviteId|| !req.body.userId) {
     //is a registered user
     return res.send({ success: false, error: "field(s) missing" });
   }
@@ -23,7 +23,7 @@ const acceptInvite = async (req, res) => {
       0, //is NOT a band admin
       "-",
       today,
-      req.user.userId,
+      req.body.userId,
       req.body.bandId
     )
     .then((retObj) => {
