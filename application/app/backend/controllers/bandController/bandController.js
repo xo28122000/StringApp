@@ -29,7 +29,8 @@ const acceptInvite = async (req, res) => {
     .then(retObj => {
       bandQueries
         .deleteInvite(req.body.inviteId)
-        .then(retObj => {
+        .then((retObj) => {
+          bandQueries.incrementMember(req.body.bandId);
           return res.send({ success: true });
         })
         .catch(err => {
