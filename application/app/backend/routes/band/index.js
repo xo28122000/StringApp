@@ -132,7 +132,6 @@ bandRouter.post(
 //route definition for creating a new band post
 bandRouter.post("/createBandPost", isUser, bandController.createBandPost);
 
-//TODO THERE ARE TWO HERE
 //route definition for creating a new event
 bandRouter.post("/createEvent", isUser, geocode, bandController.createEvent);
 

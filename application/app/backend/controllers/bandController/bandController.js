@@ -150,6 +150,9 @@ const createEvent = (req, res) => {
       error: "fields missing for createEvent",
     });
   }
+
+  //console.log(req.body.location);
+
   bandQueries
     .createEvent(
       req.body.title,
@@ -157,7 +160,7 @@ const createEvent = (req, res) => {
       req.body.date,
       req.body.startTime,
       req.body.endTime,
-      req.body.location,
+      JSON.stringify(req.body.location),
       req.body.locationLat,
       req.body.locationLong,
       req.body.bandId
@@ -166,6 +169,7 @@ const createEvent = (req, res) => {
       return res.send({ success: true });
     })
     .catch((err) => {
+      //console.log(err);
       return res.send({
         success: false,
         error: "internal error when trying to create event",
@@ -468,7 +472,7 @@ const editBandInfo = (req, res) => {
     });
   }
 
-  console.log(req.body.location);
+  //console.log(req.body.location);
 
   bandQueries
     .editBandInfo(
@@ -484,7 +488,7 @@ const editBandInfo = (req, res) => {
       return res.send({ success: true });
     })
     .catch((err) => {
-      console.log(err);
+      //console.log(err);
       return res.send({
         success: false,
         error: "internal error editing Band Information",
