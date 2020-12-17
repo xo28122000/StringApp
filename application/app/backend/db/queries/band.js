@@ -340,7 +340,7 @@ bandQueries.getEvents = (bandId) => {
 bandQueries.getBandFromId = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `select * from Band where bandId = '${bandId}'`,
+      `select * from BAND where bandId = '${bandId}'`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -354,7 +354,7 @@ bandQueries.getBandFromId = (bandId) => {
 
 bandQueries.getBandFromName = (name) => {
   return new Promise((resolve, reject) => {
-    pool.query(`select * from Band where name = '${name}'`, (err, results) => {
+    pool.query(`select * from BAND where name = '${name}'`, (err, results) => {
       if (err) {
         return reject(err);
       } else {
