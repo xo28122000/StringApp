@@ -118,7 +118,7 @@ const UserProfileScreen = props => {
         .then(res => {
           // console.log(res.data);
           if (res.data.success) {
-            toggleCreateBandModal();
+            window.location.reload();
           } else {
             alert("Invalid value in one or multiple fields.");
           }
