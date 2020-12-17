@@ -583,7 +583,8 @@ bandQueries.searchBands = (
     return new Promise((resolve, reject) => {
       //console.log("reached no location search query");
       pool.query(
-        `SELECT * from BAND WHERE (name LIKE '${name}' AND genre LIKE '${genre}'AND isLookingForMember >= ${isLookingForMember})`,
+        `SELECT * from BAND WHERE (name LIKE ? AND genre LIKE ? AND isLookingForMember >= ?)`,
+        [name, genre, isLookingForMember],
         (err, results) => {
           if (err) {
             return reject(err);
@@ -601,7 +602,15 @@ bandQueries.searchBands = (
       pool.query(
         //query searches by location only(?)
         // `Select name, location, POWER( SIN( ((37.762067-${locationLat})*0.01745329252)/2 ), 2) + COS( ${locationLat} * 0.01745329252 ) * COS( 37.762067 * 0.01745329252 ) * POWER( SIN( ((-122.483492- '${locationLong}')*0.01745329252)/2 ), 2) AS temp from BAND order by (6371 * 2 * ATAN2( SQRT(temp), SQRT(1-temp) ))`,
-        `select *, POWER( SIN( ((locationLat-${locationLat})*0.01745329252)/2 ), 2) + COS( ${locationLat} * 0.01745329252 ) * COS( locationLat * 0.01745329252 ) * POWER( SIN( ((locationLong-${locationLong})*0.01745329252)/2 ), 2) AS temp from BAND WHERE (name LIKE '${name}' AND genre LIKE '${genre}'AND isLookingForMember >= ${isLookingForMember}) order by (6371 * 2 * ATAN2( SQRT(temp), SQRT(1-temp) ));`,
+        `select *, POWER( SIN( ((locationLat-?)*0.01745329252)/2 ), 2) + COS( ? * 0.01745329252 ) * COS( locationLat * 0.01745329252 ) * POWER( SIN( ((locationLong-?)*0.01745329252)/2 ), 2) AS temp from BAND WHERE (name LIKE ? AND genre LIKE ? AND isLookingForMember >= ?) order by (6371 * 2 * ATAN2( SQRT(temp), SQRT(1-temp) ));`,
+        [
+          locationLat,
+          locationLat,
+          locationLong,
+          name,
+          genre,
+          isLookingForMember,
+        ],
         (err, results) => {
           if (err) {
             return reject(err);
