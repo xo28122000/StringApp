@@ -136,10 +136,6 @@ bandRouter.post("/createBandPost", isUser, bandController.createBandPost);
 //route definition for creating a new event
 bandRouter.post("/createEvent", isUser, geocode, bandController.createEvent);
 
-//TODO THERE ARE TWO HERE
-//route definition for getting the information about a band
-bandRouter.post("/getBandInfo", bandController.createEvent);
-
 //route definition for adding a link to a user profile
 bandRouter.post("/createLink", isUser, bandController.createLink);
 
@@ -173,10 +169,13 @@ bandRouter.post("/deleteMember", isUser, bandController.deleteMember);
 //route definition for deleting a repertoire entry
 bandRouter.post("/deleteRep", isUser, bandController.deleteRep);
 
+//TODO wonky geolocation
 //route definition for editing information of a band
 bandRouter.post(
   "/editBandInfo",
   isUser,
+  geocode,
+  /** 
   async (req, res, next) => {
     try {
       //console.log(req.body.location);
@@ -225,6 +224,7 @@ bandRouter.post(
       });
     }
   },
+  */
   bandController.editBandInfo
 );
 
