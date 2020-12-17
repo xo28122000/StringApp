@@ -89,7 +89,7 @@ pool.getConnection(async function (err, connection) {
   connection.query(
     "CREATE TABLE IF NOT EXISTS INVITATIONS(" +
       "inviteId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-      "message varchar(250), " +
+      "message varchar(1000), " +
       "dateSent DATE, " +
       "sentByBand BOOLEAN, " +
       "userId INT, " +
