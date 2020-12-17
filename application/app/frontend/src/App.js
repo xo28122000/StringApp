@@ -23,7 +23,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useDispatch } from "react-redux";
-import { login } from "./redux/Actions/actions";
+import { login, logout } from "./redux/Actions/actions";
 import Axios from "axios";
 
 const App = props => {
@@ -33,6 +33,8 @@ const App = props => {
       .then(res => {
         if (res.data.success) {
           dispatch(login(res.data.user));
+        } else {
+          dispatch(logout());
         }
       })
       .catch(err => {});

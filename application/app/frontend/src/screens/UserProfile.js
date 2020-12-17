@@ -177,7 +177,11 @@ const UserProfileScreen = props => {
                   borderStyle: "solid",
                   borderColor: "#ffffff",
                   overflow: "hidden",
-                  marginTop: -100
+                  marginTop: -100,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#ffffff"
                 }}
               >
                 {userObj.profileImageUrl ? (
