@@ -77,8 +77,8 @@ const ContactPage = (props) => {
           }}
         >
           Try to scroll down the band profile page and look for the apply
-          button. If you are can't find it then band is not currently looking
-          for anybody to invite.
+          button. If you can't find it then band is not currently looking for
+          anybody to invite.
         </div>
 
         <div style={{ fontSize: 30, fontWeight: 600 }}>
@@ -94,7 +94,7 @@ const ContactPage = (props) => {
         >
           If you are to go to your profile page there will be a button next to
           the bands you are already participating at. Click it and you will be
-          able to start band creationg.
+          able to start band creation.
         </div>
         <div style={{ fontSize: 30, fontWeight: 600 }}>
           - Can I create a band that has already existing name outside of the
@@ -111,7 +111,7 @@ const ContactPage = (props) => {
           Please refer to our Terms and Conditions.
         </div>
         <div style={{ fontSize: 30, fontWeight: 600 }}>
-          - If i find inapropriate content how do i report it?
+          - If I find inapropriate content how do I report it?
         </div>
         <div
           style={{
@@ -121,7 +121,7 @@ const ContactPage = (props) => {
             paddingBottom: 20,
           }}
         >
-          Please email us at customerservice@String.com
+          Please email us at customerservice@String.com.
         </div>
         <div style={{ fontSize: 30, fontWeight: 600 }}>
           - How do I change Band profile picture?
@@ -136,6 +136,77 @@ const ContactPage = (props) => {
         >
           If you go to your band's profile page , right under your profile
           picture you can find a button to upload new profile picture.
+        </div>
+        <div style={{ fontSize: 30, fontWeight: 600 }}>
+          - How do I check for more information about events?
+        </div>
+        <div
+          style={{
+            marginRight: 20,
+
+            fontSize: 18,
+            paddingBottom: 20,
+          }}
+        >
+          When you surched for an event and want to know more about it you can
+          click on "More" and it will display deteiled information about the
+          event.
+        </div>
+        <div style={{ fontSize: 30, fontWeight: 600 }}>
+          - If I want to delete an event what should I do?
+        </div>
+        <div
+          style={{
+            marginRight: 20,
+
+            fontSize: 18,
+            paddingBottom: 20,
+          }}
+        >
+          Go to the band page and choose the event you would like to delete and
+          choose the option to delete it.
+        </div>
+        <div style={{ fontSize: 30, fontWeight: 600 }}>
+          - How do I find bands near me?
+        </div>
+        <div
+          style={{
+            marginRight: 20,
+
+            fontSize: 18,
+            paddingBottom: 20,
+          }}
+        >
+          If you go to String's home page you can filter bands by the city that
+          you live in.
+        </div>
+        <div style={{ fontSize: 30, fontWeight: 600 }}>
+          - How do I find Events near me?
+        </div>
+        <div
+          style={{
+            marginRight: 20,
+
+            fontSize: 18,
+            paddingBottom: 20,
+          }}
+        >
+          If you go to String's home page you can filter events by the city that
+          you live in.
+        </div>
+        <div style={{ fontSize: 30, fontWeight: 600 }}>
+          - Who becomes band admin if I as administrator leaves the band?
+        </div>
+        <div
+          style={{
+            marginRight: 20,
+
+            fontSize: 18,
+            paddingBottom: 20,
+          }}
+        >
+          The new band admin will be the band member that has been in the band
+          the longest.
         </div>
       </div>
     </div>
