@@ -709,7 +709,15 @@ const UserProfileScreen = props => {
                 Should be 8 to 21 characters long and <br />
                 contain atleast 1 number, 1 uppercase and 1 lowercase letter.
               </FormText>
-
+              <Input
+                id="editProfileImage"
+                placeholder="Profile Picture (Link to an image)"
+                defaultValue={userObj.profileImageUrl}
+              />
+              <FormText color="muted" style={{ marginBottom: 20 }}>
+                Example: https://www.sfsu.edu/SFState_logo_color.jpg
+                <br /> We will soon add support for uploading images and videos.
+              </FormText>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <Button
                   onClick={() => {
@@ -725,6 +733,9 @@ const UserProfileScreen = props => {
                     let password = document.getElementById(
                       "editProfilePassword"
                     ).value;
+                    let imageURL = document.getElementById("editProfileImage")
+                      .value;
+
                     if (!name || !roleType) {
                       alert("Name and Role are required fields");
                     } else if (
@@ -748,7 +759,8 @@ const UserProfileScreen = props => {
                         .post("/api/user/editUserInfo", {
                           name,
                           password: password === "" ? null : password,
-                          role: roleType
+                          role: roleType,
+                          imageURL
                         })
                         .then(res => {
                           console.log(res.data);
