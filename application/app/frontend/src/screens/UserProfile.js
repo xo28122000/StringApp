@@ -56,7 +56,7 @@ const UserProfileScreen = props => {
       axios
         .post("/api/user/getUserBand")
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.success) {
             setBands(res.data.result);
           }
@@ -116,7 +116,7 @@ const UserProfileScreen = props => {
           }
         })
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.success) {
             toggleCreateBandModal();
           } else {
@@ -198,7 +198,7 @@ const UserProfileScreen = props => {
               </div>
               <Button
                 onClick={() => {
-                  console.log("click");
+                  // console.log("click");
                   setEditProfileModal(true);
                 }}
                 color="primary"
@@ -573,7 +573,13 @@ const UserProfileScreen = props => {
                         link: { key: key, link: link }
                       })
                       .then(res => {
-                        console.log(res.data);
+                        if (res.data.success) {
+                          window.location.reload();
+                        } else {
+                          alert(
+                            "Error in adding Link, Please try again later."
+                          );
+                        }
                       })
                       .catch(err => {});
                   } else {
@@ -767,7 +773,7 @@ const UserProfileScreen = props => {
                           imageURL
                         })
                         .then(res => {
-                          console.log(res.data);
+                          // console.log(res.data);
                           if (res.data.success) {
                             window.location.reload();
                           } else {
@@ -775,7 +781,7 @@ const UserProfileScreen = props => {
                           }
                         })
                         .catch(err => {
-                          console.log("err", err);
+                          // console.log("err", err);
                         });
                     }
                   }}
