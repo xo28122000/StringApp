@@ -181,6 +181,7 @@ const BandProfilePage = props => {
             bandId: band.bandId
           });
           if (res.data.success) {
+            console.log(res.data.result);
             setEvents(res.data.result);
           }
         } catch (err) {
@@ -781,7 +782,7 @@ const BandProfilePage = props => {
                         </Button>
                       </div>
                     )}
-                    <EventCard {...event} />
+                    <EventCard {...event} loc={event.location} />
                   </div>
                 ))}
               </div>
@@ -1021,7 +1022,13 @@ const BandProfilePage = props => {
               </div>
               <div>
                 {invitations.length === 0 && (
-                  <div style={{ marginTop: 50 ,marginBottom: 50 ,textAlign:"center"}}>
+                  <div
+                    style={{
+                      marginTop: 50,
+                      marginBottom: 50,
+                      textAlign: "center"
+                    }}
+                  >
                     There are not invitations sent to your band.
                   </div>
                 )}
@@ -1562,7 +1569,38 @@ const BandProfilePage = props => {
                 </div>
               </div>
 
-              <Button onclick={() => {}} color="primary">
+              <Button
+                onClick={() => {
+                  let title = document.getElementById("addEventTitle").value;
+                  let description = document.getElementById(
+                    "addEventDescription"
+                  ).value;
+                  let date = document.getElementById("addEventDate").value;
+                  let startTime = document.getElementById("addEventStartTime")
+                    .value;
+                  let endTime = document.getElementById("addEventEndTime")
+                    .value;
+                  let street = document.getElementById("addEventStreet").value;
+                  let city = document.getElementById("addEventCity").value;
+                  let state = document.getElementById("addEventState").value;
+                  let zip = document.getElementById("addEventZip").value;
+                  axios
+                    .post("/api/band/createEvent", {
+                      title,
+                      description,
+                      date,
+                      startTime,
+                      endTime,
+                      location: { street, city, state, zip },
+                      bandId: band.bandId
+                    })
+                    .then(res => {
+                      console.log(res.data);
+                    })
+                    .catch(err => {});
+                }}
+                color="primary"
+              >
                 Add Event
               </Button>
             </ModalBody>
