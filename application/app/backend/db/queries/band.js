@@ -578,18 +578,109 @@ bandQueries.searchBands = (
 };
 
 bandQueries.searchEvents = (title, date, location) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      `Select * from EVENTS where title like '${title}' OR date <= '${date}' OR location like '${location}'`,
-      (err, results) => {
+  if (!title && !date && !location) {
+    //blank search
+    return new Promise((resolve, reject) => {
+      pool.query(`Select * from EVENTS;'`, (err, results) => {
         if (err) {
           return reject(err);
         } else {
           return resolve(results);
         }
-      }
-    );
-  });
+      });
+    });
+  } else if (!title && !date) {
+    //search by location
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `Select * from EVENTS where location like ?'`,
+        [location],
+        (err, results) => {
+          if (err) {
+            return reject(err);
+          } else {
+            return resolve(results);
+          }
+        }
+      );
+    });
+  } else if (!date && !location) {
+    //search by title
+    return new Promise((resolve, reject) => {
+      //search by date and location
+      pool.query(
+        `Select * from EVENTS where title like ?`,
+        [title],
+        (err, results) => {
+          if (err) {
+            return reject(err);
+          } else {
+            return resolve(results);
+          }
+        }
+      );
+    });
+  } else if (!title && !location) {
+    //search by date
+    return new Promise((resolve, reject) => {
+      //search by date and location
+      pool.query(
+        `Select * from EVENTS where date <= ?`,
+        [date],
+        (err, results) => {
+          if (err) {
+            return reject(err);
+          } else {
+            return resolve(results);
+          }
+        }
+      );
+    });
+  } else if (!title) {
+    return new Promise((resolve, reject) => {
+      //search by date and location
+      pool.query(
+        `Select * from EVENTS where date <= ? OR location like ?`,
+        [date, location],
+        (err, results) => {
+          if (err) {
+            return reject(err);
+          } else {
+            return resolve(results);
+          }
+        }
+      );
+    });
+  } else if (!date) {
+    return new Promise((resolve, reject) => {
+      //search by title and location
+      pool.query(
+        `Select * from EVENTS where title like ? OR location like ?`,
+        [title, location],
+        (err, results) => {
+          if (err) {
+            return reject(err);
+          } else {
+            return resolve(results);
+          }
+        }
+      );
+    });
+  } else {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `Select * from EVENTS where title like ? OR date <= ? OR location like ?`,
+        [title, date, location],
+        (err, results) => {
+          if (err) {
+            return reject(err);
+          } else {
+            return resolve(results);
+          }
+        }
+      );
+    });
+  }
 };
 
 //sets isLookingForMembers in band table for a band identified by bandId
