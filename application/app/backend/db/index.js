@@ -16,12 +16,12 @@ const pool = mysql.createPool({
 //initiates connection to mySQL database
 pool.getConnection(async function (err, connection) {
   if (err) {
-    console.log("MYSQL connection unsuccessful");
-    console.log(err);
+    //console.log("MYSQL connection unsuccessful");
+    //console.log(err);
 
     return;
   } // not connected!
-  console.log("MYSQL connection successful!");
+  //console.log("MYSQL connection successful!");
 
   //below line won't work since the createPool call at line 7 needs the database to exist already
   connection.query("CREATE DATABASE IF NOT EXISTS StringApp;");
