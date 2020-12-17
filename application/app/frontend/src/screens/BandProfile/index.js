@@ -338,7 +338,6 @@ const BandProfilePage = props => {
                   </Button>
                 )}
               </div>
-
               {isBandAdmin ? (
                 <div
                   className="divShadow"
@@ -372,6 +371,19 @@ const BandProfilePage = props => {
                         marginLeft: 10
                       }}
                       onClick={() => {
+                        axios
+                          .post("/api/band/setIsLookingForMembers", {
+                            bandId: band.bandId,
+                            isLooking: !band.isLookingForMember
+                          })
+                          .then(res => {
+                            if (res.data.success) {
+                              window.location.reload();
+                            } else {
+                              alert("Internal error. Please try again");
+                            }
+                          })
+                          .catch(err => {});
                         // make axios call to change the islooking for member in db and refresh page
                       }}
                     />
@@ -401,7 +413,7 @@ const BandProfilePage = props => {
               ) : (
                 !isBandMember && (
                   <>
-                    {userObj && band.isLookingForMember && (
+                    {userObj && band.isLookingForMember ? (
                       <div
                         className="divShadow"
                         style={{
@@ -433,7 +445,7 @@ const BandProfilePage = props => {
                           Apply
                         </Button>
                       </div>
-                    )}
+                    ) : null}
                   </>
                 )
               )}
@@ -830,12 +842,34 @@ const BandProfilePage = props => {
                   You may want to include your previous experiences, your
                   current location and contact information
                   <Input
+                    id="sendInviteMessage"
                     type="textarea"
                     style={{ marginTop: 10, minHeight: 200 }}
+                    maxLength={1000}
                   />
-                  <FormText color="muted">Max 250 words</FormText>
+                  <FormText color="muted">Max 1000 characters</FormText>
                   <Button
-                    color="success"
+                    onClick={() => {
+                      let message = document.getElementById(
+                        "sendInviteMessage"
+                      );
+                      axios
+                        .post("/api/user/sendinvite", {
+                          bandId: band.bandId,
+                          message
+                        })
+                        .then(res => {
+                          if (res.data.success) {
+                            window.location.reload();
+                          } else {
+                            alert(
+                              "Error in sending Invite, Please try again later."
+                            );
+                          }
+                        })
+                        .catch(err => {});
+                    }}
+                    color="primary"
                     style={{ float: "right", marginTop: 10 }}
                   >
                     Send
@@ -889,7 +923,6 @@ const BandProfilePage = props => {
                         bandId: band.bandId
                       })
                       .then(res => {
-                        console.log(res.data);
                         if (res.data.success) {
                           window.location.reload();
                         } else {

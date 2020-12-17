@@ -131,7 +131,7 @@ const deleteLink = async (req, res) => {
     return res.send({ success: false, error: "missing field(s)" });
   }
 
-  let currentLinks = await bandQueries.getLink(req.user.userId);
+  let currentLinks = await userQueries.getLink(req.user.userId);
   if (currentLinks.length !== 1) {
     return res.send({ success: false });
   }
@@ -149,7 +149,7 @@ const deleteLink = async (req, res) => {
   }
   currentLinks = JSON.stringify(currentLinks);
 
-  bandQueries
+  userQueries
     .createLink(req.user.userId, currentLinks)
     .then((retObj) => {
       return res.send({ success: true });

@@ -64,7 +64,7 @@ module.exports = {
             });
           }
           delete req.body.password;
-          return done(null, req.body);
+          return done(null, {...req.body, links:"[]" });
         })
         .catch((err) => {
           return done(err.sqlMessage);

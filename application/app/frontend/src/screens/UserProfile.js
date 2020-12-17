@@ -604,7 +604,27 @@ const UserProfileScreen = () => {
                 >
                   Cancel
                 </Button>
-                <Button color="danger">Delete Link</Button>
+                <Button
+                  onClick={() => {
+                    axios
+                      .post("/api/user/deleteLink", {
+                        link: deleteLink
+                      })
+                      .then(res => {
+                        if (res.data.success) {
+                          window.location.reload();
+                        } else {
+                          alert(
+                            "Error in deleting Link, Please try again later."
+                          );
+                        }
+                      })
+                      .catch(err => {});
+                  }}
+                  color="danger"
+                >
+                  Delete Link
+                </Button>
               </div>
             </ModalBody>
           </Modal>
