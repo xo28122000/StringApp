@@ -420,7 +420,7 @@ const deleteMember = async (req, res) => {
   }
 
   bandQueries
-    .deleteMember(req.body.userId)
+    .deleteMember(req.body.userId, req.body.bandId)
     .then((retObj) => {
       bandQueries
         .decrementMember(req.body.bandId)
@@ -723,7 +723,7 @@ const leaveBand = async (req, res) => {
   }
 
   bandQueries
-    .leaveBand(req.user.userId)
+    .leaveBand(req.user.userId, req.body.bandId)
     .then((retObj) => {
       bandQueries
         .decrementMember(req.body.bandId)

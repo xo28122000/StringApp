@@ -257,11 +257,11 @@ bandQueries.deleteInvite = (inviteId) => {
 };
 
 //deletes an entry by bandMemberId from bandMembers table
-bandQueries.deleteMember = (bandMemberId) => {
+bandQueries.deleteMember = (userId, bandMemberId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `DELETE FROM BANDMEMBERS WHERE bandMemberId = ?`,
-      [bandMemberId],
+      `DELETE FROM BANDMEMBERS WHERE userId = ? AND bandMemberId = ?`,
+      [userId, bandMemberId],
       (err, results) => {
         if (err) {
           //console.log("error: " + err);
@@ -536,11 +536,11 @@ bandQueries.isMember = async (userId, bandId) => {
 };
 
 //deletes an entry by userId from bandMembers table
-bandQueries.leaveBand = (userId) => {
+bandQueries.leaveBand = (userId, bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `DELETE FROM BANDMEMBERS WHERE userId = ?`,
-      [userId],
+      `DELETE FROM BANDMEMBERS WHERE userId = ? AND bandId = ?`,
+      [userId, bandId],
       (err, results) => {
         if (err) {
           //console.log("error: " + err);
