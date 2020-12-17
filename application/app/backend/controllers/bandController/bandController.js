@@ -100,7 +100,7 @@ const createBand = async (req, res) => {
     await awsS3.clearFile(req.file);
     return res.send({ success: true });
   } catch (error) {
-    //console.log(error);
+    console.log(error);
     await awsS3.clearFile(req.file);
     return res.send({ success: false });
   }
