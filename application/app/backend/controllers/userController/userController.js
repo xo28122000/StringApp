@@ -194,12 +194,7 @@ const editUserInfo = (req, res) => {
   } else {
     //no password present
     userQueries
-      .editUserInfo(
-        req.user.userId,
-        req.body.name,
-        req.body.password,
-        req.body.role
-      )
+      .editUserInfo(req.user.userId, req.body.name, req.body.role)
       .then((retObj) => {
         //console.log("successful editing of user info from userId");
         return res.send({ success: true, result: retObj });

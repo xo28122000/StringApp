@@ -347,7 +347,8 @@ bandQueries.getEvents = (bandId) => {
 bandQueries.getBandFromId = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `select * from BAND where bandId = '${bandId}'`,
+      `select * from BAND where bandId = ?`,
+      [bandId],
       (err, results) => {
         if (err) {
           return reject(err);
@@ -362,7 +363,7 @@ bandQueries.getBandFromId = (bandId) => {
 //query to retrieve a band by name
 bandQueries.getBandFromName = (name) => {
   return new Promise((resolve, reject) => {
-    pool.query(`select * from BAND where name = '${name}'`, (err, results) => {
+    pool.query(`select * from BAND where name = ?`, [name], (err, results) => {
       if (err) {
         return reject(err);
       } else {
@@ -395,7 +396,8 @@ bandQueries.getBandMembers = (bandId) => {
     pool.query(
       `SELECT BM.bandId, BM.bandMemberId, BM.role, BM.isBandAdmin, BM.dateJoined, BM.userId, SA.email, SA.name, SA.profileImageUrl
       FROM StringApp.BANDMEMBERS BM, StringApp.STRINGACCOUNT SA
-      WHERE BM.bandId = '${bandId}' AND BM.userId = SA.userId;`,
+      WHERE BM.bandId = ? AND BM.userId = SA.userId;`,
+      [bandId],
       (err, results) => {
         if (err) {
           return reject(err);

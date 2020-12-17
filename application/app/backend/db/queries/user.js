@@ -21,7 +21,8 @@ userQueries.account = (name, type, numMembers, imgUrl) => {
 userQueries.changeName = (userId, newName) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `UPDATE STRINGACCOUNT SET name = '${newName}' WHERE userId = '${userId}'`,
+      `UPDATE STRINGACCOUNT SET name = ? WHERE userId = ?`,
+      [newName, userId],
       (err, results) => {
         if (err) {
           return reject(err);
@@ -37,7 +38,8 @@ userQueries.changeName = (userId, newName) => {
 userQueries.changePhone = (userId, newPhoneNum) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `UPDATE STRINGACCOUNT SET phoneNumber = '${newPhoneNum}' WHERE userId = '${userId}'`,
+      `UPDATE STRINGACCOUNT SET phoneNumber = ? WHERE userId = ?`,
+      [newPhoneNum, userId],
       (err, results) => {
         if (err) {
           return reject(err);
@@ -53,7 +55,8 @@ userQueries.changePhone = (userId, newPhoneNum) => {
 userQueries.changeRole = (userId, newRole) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `UPDATE STRINGACCOUNT SET role = '${newRole}' WHERE userId = '${userId}'`,
+      `UPDATE STRINGACCOUNT SET role = ? WHERE userId = ?`,
+      [newRole, userId],
       (err, results) => {
         if (err) {
           return reject(err);
@@ -86,7 +89,8 @@ userQueries.createLink = async (userId, links) => {
 userQueries.getEvent = (eventId) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT * FROM EVENTS where eventId = '${eventId}'`,
+      `SELECT * FROM EVENTS where eventId = ?`,
+      [eventId],
       (err, results) => {
         if (err) {
           return reject(err);
