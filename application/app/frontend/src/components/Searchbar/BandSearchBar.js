@@ -21,7 +21,8 @@ import {
   faSearch,
   faFilter,
   faPlus,
-  faSlidersH
+  faSlidersH,
+  faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import Axios from "axios";
 
@@ -43,6 +44,8 @@ const BandSearchBar = props => {
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
 
+  const [isLooking, setIsLooking] = useState(false);
+
   const searchBands = () => {
     Axios.post("/api/band/searchBands", {
       name: searchName,
@@ -52,11 +55,13 @@ const BandSearchBar = props => {
         city,
         state,
         zip
-      }
+      },
+      isLookingForMember: isLooking
     })
       .then(resp => {
         if (resp.data.success) {
           props.setBands(resp.data.result);
+          setFilterBandModal(false);
         } else {
           alert("incorrect filter or search values");
         }
@@ -90,46 +95,45 @@ const BandSearchBar = props => {
                   margin: 5
                 }}
               />
-              <div style={{ display: "flex" }}>
-                <Input
-                  id="filterLocationCity"
-                  placeholder="city"
-                  value={city}
-                  onChange={ev => {
-                    setCity(ev.target.value);
-                  }}
-                  style={{
-                    borderRadius: 25,
-                    margin: 5
-                  }}
-                />
 
-                <Input
-                  id="filterLocationState"
-                  placeholder="state"
-                  value={state}
-                  onChange={ev => {
-                    setState(ev.target.value);
-                  }}
-                  style={{
-                    borderRadius: 25,
-                    margin: 5
-                  }}
-                />
+              <Input
+                id="filterLocationCity"
+                placeholder="city"
+                value={city}
+                onChange={ev => {
+                  setCity(ev.target.value);
+                }}
+                style={{
+                  borderRadius: 25,
+                  margin: 5
+                }}
+              />
 
-                <Input
-                  id="filterLocationZip"
-                  placeholder="zip"
-                  value={zip}
-                  onChange={ev => {
-                    setZip(ev.target.value);
-                  }}
-                  style={{
-                    borderRadius: 25,
-                    margin: 5
-                  }}
-                />
-              </div>
+              <Input
+                id="filterLocationState"
+                placeholder="state"
+                value={state}
+                onChange={ev => {
+                  setState(ev.target.value);
+                }}
+                style={{
+                  borderRadius: 25,
+                  margin: 5
+                }}
+              />
+
+              <Input
+                id="filterLocationZip"
+                placeholder="zip"
+                value={zip}
+                onChange={ev => {
+                  setZip(ev.target.value);
+                }}
+                style={{
+                  borderRadius: 25,
+                  margin: 5
+                }}
+              />
             </div>
           </div>
           <div
@@ -171,8 +175,15 @@ const BandSearchBar = props => {
           >
             <FormGroup check>
               <Label check>
-                <Input id="filterBandsAccepting" type="checkbox" /> Only Bands
-                looking for members
+                <Input
+                  id="filterBandsAccepting"
+                  type="checkbox"
+                  value={isLooking}
+                  onChange={ev => {
+                    setIsLooking(ev.target.checked);
+                  }}
+                />{" "}
+                Only Bands looking for members
               </Label>
             </FormGroup>
           </div>
@@ -180,7 +191,6 @@ const BandSearchBar = props => {
             <Button
               onClick={() => {
                 searchBands();
-                toggleFilterBandModal();
               }}
               style={{
                 borderRadius: 20,
@@ -238,7 +248,7 @@ const BandSearchBar = props => {
               onChange={ev => {
                 setSearchName(ev.target.value);
               }}
-              placeholder="Search..."
+              placeholder="Search for bands by their name"
               style={{
                 width: "30vw",
                 minWidth: 100,
@@ -272,22 +282,76 @@ const BandSearchBar = props => {
                 toggleFilterBandModal();
               }}
               style={{
-                width: 40,
                 height: 40,
                 borderRadius: 8,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: "#ffffff"
+                backgroundColor: "#ffffff",
+                color: "#000000",
+                fontSize: 18,
+                fontWeight: 500
               }}
             >
               <FontAwesomeIcon
                 icon={faSlidersH}
                 color="#CB0086"
-                style={{ fontSize: 20 }}
-              />
+                style={{ fontSize: 20, marginRight: 5 }}
+              />{" "}
+              Filters
             </Button>
           </div>
+          {(street ||
+            city ||
+            state ||
+            zip ||
+            searchName ||
+            filterType ||
+            isLooking) && (
+            <div style={{ marginLeft: 25 }}>
+              <Button
+                color="danger"
+                onClick={() => {
+                  setStreet("");
+                  setCity("");
+                  setState("");
+                  setZip("");
+                  setSearchName("");
+                  setFilterType(null);
+                  setIsLooking(false);
+
+                  Axios.post("/api/band/searchBands", {})
+                    .then(resp => {
+                      if (resp.data.success) {
+                        props.setBands(resp.data.result);
+                        setFilterBandModal(false);
+                      } else {
+                      }
+                    })
+                    .catch(err => {
+                      alert("an error occured. Please try again later.");
+                    });
+                }}
+                style={{
+                  height: 40,
+                  borderRadius: 8,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "#000000",
+                  fontSize: 18,
+                  fontWeight: 500
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  color="#000000"
+                  style={{ fontSize: 20, marginRight: 5 }}
+                />{" "}
+                Clear Filters
+              </Button>
+            </div>
+          )}
         </div>
         {/* <Button
           onClick={toggleCreateBandModal}
