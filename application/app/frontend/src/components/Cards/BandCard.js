@@ -82,7 +82,7 @@ const BandCard = props => {
             </div>
             <div style={{ marginTop: 5 }}>
               <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />
-              {4}
+              {props.numMembers}
             </div>
           </div>
         </div>

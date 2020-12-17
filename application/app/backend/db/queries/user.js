@@ -78,7 +78,7 @@ userQueries.createLink = async (userId, links) => {
   });
 };
 
-userQueries.getEvent = (eventId) => {
+userQueries.getEvent = eventId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT * FROM EVENTS where eventId = '${eventId}'`,
@@ -93,7 +93,7 @@ userQueries.getEvent = (eventId) => {
   });
 };
 
-userQueries.getLink = async (userId) => {
+userQueries.getLink = async userId => {
   return new Promise((resolve, reject) => {
     pool.query(
       `SELECT links FROM STRINGACCOUNT where userId = ?`,
@@ -109,12 +109,12 @@ userQueries.getLink = async (userId) => {
   });
 };
 
-userQueries.getUserBand = (userId) => {
+userQueries.getUserBand = userId => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `SELECT BM.bandId, BM.bandMemberId, BM.role, BM.isBandAdmin, BM.dateJoined, BM.userId, SA.email, SA.name, SA.profileImageUrl
-      FROM StringApp.BANDMEMBERS BM, StringApp.BAND B, StringApp.STRINGACCOUNT SA
-      WHERE BM.bandId = B.bandId AND SA.userId = '${userId}' AND BM.userId = SA.userId;`,
+      `SELECT B.*
+      FROM StringApp.BANDMEMBERS BM, StringApp.BAND B
+      WHERE BM.userId = ${userId} AND BM.bandId = B.bandId;`,
       (err, results) => {
         if (err) {
           return reject(err);
@@ -152,7 +152,7 @@ userQueries.editUserInfo = (
         location,
         role,
         genre,
-        userId,
+        userId
       ],
       (err, results) => {
         if (err) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import BandCard from "../components/Cards/BandCard";
 import {
@@ -31,11 +31,12 @@ import {
 
 import defaultProfileImage from "../assets/defaultProfile.jpeg";
 
+import ReloadPage from "./BandProfile/ReloadPage";
+
 const axios = require("axios");
 
 const UserProfileScreen = () => {
   const userObj = useSelector(state => state.userObj);
-  console.log(userObj);
   const [createBandModal, setCreateBandModal] = useState(false);
   const toggleCreateBandModal = () => setCreateBandModal(!createBandModal);
 
@@ -45,47 +46,21 @@ const UserProfileScreen = () => {
     setCreateBandGenreDDOpen(!createBandGenreDDOpen);
   const [genre, setGenre] = useState("Rock");
 
-  const [bands, setBands] = useState([
-    {
-      name: "admBand 1",
-      genre: "rock",
-      loc: JSON.stringify({
-        street: "100 font blvd",
-        city: "San Francisco",
-        state: "California",
-        zip: "94132"
-      }),
-      numOfMembers: 2,
-      logoImageUrl:
-        "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c0a56608-0770-4f53-9b4a-f0b30bf8f781/d8t4ar0-e7a0416b-86ac-4b86-b5dc-c9b70d97d1cd.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvYzBhNTY2MDgtMDc3MC00ZjUzLTliNGEtZjBiMzBiZjhmNzgxXC9kOHQ0YXIwLWU3YTA0MTZiLTg2YWMtNGI4Ni1iNWRjLWM5YjcwZDk3ZDFjZC5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.zni4bjOaGJ7smAuVQugAxbDM4R1qtbhDHFzQJ1hH1hI"
-    },
-    {
-      name: "admBand 2",
-      genre: "rock",
-      loc: JSON.stringify({
-        street: "150 font blvd",
-        city: "San Francisco",
-        state: "California",
-        zip: "94132"
-      }),
-      numOfMembers: 3,
-      logoImageUrl:
-        "https://static.tvtropes.org/pmwiki/pub/images/92962-the-beatles-1-the-bea_41.jpg"
-    },
-    {
-      name: "admBand 3",
-      genre: "rock",
-      loc: JSON.stringify({
-        street: "16 Holloway Ave",
-        city: "San Francisco",
-        state: "California",
-        zip: "94132"
-      }),
-      numOfMembers: 1,
-      logoImageUrl:
-        "https://image.shutterstock.com/image-vector/rock-music-poster-old-school-260nw-742278952.jpg"
+  const [bands, setBands] = useState(null);
+
+  useEffect(() => {
+    if (userObj) {
+      axios
+        .post("/api/user/getUserBand")
+        .then(res => {
+          console.log(res.data);
+          if (res.data.success) {
+            setBands(res.data.result);
+          }
+        })
+        .catch(err => {});
     }
-  ]);
+  }, [userObj]);
 
   const createBand = () => {
     // createBandName;
@@ -377,19 +352,36 @@ const UserProfileScreen = () => {
                   Create Band{" "}
                 </Button>
               </div>
-              <div>
-                <div
-                  style={{
-                    marginTop: 20,
-                    display: "flex",
-                    alignItems: "center",
-                    flexWrap: "wrap"
-                  }}
-                >
-                  {bands.map(band => (
-                    <BandCard key={band.name} {...band} />
-                  ))}
-                </div>
+              <div style={{ minHeight: "80vh" }}>
+                {bands ? (
+                  <div
+                    style={{
+                      marginTop: 20,
+                      display: "flex",
+                      alignItems: "center",
+                      flexWrap: "wrap"
+                    }}
+                  >
+                    {bands.map(band => (
+                      <BandCard
+                        key={band.name}
+                        {...band}
+                        loc={JSON.stringify(band.location)}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div
+                    className="divShadow"
+                    style={{
+                      margin: 20,
+                      padding: 30,
+                      backgroundColor: "#ffffff"
+                    }}
+                  >
+                    <ReloadPage value="Bands" />
+                  </div>
+                )}
               </div>
             </Col>
           </Row>

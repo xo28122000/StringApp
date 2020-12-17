@@ -8,13 +8,13 @@ const awsS3 = require("../../lib/aws/s3");
 const account = (req, res) => {
   if (isUser()) {
     return res.send({
-      success: true,
+      success: true
     });
   } else {
     //console.log(req.body);
     return res.send({
       success: false,
-      error: "fields missing for account",
+      error: "fields missing for account"
     });
   }
 };
@@ -24,20 +24,20 @@ const changeName = (req, res) => {
   if (!req.body.newName) {
     return res.send({
       success: false,
-      error: "missing field: new name",
+      error: "missing field: new name"
     });
   }
 
   userQueries
     .changeName(req.user.userId, req.body.newName)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error when trying to change user name",
+        error: "internal error when trying to change user name"
       });
     });
 };
@@ -47,20 +47,20 @@ const changeRole = (req, res) => {
   if (!req.body.newRole) {
     return res.send({
       success: false,
-      error: "missing field: new role",
+      error: "missing field: new role"
     });
   }
 
   userQueries
     .changeRole(req.user.userId, req.body.newRole)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error when trying to change user role",
+        error: "internal error when trying to change user role"
       });
     });
 };
@@ -70,20 +70,20 @@ const changePhone = (req, res) => {
   if (!req.body.phoneNumber) {
     return res.send({
       success: false,
-      error: "missing field: phone number",
+      error: "missing field: phone number"
     });
   }
 
   userQueries
     .changePhone(req.user.userId, req.body.phoneNumber)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error when trying to change user phone number",
+        error: "internal error when trying to change user phone number"
       });
     });
 };
@@ -104,7 +104,7 @@ const createLink = async (req, res) => {
   if (currentLength >= 400) {
     return res.send({
       success: false,
-      error: "too many links, or links too long",
+      error: "too many links, or links too long"
     });
   }
 
@@ -114,13 +114,13 @@ const createLink = async (req, res) => {
 
   userQueries
     .createLink(req.user.userId, currentLinks)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error when trying to add link",
+        error: "internal error when trying to add link"
       });
     });
 };
@@ -151,13 +151,13 @@ const deleteLink = async (req, res) => {
 
   userQueries
     .createLink(req.user.userId, currentLinks)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error when trying to delete user link",
+        error: "internal error when trying to delete user link"
       });
     });
 };
@@ -170,14 +170,14 @@ const getEvent = (req, res) => {
   }
   userQueries
     .getEvent(req.body.bandId)
-    .then((retObj) => {
+    .then(retObj => {
       //console.log("successful retrieval of events from bandId");
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error retrieving events from bandId",
+        error: "internal error retrieving events from bandId"
       });
     });
 };
@@ -186,40 +186,44 @@ const getEvent = (req, res) => {
 const getAccount = (req, res) => {
   if (isUser()) {
     return res.send({
-      success: true,
+      success: true
     });
   }
   userQueries
     .getAccount(req.body.userId)
-    .then((retObj) => {
+    .then(retObj => {
       //console.log("successful retrieval of accounts that are logged in");
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error retrieving accounts from STRINGACCOUNT",
+        error: "internal error retrieving accounts from STRINGACCOUNT"
       });
     });
 };
 
 //controller for getting all bands of a user and its related information
 const getUserBand = (req, res) => {
-  if (!req.body.userId) {
+  if (!req.user.userId) {
     //console.log(req.body);
-    return res.send({ success: false, error: "title field missing" });
+    return res.send({ success: false, error: "userId field missing" });
   }
-  bandQueries
-    .getUserBand(req.body.userId)
-    .then((retObj) => {
+  userQueries
+    .getUserBand(req.user.userId)
+    .then(retObj => {
       //console.log("successful retrieval of bands and its related information from bandId");
+      for (let i = 0; i < retObj.length; i++) {
+        retObj[i].location = JSON.parse(retObj[i].location);
+        retObj[i].links = JSON.parse(retObj[i].links);
+      }
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving band informations from userId",
+        error: "internal error retrieving band informations from userId"
       });
     });
 };
@@ -251,15 +255,15 @@ const editUserInfo = (req, res) => {
       req.body.role,
       req.body.genre
     )
-    .then((retObj) => {
+    .then(retObj => {
       //console.log("successful editing of user info from userId");
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error editing user informations from userId",
+        error: "internal error editing user informations from userId"
       });
     });
 };
@@ -289,15 +293,15 @@ const sendInvite = (req, res) => {
       req.user.userId,
       req.body.bandId
     )
-    .then((retObj) => {
+    .then(retObj => {
       //console.log("successful editing of user info from userId");
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error sending invite from user",
+        error: "internal error sending invite from user"
       });
     });
 };
@@ -313,5 +317,5 @@ module.exports = {
   getAccount,
   getUserBand,
   editUserInfo,
-  sendInvite,
+  sendInvite
 };
