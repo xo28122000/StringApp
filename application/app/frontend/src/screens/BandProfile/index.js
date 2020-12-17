@@ -39,7 +39,7 @@ import user2 from "../../assets/bandProfile/user2.jpg";
 import user3 from "../../assets/bandProfile/user3.jpg";
 import bandPostImage from "../../assets/bandProfile/bandPost.jpg";
 
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const axios = require("axios");
@@ -1311,7 +1311,7 @@ const BandProfilePage = props => {
                       .then(res => {
                         console.log("came here");
                         if (res.data.success) {
-                          window.location.replace("/band/" + name);
+                          props.history.push("/band/" + name);
                         } else {
                           alert("Please recheck your values and try again.");
                         }
@@ -1769,4 +1769,4 @@ const BandProfilePage = props => {
   );
 };
 
-export default BandProfilePage;
+export default withRouter(BandProfilePage);
