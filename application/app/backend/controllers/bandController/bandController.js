@@ -340,12 +340,16 @@ const deleteLink = async (req, res) => {
   }
 
   let currentLinks = await bandQueries.getLink(req.body.bandId);
+  if (currentLinks.length !== 1) {
+    return res.send({ success: false });
+  }
+  currentLinks = currentLinks[0].links;
 
   currentLinks = JSON.parse(currentLinks);
 
   for (item in currentLinks) {
-    if (currentLinks[item][key] == req.body.link.key) {
-      if (currentLinks[item][link] == req.body.link.link) {
+    if (currentLinks[item]["key"] == req.body.link.key) {
+      if (currentLinks[item]["link"] == req.body.link.link) {
         currentLinks.splice(item, 1);
         break;
       }

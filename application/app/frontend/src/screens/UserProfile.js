@@ -243,7 +243,9 @@ const UserProfileScreen = () => {
                             maxWidth: 150
                           }}
                         >
-                          <a href={linkObj.link}>{linkObj.link}</a>
+                          <a target="_blank" href={linkObj.link}>
+                            {linkObj.link}
+                          </a>
                         </div>
 
                         <Button

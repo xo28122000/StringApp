@@ -299,7 +299,9 @@ const BandProfilePage = props => {
                           maxWidth: 150
                         }}
                       >
-                        <a href={linkObj.link}>{linkObj.link}</a>
+                        <a target="_blank" href={linkObj.link}>
+                          {linkObj.link}
+                        </a>
                       </div>
                       {isBandMember && (
                         <Button
@@ -881,14 +883,22 @@ const BandProfilePage = props => {
                   // TODO: add validateUrl(link)
                   if (key && link && key.length > 0 && link.length > 0) {
                     // TODO: change this to band add link route
-                    // axios
-                    //   .post("/api/user/createLink", {
-                    //     link: { key: key, link: link }
-                    //   })
-                    //   .then(res => {
-                    //     console.log(res.data);
-                    //   })
-                    //   .catch(err => {});
+                    axios
+                      .post("/api/band/createLink", {
+                        link: { key: key, link: link },
+                        bandId: band.bandId
+                      })
+                      .then(res => {
+                        console.log(res.data);
+                        if (res.data.success) {
+                          window.location.reload();
+                        } else {
+                          alert(
+                            "Error in adding Link, Please try again later. (You can only enter 5 links)"
+                          );
+                        }
+                      })
+                      .catch(err => {});
                   } else {
                     alert("please enter a key and a valid link");
                   }
@@ -932,7 +942,26 @@ const BandProfilePage = props => {
                 >
                   Cancel
                 </Button>
-                <Button color="danger">Delete Link</Button>
+                <Button
+                  onClick={() => {
+                    axios
+                      .post("/api/band/deleteLink", {
+                        bandId: band.bandId,
+                        link: deleteLink
+                      })
+                      .then(res => {
+                        if (res.data.success) {
+                          window.location.reload();
+                        } else {
+                          alert("Please recheck your values and try again.");
+                        }
+                      })
+                      .catch(err => {});
+                  }}
+                  color="danger"
+                >
+                  Delete Link
+                </Button>
               </div>
             </ModalBody>
           </Modal>
