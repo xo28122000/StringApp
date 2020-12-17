@@ -1309,9 +1309,12 @@ const BandProfilePage = props => {
                         genre: genre
                       })
                       .then(res => {
-                        console.log("came here");
                         if (res.data.success) {
-                          window.location.replace("/band/" + name);
+                          if (band.name !== name) {
+                            props.history.push("/profile");
+                          } else {
+                            window.location.reload();
+                          }
                         } else {
                           alert("Please recheck your values and try again.");
                         }

@@ -80,8 +80,8 @@ pool.getConnection(async function (err, connection) {
       "dateJoined DATE, " +
       "userId INT, " +
       "bandId INT, " +
-      "FOREIGN KEY (userId) REFERENCES stringaccount(userId) ON UPDATE CASCADE ON DELETE CASCADE, " +
-      "FOREIGN KEY (bandId) REFERENCES band(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
+      "FOREIGN KEY (userId) REFERENCES STRINGACCOUNT(userId) ON UPDATE CASCADE ON DELETE CASCADE, " +
+      "FOREIGN KEY (bandId) REFERENCES BAND(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
       " );",
     function (error, result, fields) {}
   );
@@ -94,8 +94,8 @@ pool.getConnection(async function (err, connection) {
       "sentByBand BOOLEAN, " +
       "userId INT, " +
       "bandId INT, " +
-      "FOREIGN KEY (userId) REFERENCES stringaccount(userId) ON UPDATE CASCADE ON DELETE CASCADE, " +
-      "FOREIGN KEY (bandId) REFERENCES band(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
+      "FOREIGN KEY (userId) REFERENCES STRINGACCOUNT(userId) ON UPDATE CASCADE ON DELETE CASCADE, " +
+      "FOREIGN KEY (bandId) REFERENCES BAND(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
       " );",
     function (error, result, fields) {}
   );
@@ -107,7 +107,7 @@ pool.getConnection(async function (err, connection) {
       "title varchar(45), " +
       "description varchar(400), " +
       "bandId INT, " +
-      "FOREIGN KEY (bandId) REFERENCES band(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
+      "FOREIGN KEY (bandId) REFERENCES BAND(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
       " );",
     function (error, result, fields) {}
   );
@@ -120,7 +120,7 @@ pool.getConnection(async function (err, connection) {
       "genre varchar(45), " +
       "link varchar(150), " +
       "bandId INT, " +
-      "FOREIGN KEY (bandId) REFERENCES band(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
+      "FOREIGN KEY (bandId) REFERENCES BAND(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
       " );",
     function (error, result, fields) {}
   );
@@ -137,7 +137,7 @@ pool.getConnection(async function (err, connection) {
       "locationLat decimal(30,15), " +
       "locationLong decimal(30,15), " +
       "bandId INT, " +
-      "FOREIGN KEY (bandId) REFERENCES band(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
+      "FOREIGN KEY (bandId) REFERENCES BAND(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
       " );",
     function (error, result, fields) {}
   );
