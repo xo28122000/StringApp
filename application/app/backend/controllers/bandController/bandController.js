@@ -468,12 +468,14 @@ const editBandInfo = (req, res) => {
     });
   }
 
+  console.log(req.body.location);
+
   bandQueries
     .editBandInfo(
       req.body.bandId,
       req.body.name,
       req.body.description,
-      req.body.location,
+      JSON.stringify(req.body.location),
       req.body.locationLat,
       req.body.locationLong,
       req.body.genre
@@ -482,7 +484,7 @@ const editBandInfo = (req, res) => {
       return res.send({ success: true });
     })
     .catch((err) => {
-      //console.log(err);
+      console.log(err);
       return res.send({
         success: false,
         error: "internal error editing Band Information",
