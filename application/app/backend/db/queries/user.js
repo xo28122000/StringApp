@@ -126,12 +126,34 @@ userQueries.getUserBand = (userId) => {
   });
 };
 
-userQueries.editUserInfo = (userId) => {
+//query that edits the user info in the stringaccount table by userId
+userQueries.editUserInfo = (
+  userId,
+  name,
+  email,
+  password,
+  profileImageUrl,
+  phoneNumber,
+  location,
+  role,
+  genre
+) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `UPDATE  StringApp.STRINGACCOUNT SA
-      SET SA.name = '${name}', SA.email = '${email}', SA.password = '${password}', SA.profileImageUrl = '${profileImageUrl}', SA.phoneNumber = '${phoneNumber}', SA.location = '${location}', SA.role = '${role}', SA.genre = '${genre}'
-      WHERE SA.userId = '${userId}' ;`,
+      SET SA.name = ?, SA.email = ?, SA.password = ?, SA.profileImageUrl = ?, SA.phoneNumber = ?, SA.location = ?, SA.role = ?, SA.genre = ?
+      WHERE SA.userId = ? ;`,
+      [
+        name,
+        email,
+        password,
+        profileImageUrl,
+        phoneNumber,
+        location,
+        role,
+        genre,
+        userId,
+      ],
       (err, results) => {
         if (err) {
           return reject(err);
