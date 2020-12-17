@@ -752,9 +752,7 @@ const searchBands = (req, res) => {
     genre: req.body.genre ? req.body.genre : "%",
     locationLat: req.body.locationLat ? req.body.locationLat : null,
     locationLong: req.body.locationLong ? req.body.locationLong : null,
-    isLookingForMember: req.body.isLookingForMember
-      ? req.body.isLookingForMember
-      : 0,
+    isLookingForMember: req.body.isLookingForMember ? 1 : 0,
   };
 
   bandQueries
