@@ -50,7 +50,7 @@ function validateUrl(value) {
 }
 const BandProfilePage = props => {
   const { bandName } = useParams();
-  const history = useHistory();
+  // const history = useHistory();
   const userObj = useSelector(store => store.userObj);
   const [band, setBand] = useState(null);
   const [bandMembers, setBandMembers] = useState(null);
@@ -60,7 +60,7 @@ const BandProfilePage = props => {
   useEffect(() => {
     (async () => {
       if (!bandName) {
-        history.goBack();
+        props.history.goBack();
       } else {
         // todo: axios call to get the band
         // setBand({
@@ -1299,7 +1299,7 @@ const BandProfilePage = props => {
                     let zip = document.getElementById("editBandZip").value;
                     let description = document.getElementById("editBandDesc")
                       .value;
-
+                    console.log("req sent");
                     axios
                       .post("/api/band/editBandInfo", {
                         bandId: band.bandId,
@@ -1309,9 +1309,13 @@ const BandProfilePage = props => {
                         genre: genre
                       })
                       .then(res => {
-                        console.log("came here");
+                        console.log("came here", res.data);
                         if (res.data.success) {
-                          props.history.push("/band/" + name);
+                          if (band.name !== name) {
+                            props.history.push("/profile");
+                          } else {
+                            window.location.reload();
+                          }
                         } else {
                           alert("Please recheck your values and try again.");
                         }
