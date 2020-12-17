@@ -131,13 +131,17 @@ const deleteLink = async (req, res) => {
     return res.send({ success: false, error: "missing field(s)" });
   }
 
-  let currentLinks = await userQueries.getLink(req.user.userId);
+  let currentLinks = await bandQueries.getLink(req.user.userId);
+  if (currentLinks.length !== 1) {
+    return res.send({ success: false });
+  }
+  currentLinks = currentLinks[0].links;
 
   currentLinks = JSON.parse(currentLinks);
 
   for (item in currentLinks) {
-    if (currentLinks[item][key] == req.body.link.key) {
-      if (currentLinks[item][link] == req.body.link.link) {
+    if (currentLinks[item]["key"] == req.body.link.key) {
+      if (currentLinks[item]["link"] == req.body.link.link) {
         currentLinks.splice(item, 1);
         break;
       }
@@ -145,15 +149,15 @@ const deleteLink = async (req, res) => {
   }
   currentLinks = JSON.stringify(currentLinks);
 
-  userQueries
-    .createLink(req.user.userId, currentLinks)
+  bandQueries
+    .createLink(req.body.userId, currentLinks)
     .then((retObj) => {
       return res.send({ success: true });
     })
     .catch((err) => {
       return res.send({
         success: false,
-        error: "internal error when trying to delete link",
+        error: "internal error when trying to delete user link",
       });
     });
 };

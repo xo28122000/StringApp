@@ -9,8 +9,8 @@ const createStringAccountLimmiter = rateLimit({
   max: 150, // start blocking after 5 requests
   message: {
     success: false,
-    error: "try again after an hour"
-  }
+    error: "try again after an hour",
+  },
 });
 
 let authRouter = express.Router();
@@ -23,16 +23,16 @@ authRouter.post(
     // get geocoordinates
     next();
   },
-  function(req, res, next) {
-    passport.authenticate("user-register", function(error, user, info) {
+  function (req, res, next) {
+    passport.authenticate("user-register", function (error, user, info) {
       if (error) {
-        console.log(error);
+        //console.log(error)
         return res.send({ success: false });
       }
       if (!user) {
         return res.send({ success: false });
       }
-      req.logIn(user, error => {
+      req.logIn(user, (error) => {
         if (error) {
           //console.log(error);
           return res.send({ success: false });
@@ -41,23 +41,23 @@ authRouter.post(
           success: true,
           user: {
             ...user,
-            links: JSON.parse(user.links)
-          }
+            links: JSON.parse(user.links),
+          },
         });
       });
     })(req, res, next);
   }
 );
 
-authRouter.post("/login", function(req, res, next) {
+authRouter.post("/login", function (req, res, next) {
   //route definition for logging in to a user account
-  passport.authenticate("user-login", function(error, user, info) {
+  passport.authenticate("user-login", function (error, user, info) {
     if (error) {
       return res.send({ success: false });
     } else if (!user) {
       return res.send({ success: false });
     }
-    req.logIn(user, error => {
+    req.logIn(user, (error) => {
       if (error) {
         return res.send({ success: false });
       }
@@ -65,8 +65,8 @@ authRouter.post("/login", function(req, res, next) {
         success: true,
         user: {
           ...user,
-          links: JSON.parse(user.links)
-        }
+          links: JSON.parse(user.links),
+        },
       });
     });
   })(req, res, next);
@@ -85,8 +85,8 @@ authRouter.post("/user", (req, res) => {
       success: true,
       user: {
         ...req.user,
-        links: JSON.parse(req.user.links)
-      }
+        links: JSON.parse(req.user.links),
+      },
     });
   } else {
     res.send({ success: false });
