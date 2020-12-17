@@ -55,7 +55,7 @@ const createBand = async (req, res) => {
     // console.log(req.body);
     return res.send({ success: false, error: "fields missing" });
   }
-  console.log("reaching here")
+  console.log("reaching here");
   try {
     let contents = await awsS3.getS3files("csc648-string", "M3/");
 
@@ -537,6 +537,7 @@ const getBandFromName = (req, res) => {
   bandQueries
     .getBandFromName(req.body.name)
     .then(retObj => {
+      console.log(retObj);
       if (retObj.length === 1) {
         return res.send({
           success: true,
