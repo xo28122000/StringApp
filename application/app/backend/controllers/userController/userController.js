@@ -171,7 +171,7 @@ const editUserInfo = (req, res) => {
   }
   if (req.body.password && req.body.password.length > 0) {
     //password is present
-    const hashedPassword = bcrypt.hashSync(password, 12);
+    const hashedPassword = bcrypt.hashSync(req.body.password, 12);
     userQueries
       .editUserInfoPassword(
         req.user.userId,
