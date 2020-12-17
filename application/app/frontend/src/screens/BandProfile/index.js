@@ -298,7 +298,11 @@ const BandProfilePage = props => {
                           maxWidth: 150
                         }}
                       >
-                        <a target="_blank" href={linkObj.link}>
+                        <a
+                          rel="noopener noreferrer"
+                          target="_blank"
+                          href={linkObj.link}
+                        >
                           {linkObj.link}
                         </a>
                       </div>
@@ -1231,44 +1235,40 @@ const BandProfilePage = props => {
                       : ""
                   }
                 />
-                <div style={{ display: "flex" }}>
-                  <Input
-                    id="editBandCity"
-                    placeholder="city"
-                    style={{
-                      margin: 5
-                    }}
-                    defaultValue={
-                      band.location && band.location.city
-                        ? band.location.city
-                        : ""
-                    }
-                  />
-                  <Input
-                    id="editBandState"
-                    placeholder="state"
-                    style={{
-                      margin: 5
-                    }}
-                    defaultValue={
-                      band.location && band.location.state
-                        ? band.location.state
-                        : ""
-                    }
-                  />
-                  <Input
-                    id="editBandZip"
-                    placeholder="zip"
-                    style={{
-                      margin: 5
-                    }}
-                    defaultValue={
-                      band.location && band.location.zip
-                        ? band.location.zip
-                        : ""
-                    }
-                  />
-                </div>
+                <Input
+                  id="editBandCity"
+                  placeholder="city"
+                  style={{
+                    margin: 5
+                  }}
+                  defaultValue={
+                    band.location && band.location.city
+                      ? band.location.city
+                      : ""
+                  }
+                />
+                <Input
+                  id="editBandState"
+                  placeholder="state"
+                  style={{
+                    margin: 5
+                  }}
+                  defaultValue={
+                    band.location && band.location.state
+                      ? band.location.state
+                      : ""
+                  }
+                />
+                <Input
+                  id="editBandZip"
+                  placeholder="zip"
+                  style={{
+                    margin: 5
+                  }}
+                  defaultValue={
+                    band.location && band.location.zip ? band.location.zip : ""
+                  }
+                />
               </div>
 
               <Label>Band's Description</Label>
@@ -1386,10 +1386,8 @@ const BandProfilePage = props => {
               Duration of this Repertoir
               <div
                 style={{
-                  display: "flex",
                   marginBottom: 20,
                   marginLeft: 50,
-                  alignItems: "center",
                   fontSize: 20,
                   fontWeight: 600
                 }}
@@ -1401,7 +1399,7 @@ const BandProfilePage = props => {
                   type="number"
                   min={0}
                 />
-                {" : "}
+
                 <Input
                   id="addRepDurationSec"
                   style={{ marginLeft: 5 }}
@@ -1585,31 +1583,30 @@ const BandProfilePage = props => {
                       margin: 5
                     }}
                   />
-                  <div style={{ display: "flex" }}>
-                    <Input
-                      id="addEventCity"
-                      placeholder="city"
-                      style={{
-                        margin: 5
-                      }}
-                    />
 
-                    <Input
-                      id="addEventState"
-                      placeholder="state"
-                      style={{
-                        margin: 5
-                      }}
-                    />
+                  <Input
+                    id="addEventCity"
+                    placeholder="city"
+                    style={{
+                      margin: 5
+                    }}
+                  />
 
-                    <Input
-                      id="addEventZip"
-                      placeholder="zip"
-                      style={{
-                        margin: 5
-                      }}
-                    />
-                  </div>
+                  <Input
+                    id="addEventState"
+                    placeholder="state"
+                    style={{
+                      margin: 5
+                    }}
+                  />
+
+                  <Input
+                    id="addEventZip"
+                    placeholder="zip"
+                    style={{
+                      margin: 5
+                    }}
+                  />
                 </div>
               </div>
 

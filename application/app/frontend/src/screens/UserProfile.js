@@ -240,7 +240,11 @@ const UserProfileScreen = props => {
                             maxWidth: 150
                           }}
                         >
-                          <a target="_blank" href={linkObj.link}>
+                          <a
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            href={linkObj.link}
+                          >
                             {linkObj.link}
                           </a>
                         </div>
