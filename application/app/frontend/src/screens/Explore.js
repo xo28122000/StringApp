@@ -205,7 +205,7 @@ const ExplorePage = props => {
       </div>
       <div>
         <Element name="exploreJump"></Element>
-        <a id="explore" />
+
         <Nav
           tabs
           style={{
