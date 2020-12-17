@@ -1,7 +1,8 @@
 const bandQueries = require("../../db/queries/band.js");
 
+//internal helper function as middleware for verification if
+//the user is the Band Admin of a given band or not
 const isBandAdmin = async (req, res, next) => {
-  //internal helper function for band membership verification
   //console.log("called inside isMember");
   if (!req.body.bandId) {
     console.log("bandId field missing");

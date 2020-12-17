@@ -4,6 +4,7 @@
 const mysql = require("mysql");
 const credentials = require("./credentials.js");
 
+//creates pool for connection to mySQL database
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: credentials.host,
@@ -12,6 +13,7 @@ const pool = mysql.createPool({
   database: credentials.database,
 });
 
+//initiates connection to mySQL database
 pool.getConnection(async function (err, connection) {
   if (err) {
     console.log("MYSQL connection unsuccessful");
@@ -35,6 +37,7 @@ pool.getConnection(async function (err, connection) {
   );
   */
 
+  //query to create stringaccount table in stringapp database
   connection.query(
     "CREATE TABLE IF NOT EXISTS STRINGACCOUNT(" +
       "userId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
@@ -55,6 +58,7 @@ pool.getConnection(async function (err, connection) {
     }
   );
 
+  //query to create band table in stringapp database
   connection.query(
     "CREATE TABLE IF NOT EXISTS BAND(" +
       "bandId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
@@ -72,6 +76,7 @@ pool.getConnection(async function (err, connection) {
     function (error, result, fields) {}
   );
 
+  //query to create bandmembers table in stringapp database
   connection.query(
     "CREATE TABLE IF NOT EXISTS BANDMEMBERS(" +
       "bandMemberId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
@@ -86,6 +91,7 @@ pool.getConnection(async function (err, connection) {
     function (error, result, fields) {}
   );
 
+  //query to create invitations table in stringapp database
   connection.query(
     "CREATE TABLE IF NOT EXISTS INVITATIONS(" +
       "inviteId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
@@ -100,6 +106,7 @@ pool.getConnection(async function (err, connection) {
     function (error, result, fields) {}
   );
 
+  //query to create bandposts table in stringapp database
   connection.query(
     "CREATE TABLE IF NOT EXISTS BANDPOSTS(" +
       "bandPostId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
@@ -112,6 +119,7 @@ pool.getConnection(async function (err, connection) {
     function (error, result, fields) {}
   );
 
+  //query to create repertoire table in stringapp database
   connection.query(
     "CREATE TABLE IF NOT EXISTS REPERTOIRE(" +
       "repId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
@@ -125,6 +133,7 @@ pool.getConnection(async function (err, connection) {
     function (error, result, fields) {}
   );
 
+  //query to create events table in stringapp database
   connection.query(
     "CREATE TABLE IF NOT EXISTS EVENTS(" +
       "eventId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
@@ -142,6 +151,7 @@ pool.getConnection(async function (err, connection) {
     function (error, result, fields) {}
   );
 
+  //query to create sets table in stringapp database
   connection.query(
     "CREATE TABLE IF NOT EXISTS SETS(" +
       "setId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
@@ -153,6 +163,7 @@ pool.getConnection(async function (err, connection) {
     function (error, result, fields) {}
   );
 
+  //query to create administratorStringAccount table in stringapp database
   connection.query(
     "CREATE TABLE IF NOT EXISTS administratorStringAccount(" +
       "adminUserId INT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +

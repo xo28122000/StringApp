@@ -132,7 +132,6 @@ const createBandPost = (req, res) => {
     });
 };
 
-//TODO need to test
 //controller for creating a new event
 const createEvent = (req, res) => {
   if (
@@ -530,6 +529,7 @@ const getBandFromId = (req, res) => {
     });
 };
 
+//controller to get a band by name
 const getBandFromName = (req, res) => {
   if (!req.body.name) {
     return res.send({ success: false, error: "title field missing" });

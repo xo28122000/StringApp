@@ -1,7 +1,7 @@
 const pool = require("../index");
 let userQueries = {};
 
-//TODO fix this SQL query
+//this query is deprecated and not being used right now in routing
 userQueries.account = (name, type, numMembers, imgUrl) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -17,6 +17,7 @@ userQueries.account = (name, type, numMembers, imgUrl) => {
   });
 };
 
+//query to update a name in user info in stringaccount table
 userQueries.changeName = (userId, newName) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -32,6 +33,7 @@ userQueries.changeName = (userId, newName) => {
   });
 };
 
+//query to update a phone number in user info in stringaccount table
 userQueries.changePhone = (userId, newPhoneNum) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -47,6 +49,7 @@ userQueries.changePhone = (userId, newPhoneNum) => {
   });
 };
 
+//query to update role in a user's information in stringaccount table
 userQueries.changeRole = (userId, newRole) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -62,6 +65,7 @@ userQueries.changeRole = (userId, newRole) => {
   });
 };
 
+//query to create a new link in links field of stringaccount table
 userQueries.createLink = async (userId, links) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -78,6 +82,7 @@ userQueries.createLink = async (userId, links) => {
   });
 };
 
+//query to retrieve a specific event from the invitations table
 userQueries.getEvent = (eventId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -93,6 +98,7 @@ userQueries.getEvent = (eventId) => {
   });
 };
 
+//query to retrieve all links in a user account
 userQueries.getLink = async (userId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -109,6 +115,7 @@ userQueries.getLink = async (userId) => {
   });
 };
 
+//query to retrieve all bands a user is a part of
 userQueries.getUserBand = (userId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -166,6 +173,7 @@ userQueries.editUserInfo = (
   });
 };
 
+//query to create a new invite in invitations table
 userQueries.sendInvite = (message, today, sentByBand, userId, bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(

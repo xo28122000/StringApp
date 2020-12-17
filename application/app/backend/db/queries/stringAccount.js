@@ -1,6 +1,7 @@
 const pool = require("../index");
 let stringAccountQueries = {};
 
+//this query inserts a user into the stringaccoun table along with all relevant fields
 stringAccountQueries.register = (
   email,
   passwordHash,
@@ -28,7 +29,7 @@ stringAccountQueries.register = (
         locationLat,
         locationLong,
         role,
-        genre
+        genre,
       ],
       (err, results) => {
         if (err) {
@@ -41,6 +42,7 @@ stringAccountQueries.register = (
   });
 };
 
+//this query gets a user by email and passwordHash fields
 stringAccountQueries.getUser = (email, passwordHash) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -58,7 +60,8 @@ stringAccountQueries.getUser = (email, passwordHash) => {
   });
 };
 
-stringAccountQueries.getUserFromId = userId => {
+//this query gets a user by userId
+stringAccountQueries.getUserFromId = (userId) => {
   return new Promise((resolve, reject) => {
     pool.query(
       `Select userId, email, name, profileImageUrl, phoneNumber, links, location, locationLat, locationLong, role, genre from STRINGACCOUNT where userId = ?`,

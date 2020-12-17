@@ -168,64 +168,8 @@ bandRouter.post("/deleteMember", isUser, bandController.deleteMember);
 //route definition for deleting a repertoire entry
 bandRouter.post("/deleteRep", isUser, bandController.deleteRep);
 
-//TODO wonky geolocation
 //route definition for editing information of a band
-bandRouter.post(
-  "/editBandInfo",
-  isUser,
-  geocode,
-  /** 
-  async (req, res, next) => {
-    try {
-      //console.log(req.body.location);
-      //req.body.location = JSON.parse(req.body.location);
-      next();
-    } catch (error) {
-      //console.log(error);
-      res.send({ success: false, error: "Location is not parsable" });
-    }
-  },
-
-  async (req, res, next) => {
-    if (req.body.location) {
-      try {
-        const retObj = await geoCoder.geocode({
-          street: req.body.location.street,
-          city: req.body.location.city,
-          state: req.body.location.state,
-          postalcode: req.body.location.zip,
-          country: "United States",
-        });
-        if (
-          retObj.length <= 0 ||
-          (!retObj[0].city && !req.body.location.city) ||
-          !retObj[0].state ||
-          !retObj[0].streetName
-        ) {
-          return res.send({ success: false, error: "location is not valid" });
-        } else {
-          req.body.location = {
-            street: retObj[0].streetName,
-            city: retObj[0].city ? retObj[0].city : req.body.location.city,
-            state: retObj[0].state,
-          };
-          req.body.latitude = retObj[0].latitude;
-          req.body.longitude = retObj[0].longitude;
-          next();
-        }
-      } catch (err) {
-        return res.send({ success: false, error: "geolocation error" });
-      }
-    } else {
-      return res.send({
-        success: false,
-        error: "no location provided by user",
-      });
-    }
-  },
-  */
-  bandController.editBandInfo
-);
+bandRouter.post("/editBandInfo", isUser, geocode, bandController.editBandInfo);
 
 //route definition for getting all the bands that someone is a member of
 bandRouter.post("/getBandFromId", bandController.getBandFromId);

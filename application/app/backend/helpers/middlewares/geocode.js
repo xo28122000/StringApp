@@ -1,12 +1,15 @@
 //should run the location library and then
 //change the req.body.lat, req.body.long to what the function returns
 //everything gets done in here
+//note: this is middleware
 const nodeGeocoder = require("node-geocoder");
 
 const geoCoder = nodeGeocoder({
   provider: "openstreetmap",
 });
 
+//geocodes for an input location json object
+//outputs latitude and longitude to the requesting object's body
 const geocode = async (req, res, next) => {
   if (req.body.location) {
     try {

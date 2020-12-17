@@ -1,7 +1,7 @@
 const pool = require("../index");
 let bandQueries = {};
 
-//TODO figure out difference between filename/imgUrl, if any (and proper use)
+//query to create a band
 bandQueries.createBand = (
   name,
   imgUrl,
@@ -39,6 +39,7 @@ bandQueries.createBand = (
   });
 };
 
+//query to create a band post entry tied to a band
 bandQueries.createBandPost = (mediaLocation, title, description, bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -56,6 +57,7 @@ bandQueries.createBandPost = (mediaLocation, title, description, bandId) => {
   });
 };
 
+//query to create an event entry tied to a band
 bandQueries.createEvent = (
   title,
   description,
@@ -92,6 +94,7 @@ bandQueries.createEvent = (
   });
 };
 
+//query to create a link tied to a band
 bandQueries.createLink = async (bandId, links) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -108,6 +111,7 @@ bandQueries.createLink = async (bandId, links) => {
   });
 };
 
+//query to create a member tied to a band
 bandQueries.createMember = (isBandAdmin, role, dateJoined, userId, bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -125,6 +129,7 @@ bandQueries.createMember = (isBandAdmin, role, dateJoined, userId, bandId) => {
   });
 };
 
+//query to create a repertoire entry tied to a band
 bandQueries.createRep = (songName, runTime, genre, link, bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -319,6 +324,7 @@ bandQueries.editBandInfo = async (
   });
 };
 
+//query to retrieve all events of a given band
 bandQueries.getEvents = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -337,6 +343,7 @@ bandQueries.getEvents = (bandId) => {
   });
 };
 
+//query to retrieve a band by id
 bandQueries.getBandFromId = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -352,6 +359,7 @@ bandQueries.getBandFromId = (bandId) => {
   });
 };
 
+//query to retrieve a band by name
 bandQueries.getBandFromName = (name) => {
   return new Promise((resolve, reject) => {
     pool.query(`select * from BAND where name = '${name}'`, (err, results) => {
@@ -364,6 +372,7 @@ bandQueries.getBandFromName = (name) => {
   });
 };
 
+//query to retrieve all information of a given band
 bandQueries.getBandInfo = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -380,6 +389,7 @@ bandQueries.getBandInfo = (bandId) => {
   });
 };
 
+//query to retrieve all band members of a given band
 bandQueries.getBandMembers = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -397,6 +407,7 @@ bandQueries.getBandMembers = (bandId) => {
   });
 };
 
+//query to retrieve all band posts of a given band
 bandQueries.getBandPosts = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -413,6 +424,7 @@ bandQueries.getBandPosts = (bandId) => {
   });
 };
 
+//query to retrieve all repertoire of a given band
 bandQueries.getBandRep = (bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -501,6 +513,7 @@ bandQueries.incrementMember = (bandId) => {
   });
 };
 
+//verification queryto see if user is a band admin for a given band
 bandQueries.isBandAdmin = async (userId, bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -518,6 +531,7 @@ bandQueries.isBandAdmin = async (userId, bandId) => {
   });
 };
 
+//verification query to check if a user is a member of a specific band
 bandQueries.isMember = async (userId, bandId) => {
   return new Promise((resolve, reject) => {
     pool.query(
@@ -554,6 +568,7 @@ bandQueries.leaveBand = (userId, bandId) => {
   });
 };
 
+//query to allow for searching for bands by name, genre, or availability
 bandQueries.searchBands = (
   name,
   genre,
@@ -597,6 +612,7 @@ bandQueries.searchBands = (
   }
 };
 
+//query to allow for searching for events by any subset of title, date, and location
 bandQueries.searchEvents = (title, date, location) => {
   if (!title && !date && !location) {
     //blank search
