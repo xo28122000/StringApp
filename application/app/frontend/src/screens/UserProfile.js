@@ -474,7 +474,7 @@ const UserProfileScreen = props => {
                     margin: 5
                   }}
                 />
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
                   <Input
                     id="createBandCity"
                     placeholder="city"
