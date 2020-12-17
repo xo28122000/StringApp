@@ -52,7 +52,7 @@ const EventCard = props => {
             textAlign: "center"
           }}
         >
-          <Link to={"/band?" + props.bandName} target="_blank">
+          <Link to={"/band/" + props.bandName} target="_blank">
             {props.bandName}
           </Link>
         </div>
@@ -64,7 +64,7 @@ const EventCard = props => {
               color: "#ABABAB"
             }}
           >
-            {props.date}
+            {new Date(props.date).toDateString()}
           </div>
           <div
             style={{
@@ -144,8 +144,9 @@ const EventCard = props => {
               </Link>
             </div>
             <div style={{ marginBottom: 10 }}>
-              <span style={{ fontWeight: 600 }}>When:</span> {props.date} from{" "}
-              {props.startTime} to {props.endTime}
+              <span style={{ fontWeight: 600 }}>When:</span>{" "}
+              {new Date(props.date).toDateString()} from {props.startTime} to{" "}
+              {props.endTime}
             </div>
 
             <div>

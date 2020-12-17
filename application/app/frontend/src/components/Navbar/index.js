@@ -29,7 +29,6 @@ const Navbar = props => {
     } else {
       Axios.post("/api/auth/login", { email, password })
         .then(res => {
-          console.log(res);
           if (res.data.success) {
             dispatch(login(res.data.user));
             toggleLoginModal();
@@ -80,7 +79,7 @@ const Navbar = props => {
           alignItems: "center"
         }}
       >
-        <Link to="/">
+        <Link to="/explore">
           <img
             src={StringLogo}
             alt="logo"
@@ -89,9 +88,16 @@ const Navbar = props => {
         </Link>
         {screenWidth > 450 ? (
           <div style={{ marginLeft: 20 }}>
-            <a href="/#explore" className="navLink">
+            <Link to="/about" className="navLink">
+              About
+            </Link>
+          </div>
+        ) : null}
+        {screenWidth > 450 ? (
+          <div style={{ marginLeft: 20 }}>
+            <Link to="/explore" className="navLink">
               Explore
-            </a>
+            </Link>
           </div>
         ) : null}
       </div>

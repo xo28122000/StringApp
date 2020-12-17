@@ -1,27 +1,36 @@
 const LocalStrategy = require("passport-local").Strategy;
 const stringAccountQueries = require("../../db/queries/stringAccount");
+
+const bcrypt = require("bcryptjs");
+
 module.exports = {
   "user-login": new LocalStrategy(
     {
       usernameField: "email",
       passwordField: "password",
-      passReqToCallback: true
+      passReqToCallback: true,
     },
-    function(req, email, password, done) {
+    function (req, email, password, done) {
       stringAccountQueries
-        .login(email, password)
-        .then(data => {
+        .getUser(email)
+        .then((data) => {
           if (data && data.length === 1) {
-            delete data.password;
-            return done(null, {
-              ...data[0],
-              location: JSON.parse(data[0].location)
-            });
+            if (!bcrypt.compareSync(password, data[0].password)) {
+              // incorrect pass
+              console.log("incorrect pass");
+              return done(null, false, { message: "Incorrect password" });
+            } else {
+              delete data[0].password;
+              return done(null, {
+                ...data[0],
+                location: JSON.parse(data[0].location),
+              });
+            }
           } else {
             return done(null, false, { message: "Incorrect field" });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           return done(err.sqlMessage);
         });
     }
@@ -30,15 +39,17 @@ module.exports = {
     {
       usernameField: "email",
       passwordField: "password",
-      passReqToCallback: true
+      passReqToCallback: true,
     },
-    function(req, email, password, done) {
+    function (req, email, password, done) {
+      const hashedPassword = bcrypt.hashSync(password, 12);
       stringAccountQueries
         .register(
           email,
-          password,
+          hashedPassword,
           req.body.name,
           req.body.imgUrl,
+          req.body.links,
           req.body.phoneNumber,
           JSON.stringify(req.body.location),
           req.body.locationLat,
@@ -46,18 +57,18 @@ module.exports = {
           req.body.role,
           req.body.genre
         )
-        .then(data => {
+        .then((data) => {
           if (data.affectedRows !== 1) {
             return done(null, false, {
-              message: "unable to create user"
+              message: "unable to create user",
             });
           }
           delete req.body.password;
-          return done(null, req.body);
+          return done(null, {...req.body, links:"[]" });
         })
-        .catch(err => {
+        .catch((err) => {
           return done(err.sqlMessage);
         });
     }
-  )
+  ),
 };

@@ -17,7 +17,7 @@ import { withRouter } from "react-router";
 
 const BandCard = props => {
   const goToBandPage = () => {
-    props.history.push("/band?" + props.name);
+    props.history.push("/band/" + props.name);
   };
 
   return (
@@ -27,9 +27,6 @@ const BandCard = props => {
         style={{
           borderRadius: 0,
           borderWidth: 0
-        }}
-        onClick={() => {
-          goToBandPage();
         }}
       >
         <div
@@ -85,7 +82,7 @@ const BandCard = props => {
             </div>
             <div style={{ marginTop: 5 }}>
               <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />
-              {4}
+              {props.numMembers}
             </div>
           </div>
         </div>

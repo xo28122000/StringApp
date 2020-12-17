@@ -50,6 +50,21 @@ const RegisterPage = () => {
 
     if (!registerName || !registerEmail || !registerPassword) {
       alert("Name, Email and Password are required fields");
+    } else if (
+      registerName.length > 30 ||
+      registerName.replace(/[^a-zA-Z ]/g, "").length < 1 ||
+      registerName.replace(/[^a-zA-Z ]/g, "").length > 30
+    ) {
+      alert("Name should contain atleast one and atmost 30 characters");
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(registerEmail)) {
+      alert("Please enter a valid email");
+    } else if (
+      !/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,21}/.test(registerPassword)
+    ) {
+      alert(
+        `Please enter a valid password containing 8 to 21 characters 
+        containing atleast 1 number, 1 uppercase and 1 lowercase letter.`
+      );
     } else {
       axios
         .post("/api/auth/register", {
@@ -88,7 +103,7 @@ const RegisterPage = () => {
         marginTop: 20
       }}
     >
-      {userObj && <Redirect to="/" />}
+      {userObj && <Redirect to="/profile" />}
       <div style={{ fontSize: 25, fontWeight: 600 }}>Sign Up</div>
       <div
         style={{
@@ -119,6 +134,10 @@ const RegisterPage = () => {
             id="registerPassword"
             placeholder="Password"
           />
+          <FormText color="muted">
+            Should be 8 to 21 characters long and <br />
+            contain atleast 1 number, 1 uppercase and 1 lowercase letter.
+          </FormText>
         </div>
         <div style={{ margin: 10, width: "50vw", minWidth: 300 }}>
           <Input
