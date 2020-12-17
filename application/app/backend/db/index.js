@@ -9,10 +9,10 @@ const pool = mysql.createPool({
   host: credentials.host,
   user: credentials.user,
   password: credentials.password,
-  database: credentials.database,
+  database: credentials.database
 });
 
-pool.getConnection(async function (err, connection) {
+pool.getConnection(async function(err, connection) {
   if (err) {
     console.log("MYSQL connection unsuccessful");
     console.log(err);
@@ -23,7 +23,7 @@ pool.getConnection(async function (err, connection) {
 
   //below line won't work since the createPool call at line 7 needs the database to exist already
   connection.query("CREATE DATABASE IF NOT EXISTS StringApp;");
-  connection.query("USE StringApp;", function (error, result, fields) {});
+  connection.query("USE StringApp;", function(error, result, fields) {});
   /** 
   connection.query( 
     "CREATE TABLE IF NOT EXISTS MOCKBAND(" +
@@ -50,8 +50,8 @@ pool.getConnection(async function (err, connection) {
       "role varchar(50), " +
       "genre varchar(50)" +
       " );",
-    function (error, result, fields) {
-      //console.log(error);
+    function(error, result, fields) {
+      console.log(error);
     }
   );
 
@@ -69,7 +69,9 @@ pool.getConnection(async function (err, connection) {
       "genre varchar(100), " +
       "isLookingForMember BOOLEAN" +
       " );",
-    function (error, result, fields) {}
+    function(error, result, fields) {
+      console.log(error);
+    }
   );
 
   connection.query(
@@ -83,7 +85,9 @@ pool.getConnection(async function (err, connection) {
       "FOREIGN KEY (userId) REFERENCES stringaccount(userId) ON UPDATE CASCADE ON DELETE CASCADE, " +
       "FOREIGN KEY (bandId) REFERENCES band(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
       " );",
-    function (error, result, fields) {}
+    function(error, result, fields) {
+      console.log(error);
+    }
   );
 
   connection.query(
@@ -97,7 +101,9 @@ pool.getConnection(async function (err, connection) {
       "FOREIGN KEY (userId) REFERENCES stringaccount(userId) ON UPDATE CASCADE ON DELETE CASCADE, " +
       "FOREIGN KEY (bandId) REFERENCES band(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
       " );",
-    function (error, result, fields) {}
+    function(error, result, fields) {
+      console.log(error);
+    }
   );
 
   connection.query(
@@ -109,7 +115,9 @@ pool.getConnection(async function (err, connection) {
       "bandId INT, " +
       "FOREIGN KEY (bandId) REFERENCES band(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
       " );",
-    function (error, result, fields) {}
+    function(error, result, fields) {
+      console.log(error);
+    }
   );
 
   connection.query(
@@ -122,7 +130,9 @@ pool.getConnection(async function (err, connection) {
       "bandId INT, " +
       "FOREIGN KEY (bandId) REFERENCES band(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
       " );",
-    function (error, result, fields) {}
+    function(error, result, fields) {
+      console.log(error);
+    }
   );
 
   connection.query(
@@ -139,7 +149,9 @@ pool.getConnection(async function (err, connection) {
       "bandId INT, " +
       "FOREIGN KEY (bandId) REFERENCES band(bandId) ON UPDATE CASCADE ON DELETE CASCADE" +
       " );",
-    function (error, result, fields) {}
+    function(error, result, fields) {
+      console.log(error);
+    }
   );
 
   connection.query(
@@ -150,7 +162,9 @@ pool.getConnection(async function (err, connection) {
       "eventId INT, " +
       "FOREIGN KEY (eventId) REFERENCES EVENTS(eventId) ON UPDATE CASCADE ON DELETE CASCADE" +
       " );",
-    function (error, result, fields) {}
+    function(error, result, fields) {
+      console.log(error);
+    }
   );
 
   connection.query(
@@ -161,7 +175,9 @@ pool.getConnection(async function (err, connection) {
       "name varchar(45), " +
       "role varchar(45)" +
       " );",
-    function (error, result, fields) {}
+    function(error, result, fields) {
+      console.log(error);
+    }
   );
   // connection.query("DROP TABLE MOCKBAND;", function(error, result, fields) {});
   connection.release();
