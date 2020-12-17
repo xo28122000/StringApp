@@ -191,21 +191,22 @@ const BandProfilePage = props => {
     //
   }, [band]);
 
+  useEffect(() => {
+    if (bandMembers && userObj) {
+      bandMembers.forEach(bandMember => {
+        if (bandMember.bandMemberId === userObj.userId) {
+          setIsBandMember(true);
+          if (bandMember.isBandAdmin === 1) {
+            setIsBandAdmin(true);
+          }
+        }
+      });
+    }
+  }, [bandMembers, userObj]);
+
   // TODO: change to state variables
-  const isBandAdmin = () => {
-    if (userObj && bandMembers) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-  const isBandMember = () => {
-    if (userObj && bandMembers) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const [isBandAdmin, setIsBandAdmin] = useState(false);
+  const [isBandMember, setIsBandMember] = useState(false);
 
   const [invitationModal, setInvitationModal] = useState(false);
 
@@ -290,8 +291,17 @@ const BandProfilePage = props => {
                       <div style={{ fontWeight: 600, marginRight: 5 }}>
                         {linkObj.key}:
                       </div>
-                      <div>{linkObj.link}</div>
-                      {isBandMember() && (
+                      <div
+                        style={{
+                          overflowX: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          maxWidth: 150
+                        }}
+                      >
+                        <a href={linkObj.link}>{linkObj.link}</a>
+                      </div>
+                      {isBandMember && (
                         <Button
                           onClick={() => {
                             setDeleteLink(linkObj);
@@ -314,7 +324,7 @@ const BandProfilePage = props => {
                   </div>
                 ))}
 
-                {isBandMember() && (
+                {isBandMember && (
                   <Button
                     onClick={() => {
                       setAddLinkModal(true);
@@ -327,7 +337,7 @@ const BandProfilePage = props => {
                 )}
               </div>
 
-              {isBandAdmin() ? (
+              {isBandAdmin ? (
                 <div
                   className="divShadow"
                   style={{
@@ -369,8 +379,11 @@ const BandProfilePage = props => {
                     placement="right"
                     target="helpLookingForMember"
                   >
-                    Checking this will allow non members users of this band to send invitations to join.<br />
-                    The band admin will be able to accept or reject the invitation.
+                    Checking this will allow non members users of this band to
+                    send invitations to join.
+                    <br />
+                    The band admin will be able to accept or reject the
+                    invitation.
                   </UncontrolledTooltip>
                   <div style={{ marginTop: 20 }}>
                     <Button
@@ -384,7 +397,7 @@ const BandProfilePage = props => {
                   </div>
                 </div>
               ) : (
-                !isBandMember() && (
+                !isBandMember && (
                   <>
                     {userObj && band.isLookingForMember && (
                       <div
@@ -508,7 +521,7 @@ const BandProfilePage = props => {
               >
                 <div style={{ fontSize: 35, fontWeight: 700 }}>
                   Members{" "}
-                  {isBandAdmin() ? (
+                  {isBandAdmin ? (
                     <Button
                       onClick={() => {
                         setDeleteBandModal(true);
@@ -518,7 +531,7 @@ const BandProfilePage = props => {
                     >
                       Delete Band
                     </Button>
-                  ) : isBandMember() ? (
+                  ) : isBandMember ? (
                     <Button
                       onClick={() => {
                         setLeaveBandModal(true);
@@ -593,7 +606,7 @@ const BandProfilePage = props => {
           >
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
               Music Repertoir{" "}
-              {isBandMember() && (
+              {isBandMember && (
                 <Button
                   onClick={() => {
                     setAddRepModal(true);
@@ -639,7 +652,7 @@ const BandProfilePage = props => {
                     {...rep}
                     key={i}
                     index={i}
-                    isBandMember={isBandMember()}
+                    isBandMember={isBandMember}
                   />
                 ))}
               </Container>
@@ -665,7 +678,7 @@ const BandProfilePage = props => {
           >
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
               Posts{" "}
-              {isBandMember() && (
+              {isBandMember && (
                 <Button
                   onClick={() => {
                     setAddPostModal(true);
@@ -688,11 +701,7 @@ const BandProfilePage = props => {
                 }}
               >
                 {posts.map((post, i) => (
-                  <BandPostItem
-                    key={i}
-                    {...post}
-                    isBandMember={isBandMember()}
-                  />
+                  <BandPostItem key={i} {...post} isBandMember={isBandMember} />
                 ))}
               </div>
             ) : (
@@ -716,7 +725,7 @@ const BandProfilePage = props => {
           >
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
               Events{" "}
-              {isBandMember() && (
+              {isBandMember && (
                 <Button
                   onClick={() => {
                     setAddEventModal(true);
@@ -739,7 +748,7 @@ const BandProfilePage = props => {
               >
                 {events.map((event, i) => (
                   <div key={i}>
-                    {isBandMember() && (
+                    {isBandMember && (
                       <div
                         style={{
                           display: "flex",
@@ -768,7 +777,7 @@ const BandProfilePage = props => {
             )}
           </div>
 
-          {isBandMember() && (
+          {isBandMember && (
             <div
               style={{
                 position: "fixed",
@@ -853,13 +862,13 @@ const BandProfilePage = props => {
                 }}
               >
                 <Input
-                  id="addLinkKey"
+                  id="addBandLinkKey"
                   placeholder="key. Ex: youtube"
                   style={{ marginRight: 5 }}
                 />
                 {" : "}
                 <Input
-                  id="addLinkLink"
+                  id="addBandLinkLink"
                   placeholder="Link. Ex: www.youtube.com/"
                   style={{ marginLeft: 5 }}
                 />
@@ -867,8 +876,8 @@ const BandProfilePage = props => {
 
               <Button
                 onClick={() => {
-                  let key = document.getElementById("addLinkKey").value;
-                  let link = document.getElementById("addLinkLink").value;
+                  let key = document.getElementById("addBandLinkKey").value;
+                  let link = document.getElementById("addBandLinkLink").value;
                   // TODO: add validateUrl(link)
                   if (key && link && key.length > 0 && link.length > 0) {
                     // TODO: change this to band add link route

@@ -61,7 +61,7 @@ stringAccountQueries.getUser = (email, passwordHash) => {
 stringAccountQueries.getUserFromId = userId => {
   return new Promise((resolve, reject) => {
     pool.query(
-      `Select userId, email, name, profileImageUrl, phoneNumber, location, locationLat, locationLong, role, genre from STRINGACCOUNT where userId = ?`,
+      `Select userId, email, name, profileImageUrl, phoneNumber, links, location, locationLat, locationLong, role, genre from STRINGACCOUNT where userId = ?`,
       [userId],
       (err, results) => {
         if (err) {

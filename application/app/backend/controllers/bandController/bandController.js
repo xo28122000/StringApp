@@ -26,23 +26,23 @@ const acceptInvite = async (req, res) => {
       req.user.userId,
       req.body.bandId
     )
-    .then((retObj) => {
+    .then(retObj => {
       bandQueries
         .deleteInvite(req.body.inviteId)
-        .then((retObj) => {
+        .then(retObj => {
           return res.send({ success: true });
         })
-        .catch((err) => {
+        .catch(err => {
           return res.send({
             success: false,
-            error: "internal error when trying to delete accepted Invitation",
+            error: "internal error when trying to delete accepted Invitation"
           });
         });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error when trying to accept Invitation",
+        error: "internal error when trying to accept Invitation"
       });
     });
 };
@@ -120,13 +120,13 @@ const createBandPost = (req, res) => {
       req.body.description,
       req.body.bandId
     )
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error when trying to create Band Post",
+        error: "internal error when trying to create Band Post"
       });
     });
 };
@@ -147,7 +147,7 @@ const createEvent = (req, res) => {
   ) {
     return res.send({
       success: false,
-      error: "fields missing for createEvent",
+      error: "fields missing for createEvent"
     });
   }
   bandQueries
@@ -162,13 +162,13 @@ const createEvent = (req, res) => {
       req.body.locationLong,
       req.body.bandId
     )
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error when trying to create event",
+        error: "internal error when trying to create event"
       });
     });
 };
@@ -189,7 +189,7 @@ const createLink = async (req, res) => {
   if (currentLength >= 400) {
     return res.send({
       success: false,
-      error: "too many links, or links too long",
+      error: "too many links, or links too long"
     });
   }
 
@@ -199,13 +199,13 @@ const createLink = async (req, res) => {
 
   bandQueries
     .createLink(req.body.bandId, currentLinks)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error when trying to add link",
+        error: "internal error when trying to add link"
       });
     });
 };
@@ -215,7 +215,7 @@ const createMember = (req, res) => {
   if (!req.user) {
     return res.send({
       success: false,
-      error: "Must be a logged in user to proceed.",
+      error: "Must be a logged in user to proceed."
     });
   }
 
@@ -227,13 +227,13 @@ const createMember = (req, res) => {
       req.user.userId,
       req.body.bandId
     )
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error creating a band member",
+        error: "internal error creating a band member"
       });
     });
 };
@@ -251,7 +251,7 @@ const createRep = (req, res) => {
   ) {
     return res.send({
       success: false,
-      error: "fields missing for adding repertoire",
+      error: "fields missing for adding repertoire"
     });
   }
 
@@ -263,13 +263,13 @@ const createRep = (req, res) => {
       req.body.link,
       req.body.bandId
     )
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error creating a band Repertoire Entry",
+        error: "internal error creating a band Repertoire Entry"
       });
     });
 };
@@ -278,13 +278,13 @@ const createRep = (req, res) => {
 const createSetEntry = (req, res) => {
   bandQueries
     .createSetEntry(req.body.songName, req.body.runTime, req.body.eventId)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error creating a band Set Entry",
+        error: "internal error creating a band Set Entry"
       });
     });
 };
@@ -294,19 +294,19 @@ const deleteBandPost = (req, res) => {
   if (!req.body.bandPostId) {
     return res.send({
       success: false,
-      error: "fields missing for deleting Band Post",
+      error: "fields missing for deleting Band Post"
     });
   }
 
   bandQueries
     .deleteBandPost(req.body.bandPostId)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error deleting a Band Post",
+        error: "internal error deleting a Band Post"
       });
     });
 };
@@ -316,19 +316,19 @@ const deleteEvent = (req, res) => {
   if (!req.body.eventId) {
     return res.send({
       success: false,
-      error: "fields missing for deleting Event",
+      error: "fields missing for deleting Event"
     });
   }
 
   bandQueries
     .deleteEvent(req.body.eventId)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error deleting a band Event",
+        error: "internal error deleting a band Event"
       });
     });
 };
@@ -355,13 +355,13 @@ const deleteLink = async (req, res) => {
 
   bandQueries
     .createLink(req.body.bandId, currentLinks)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error when trying to delete link",
+        error: "internal error when trying to delete link"
       });
     });
 };
@@ -374,13 +374,13 @@ const deleteBand = async (req, res) => {
 
   bandQueries
     .deleteBand(req.body.bandId)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error when trying to delete band",
+        error: "internal error when trying to delete band"
       });
     });
 };
@@ -393,13 +393,13 @@ const deleteInvite = async (req, res) => {
 
   bandQueries
     .deleteInvite(req.body.inviteId)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error when trying to delete invitation",
+        error: "internal error when trying to delete invitation"
       });
     });
 };
@@ -412,23 +412,23 @@ const deleteMember = async (req, res) => {
 
   bandQueries
     .deleteMember(req.body.bandMemberId)
-    .then((retObj) => {
+    .then(retObj => {
       bandQueries
         .decrementMember(req.body.bandId)
-        .then((retObj) => {
+        .then(retObj => {
           return res.send({ success: true });
         })
-        .catch((err) => {
+        .catch(err => {
           return res.send({
             success: false,
-            error: "internal error when trying to decrement numMembers",
+            error: "internal error when trying to decrement numMembers"
           });
         });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error when trying to delete member from band",
+        error: "internal error when trying to delete member from band"
       });
     });
 };
@@ -438,19 +438,19 @@ const deleteRep = (req, res) => {
   if (!req.body.repId) {
     return res.send({
       success: false,
-      error: "fields missing for deleting repertoire",
+      error: "fields missing for deleting repertoire"
     });
   }
 
   bandQueries
     .deleteRep(req.body.repId)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error deleting a band Rep Entry",
+        error: "internal error deleting a band Rep Entry"
       });
     });
 };
@@ -460,7 +460,7 @@ const editBandInfo = (req, res) => {
   if (!req.body.bandId) {
     return res.send({
       success: false,
-      error: "bandId field missing",
+      error: "bandId field missing"
     });
   }
 
@@ -474,14 +474,14 @@ const editBandInfo = (req, res) => {
       req.body.locationLong,
       req.body.genre
     )
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true });
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
       return res.send({
         success: false,
-        error: "internal error editing Band Information",
+        error: "internal error editing Band Information"
       });
     });
 };
@@ -493,28 +493,28 @@ const getBandFromId = (req, res) => {
   }
   bandQueries
     .getBandFromId(req.body.name)
-    .then((retObj) => {
+    .then(retObj => {
       if (retObj.length === 1) {
         return res.send({
           success: true,
           band: {
             ...retObj[0],
             links: JSON.parse(retObj[0].links),
-            location: JSON.parse(retObj[0].location),
-          },
+            location: JSON.parse(retObj[0].location)
+          }
         });
       } else {
         return res.send({
           success: false,
-          error: "no band with this id found",
+          error: "no band with this id found"
         });
       }
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving bands from band id",
+        error: "internal error retrieving bands from band id"
       });
     });
 };
@@ -525,29 +525,29 @@ const getBandFromName = (req, res) => {
   }
   bandQueries
     .getBandFromName(req.body.name)
-    .then((retObj) => {
+    .then(retObj => {
       if (retObj.length === 1) {
         return res.send({
           success: true,
           band: {
             ...retObj[0],
             links: JSON.parse(retObj[0].links),
-            location: JSON.parse(retObj[0].location),
-          },
+            location: JSON.parse(retObj[0].location)
+          }
         });
       } else {
         return res.send({
           success: false,
           error:
-            "no band with this name found or more than one band have this name",
+            "no band with this name found or more than one band have this name"
         });
       }
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving bands from band name",
+        error: "internal error retrieving bands from band name"
       });
     });
 };
@@ -562,7 +562,7 @@ const getBandInfo = (req, res) => {
     type: req.body.type ? req.body.type : "%",
     numMembers: req.body.numMembers ? req.body.numMembers : "%",
     */
-    bandId: req.body.bandId ? req.body.bandId : "%",
+    bandId: req.body.bandId ? req.body.bandId : "%"
   };
 
   bandQueries.getBandInfo(search.bandId);
@@ -575,12 +575,15 @@ const getBandMembers = async (req, res) => {
   }
   try {
     let bandMembers = await bandQueries.getBandMembers(req.body.bandId);
-    return res.send({ success: true, bandMembers: bandMembers });
+    return res.send({
+      success: true,
+      bandMembers
+    });
   } catch (err) {
     console.log(err);
     return res.send({
       success: false,
-      error: "internal error retrieving band members from bandId",
+      error: "internal error retrieving band members from bandId"
     });
   }
 };
@@ -593,14 +596,14 @@ const getBandPosts = (req, res) => {
 
   bandQueries
     .getBandPosts(req.body.bandId)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving posts of a band from bandId",
+        error: "internal error retrieving posts of a band from bandId"
       });
     });
 };
@@ -613,14 +616,14 @@ const getBandRep = (req, res) => {
 
   bandQueries
     .getBandRep(req.body.bandId)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving repertoire from bandId",
+        error: "internal error retrieving repertoire from bandId"
       });
     });
 };
@@ -633,15 +636,15 @@ const getEvents = (req, res) => {
   }
   bandQueries
     .getEvents(req.body.bandId)
-    .then((retObj) => {
+    .then(retObj => {
       //console.log("successful retrieval of band events from bandId");
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving band events from bandId",
+        error: "internal error retrieving band events from bandId"
       });
     });
 };
@@ -654,15 +657,15 @@ const getInvites = (req, res) => {
   }
   bandQueries
     .getInvites(req.body.bandId)
-    .then((retObj) => {
+    .then(retObj => {
       //console.log("successful retrieval of band events from bandId");
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
+    .catch(err => {
       //console.log(err);
       return res.send({
         success: false,
-        error: "internal error retrieving band invitations from bandId",
+        error: "internal error retrieving band invitations from bandId"
       });
     });
 };
@@ -676,7 +679,7 @@ const getIsLookingForMembers = async (req, res) => {
 
   await bandQueries
     .getIsLookingForMembers(req.body.bandId)
-    .then((retObj) => {
+    .then(retObj => {
       let isLooking = retObj[0].isLookingForMember;
       if (isLooking == 1) {
         isLooking = true;
@@ -687,14 +690,14 @@ const getIsLookingForMembers = async (req, res) => {
       return res.send({
         success: true,
         isLookingForMember: isLooking,
-        result: retObj,
+        result: retObj
       });
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
       return res.send({
         success: false,
-        error: "internal error getting if band is looking for members or not",
+        error: "internal error getting if band is looking for members or not"
       });
     });
 };
@@ -708,7 +711,7 @@ const searchBands = (req, res) => {
     locationLong: req.body.locationLong ? req.body.locationLong : null,
     isLookingForMember: req.body.isLookingForMember
       ? req.body.isLookingForMember
-      : 0,
+      : 0
   };
 
   bandQueries
@@ -719,10 +722,10 @@ const searchBands = (req, res) => {
       search.locationLong,
       search.isLookingForMember
     )
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({ success: false, error: "internal error" });
     });
 };
@@ -736,19 +739,19 @@ const searchEvents = (req, res) => {
   var search = {
     name: req.body.title ? req.body.title + "%" : "%",
     date: req.body.date ? req.body.date : "%",
-    location: req.body.location ? req.body.location : "%",
+    location: req.body.location ? req.body.location : "%"
     //location
   };
 
   userQueries
     .searchEvents(search.name, search.date, search.location)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
+    .catch(err => {
       return res.send({
         success: false,
-        error: "internal error searching for events",
+        error: "internal error searching for events"
       });
     });
 };
@@ -774,14 +777,14 @@ const setIsLookingForMembers = (req, res) => {
 
   bandQueries
     .setIsLookingForMembers(req.body.bandId, isLooking)
-    .then((retObj) => {
+    .then(retObj => {
       return res.send({ success: true, result: retObj });
     })
-    .catch((err) => {
+    .catch(err => {
       console.log(err);
       return res.send({
         success: false,
-        error: "internal error setting if band is looking for members or not",
+        error: "internal error setting if band is looking for members or not"
       });
     });
 };
@@ -814,5 +817,5 @@ module.exports = {
   getIsLookingForMembers,
   searchBands,
   searchEvents,
-  setIsLookingForMembers,
+  setIsLookingForMembers
 };

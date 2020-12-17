@@ -163,6 +163,7 @@ const Navbar = props => {
               id="loginEmail"
               placeholder="email"
               style={{ borderRadius: 20 }}
+              defaultValue="j@j.com"
             />
           </div>
           <div style={{ marginBottom: 20 }}>
@@ -171,6 +172,7 @@ const Navbar = props => {
               id="loginPassword"
               placeholder="password"
               style={{ borderRadius: 20 }}
+              defaultValue="Jainam@123"
             />
           </div>
           <div style={{ display: "flex", justifyContent: "flex-end" }}>

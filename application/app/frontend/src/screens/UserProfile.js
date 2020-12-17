@@ -29,13 +29,13 @@ import {
   faPlus
 } from "@fortawesome/free-solid-svg-icons";
 
-import user5 from "../assets/bandProfile/user5.jpg";
+import defaultProfileImage from "../assets/defaultProfile.jpeg";
 
 const axios = require("axios");
 
 const UserProfileScreen = () => {
   const userObj = useSelector(state => state.userObj);
-
+  console.log(userObj);
   const [createBandModal, setCreateBandModal] = useState(false);
   const toggleCreateBandModal = () => setCreateBandModal(!createBandModal);
 
@@ -151,6 +151,10 @@ const UserProfileScreen = () => {
     }
   };
 
+  const [addLinkModal, setAddLinkModal] = useState(false);
+  const [deleteLinkModal, setDeleteLinkModal] = useState(false);
+  const [deleteLink, setDeleteLink] = useState(null);
+
   return (
     <div style={{ backgroundColor: "#E5E5E5" }}>
       {userObj ? (
@@ -193,7 +197,17 @@ const UserProfileScreen = () => {
                   marginTop: -100
                 }}
               >
-                <img style={{ width: 250, maxHeight: 250 }} src={user5} />
+                {userObj.profileImageUrl ? (
+                  <img
+                    style={{ width: 250, maxHeight: 250 }}
+                    src={userObj.profileImageUrl}
+                  />
+                ) : (
+                  <img
+                    style={{ width: 250, maxHeight: 250 }}
+                    src={defaultProfileImage}
+                  />
+                )}
               </div>
               <div
                 className="divShadow"
@@ -201,51 +215,67 @@ const UserProfileScreen = () => {
                   marginTop: 30,
                   padding: 20,
                   display: "flex",
+                  flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
                   flexWrap: "wrap",
                   backgroundColor: "#ffffff"
                 }}
               >
-                <div
-                  style={{
-                    fontSize: 18,
-                    fontWeight: 500,
-                    paddingLeft: 40,
-                    paddingRight: 40
+                {userObj.links &&
+                  userObj.links.map(linkObj => (
+                    <div>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center"
+                        }}
+                      >
+                        <div style={{ fontWeight: 600, marginRight: 5 }}>
+                          {linkObj.key}:
+                        </div>
+                        <div
+                          style={{
+                            overflowX: "hidden",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            maxWidth: 150
+                          }}
+                        >
+                          <a href={linkObj.link}>{linkObj.link}</a>
+                        </div>
+
+                        <Button
+                          onClick={() => {
+                            setDeleteLink(linkObj);
+                            setDeleteLinkModal(true);
+                          }}
+                          color="danger"
+                          style={{
+                            height: 30,
+                            width: 30,
+                            borderRadius: 15,
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginLeft: 10
+                          }}
+                        >
+                          x
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                <Button
+                  onClick={() => {
+                    setAddLinkModal(true);
                   }}
+                  color="primary"
+                  style={{ marginTop: 10, width: "100%" }}
                 >
-                  <div style={{ marginBottom: 10, overflowx: "hidden" }}>
-                    Instagram:
-                    <a href="#" style={{ marginLeft: 5 }}>
-                      http://www.link.com
-                    </a>
-                  </div>
-                  <div style={{ marginBottom: 10, overflowx: "hidden" }}>
-                    Twitter:
-                    <a href="#" style={{ marginLeft: 5 }}>
-                      http://www.link.com
-                    </a>
-                  </div>
-                  <div style={{ marginBottom: 10, overflowx: "hidden" }}>
-                    Youtube:
-                    <a href="#" style={{ marginLeft: 5 }}>
-                      http://www.link.com
-                    </a>
-                  </div>
-                  <div style={{ marginBottom: 10, overflowx: "hidden" }}>
-                    Spotify:
-                    <a href="#" style={{ marginLeft: 5 }}>
-                      http://www.link.com
-                    </a>
-                  </div>
-                  <div style={{ marginBottom: 10, overflowx: "hidden" }}>
-                    Apple music:
-                    <a href="#" style={{ marginLeft: 5 }}>
-                      http://www.link.com
-                    </a>
-                  </div>
-                </div>
+                  Add Link
+                </Button>
               </div>
             </Col>
             <Col lg={8} style={{ paddingRight: 20, paddingLeft: 20 }}>
@@ -261,21 +291,27 @@ const UserProfileScreen = () => {
                   paddingRight: 20
                 }}
               >
-                <Badge
-                  className="divShadow"
-                  style={{
-                    margin: 10,
-                    padding: 10,
-                    paddingLeft: 30,
-                    paddingRight: 30,
-                    color: "#FFFFFF",
-                    backgroundColor: "#CB0086",
-                    borderRadius: 20
-                  }}
-                >
-                  <FontAwesomeIcon icon={faMusic} style={{ marginRight: 4 }} />
-                  {userObj.genre}
-                </Badge>
+                {userObj.genre && (
+                  <Badge
+                    className="divShadow"
+                    style={{
+                      margin: 10,
+                      padding: 10,
+                      paddingLeft: 30,
+                      paddingRight: 30,
+                      color: "#FFFFFF",
+                      backgroundColor: "#CB0086",
+                      borderRadius: 20
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faMusic}
+                      style={{ marginRight: 4 }}
+                    />
+                    {userObj.genre}
+                  </Badge>
+                )}
+
                 <Badge
                   className="divShadow"
                   style={{
@@ -287,8 +323,8 @@ const UserProfileScreen = () => {
                     backgroundColor: "#FF9900"
                   }}
                 >
-                  <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />
-                  {userObj.role}
+                  {/* <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} /> */}
+                  Role: {userObj.role}
                 </Badge>
                 {userObj.location && userObj.location.city && (
                   <Badge
@@ -329,14 +365,14 @@ const UserProfileScreen = () => {
                   style={{
                     backgroundColor: "#000000",
                     borderRadius: 25,
-                    height: 50,
-                    width: 50
+                    height: 50
                   }}
                   onClick={() => {
                     toggleCreateBandModal();
                   }}
                 >
-                  <FontAwesomeIcon icon={faPlus} style={{ marginRight: 4 }} />
+                  <FontAwesomeIcon icon={faPlus} style={{ marginRight: 4 }} />{" "}
+                  Create Band{" "}
                 </Button>
               </div>
               <div>
@@ -476,6 +512,97 @@ const UserProfileScreen = () => {
                 >
                   Create Band!
                 </Button>
+              </div>
+            </ModalBody>
+          </Modal>
+
+          <Modal
+            isOpen={addLinkModal}
+            toggle={() => setAddLinkModal(!addLinkModal)}
+            backdrop="static"
+          >
+            <ModalHeader toggle={() => setAddLinkModal(!addLinkModal)}>
+              Add link to your band
+            </ModalHeader>
+            <ModalBody>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: 20,
+                  fontWeight: 600,
+                  marginTop: 10
+                }}
+              >
+                <Input
+                  id="addLinkKey"
+                  placeholder="key. Ex: youtube"
+                  style={{ marginRight: 5 }}
+                />
+                {" : "}
+                <Input
+                  id="addLinkLink"
+                  placeholder="Link. Ex: www.youtube.com/"
+                  style={{ marginLeft: 5 }}
+                />
+              </div>
+
+              <Button
+                onClick={() => {
+                  let key = document.getElementById("addLinkKey").value;
+                  let link = document.getElementById("addLinkLink").value;
+                  if (key && link && key.length > 0 && link.length > 0) {
+                    axios
+                      .post("/api/user/createLink", {
+                        link: { key: key, link: link }
+                      })
+                      .then(res => {
+                        console.log(res.data);
+                      })
+                      .catch(err => {});
+                  } else {
+                    alert("please enter a key and a valid link");
+                  }
+                }}
+                color="primary"
+                style={{ float: "right", marginTop: 10 }}
+              >
+                Add Link
+              </Button>
+            </ModalBody>
+          </Modal>
+          <Modal
+            isOpen={deleteLinkModal}
+            toggle={() => setDeleteLinkModal(!deleteLinkModal)}
+            backdrop="static"
+          >
+            <ModalBody
+              style={{
+                textAlign: "center",
+                paddingTop: 40,
+                paddingBottom: 40,
+                fontSize: 18,
+                fontWeight: 600
+              }}
+            >
+              Are you sure you want to delete "{deleteLink && deleteLink.key}"
+              link?
+              <div
+                style={{
+                  marginTop: 20,
+                  display: "flex",
+                  justifyContent: "space-around"
+                }}
+              >
+                <Button
+                  onClick={() => {
+                    setDeleteLinkModal(!deleteLinkModal);
+                  }}
+                  color="dark"
+                >
+                  Cancel
+                </Button>
+                <Button color="danger">Delete Link</Button>
               </div>
             </ModalBody>
           </Modal>

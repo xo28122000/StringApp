@@ -1,5 +1,7 @@
 import React from "react";
 import { Badge, Card } from "reactstrap";
+import defaultProfileImage from "../../assets/defaultProfile.jpeg";
+
 const BandMemberItem = props => {
   return (
     <Card
@@ -12,15 +14,15 @@ const BandMemberItem = props => {
         padding: 25
       }}
     >
-      {props.img && (
-        <div
-          style={{
-            width: 150,
-            height: 150,
-            borderRadius: 130,
-            marginBottom: 10
-          }}
-        >
+      <div
+        style={{
+          width: 150,
+          height: 150,
+          borderRadius: 130,
+          marginBottom: 10
+        }}
+      >
+        {props.img ? (
           <img
             src={props.profileImageUrl}
             style={{
@@ -29,8 +31,17 @@ const BandMemberItem = props => {
               borderRadius: 130
             }}
           />
-        </div>
-      )}
+        ) : (
+          <img
+            src={defaultProfileImage}
+            style={{
+              width: 130,
+              maxHeight: 130,
+              borderRadius: 130
+            }}
+          />
+        )}
+      </div>
 
       <Badge
         style={{

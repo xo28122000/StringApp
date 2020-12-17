@@ -26,7 +26,7 @@ authRouter.post(
   function(req, res, next) {
     passport.authenticate("user-register", function(error, user, info) {
       if (error) {
-        console.log(error) 
+        console.log(error);
         return res.send({ success: false });
       }
       if (!user) {
@@ -37,7 +37,13 @@ authRouter.post(
           //console.log(error);
           return res.send({ success: false });
         }
-        return res.send({ success: true, user });
+        return res.send({
+          success: true,
+          user: {
+            ...user,
+            links: JSON.parse(user.links)
+          }
+        });
       });
     })(req, res, next);
   }
@@ -55,7 +61,13 @@ authRouter.post("/login", function(req, res, next) {
       if (error) {
         return res.send({ success: false });
       }
-      return res.send({ success: true, user });
+      return res.send({
+        success: true,
+        user: {
+          ...user,
+          links: JSON.parse(user.links)
+        }
+      });
     });
   })(req, res, next);
 });
@@ -69,7 +81,13 @@ authRouter.post("/logout", (req, res) => {
 authRouter.post("/user", (req, res) => {
   //route definition for displaying a user's account information
   if (req.user) {
-    res.send({ success: true, user: req.user });
+    res.send({
+      success: true,
+      user: {
+        ...req.user,
+        links: JSON.parse(req.user.links)
+      }
+    });
   } else {
     res.send({ success: false });
   }
