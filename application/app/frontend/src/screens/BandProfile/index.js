@@ -299,7 +299,7 @@ const BandProfilePage = props => {
                         }}
                       >
                         <a
-                          rel="noopener noreferrer"
+                          rel="noopener"
                           target="_blank"
                           href={linkObj.link}
                         >
