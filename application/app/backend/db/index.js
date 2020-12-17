@@ -44,7 +44,7 @@ pool.getConnection(async function (err, connection) {
       "email varchar(350) NOT NULL UNIQUE, " +
       "password varchar(200) NOT NULL, " +
       "name varchar(100) NOT NULL, " +
-      "profileImageUrl varchar(150), " +
+      "profileImageUrl varchar(1500), " +
       "phoneNumber varchar(15), " +
       "links varchar(500), " +
       "location varchar(500), " +
