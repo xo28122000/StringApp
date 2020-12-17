@@ -85,6 +85,44 @@ userQueries.createLink = async (userId, links) => {
   });
 };
 
+//query that edits the user info in the stringaccount table by userId
+userQueries.editUserInfo = (userId, name, role, imageURL) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE  StringApp.STRINGACCOUNT SA
+      SET SA.name = ?, SA.role = ?, SA.profileImageUrl = ?
+      WHERE SA.userId = ? ;`,
+      [name, role, imageURL, userId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//query that edits the user info in the stringaccount table by userId
+userQueries.editUserInfoPassword = (userId, name, password, role, imageURL) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      `UPDATE  StringApp.STRINGACCOUNT SA
+      SET SA.name = ?, SA.password = ?, SA.role = ?, SA.profileImageUrl = ?
+      WHERE SA.userId = ? ;`,
+      [name, password, role, imageURL, userId],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        } else {
+          return resolve(results);
+        }
+      }
+    );
+  });
+};
+
 //query to retrieve a specific event from the invitations table
 userQueries.getEvent = (eventId) => {
   return new Promise((resolve, reject) => {
@@ -127,44 +165,6 @@ userQueries.getUserBand = (userId) => {
       FROM StringApp.BANDMEMBERS BM, StringApp.BAND B
       WHERE BM.userId = ? AND BM.bandId = B.bandId;`,
       [userId],
-      (err, results) => {
-        if (err) {
-          return reject(err);
-        } else {
-          return resolve(results);
-        }
-      }
-    );
-  });
-};
-
-//query that edits the user info in the stringaccount table by userId
-userQueries.editUserInfo = (userId, name, role) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      `UPDATE  StringApp.STRINGACCOUNT SA
-      SET SA.name = ?, SA.role = ?
-      WHERE SA.userId = ? ;`,
-      [name, role, userId],
-      (err, results) => {
-        if (err) {
-          return reject(err);
-        } else {
-          return resolve(results);
-        }
-      }
-    );
-  });
-};
-
-//query that edits the user info in the stringaccount table by userId
-userQueries.editUserInfoPassword = (userId, name, password, role) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      `UPDATE  StringApp.STRINGACCOUNT SA
-      SET SA.name = ?, SA.password = ?, SA.role = ?
-      WHERE SA.userId = ? ;`,
-      [name, password, role, userId],
       (err, results) => {
         if (err) {
           return reject(err);

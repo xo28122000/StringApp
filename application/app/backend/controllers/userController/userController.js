@@ -165,7 +165,12 @@ const deleteLink = async (req, res) => {
 
 //controller for editing profile of the registered users
 const editUserInfo = (req, res) => {
-  if (!req.user.userId || !req.body.name || !req.body.role) {
+  if (
+    !req.user.userId ||
+    !req.body.name ||
+    !req.body.role ||
+    !req.body.imageURL
+  ) {
     //console.log(req.body);
     return res.send({ success: false, error: "fields missing" });
   }
@@ -177,7 +182,8 @@ const editUserInfo = (req, res) => {
         req.user.userId,
         req.body.name,
         hashedPassword,
-        req.body.role
+        req.body.role,
+        req.body.imageURL
       )
       .then((retObj) => {
         //console.log("successful editing of user info from userId");
@@ -194,7 +200,12 @@ const editUserInfo = (req, res) => {
   } else {
     //no password present
     userQueries
-      .editUserInfo(req.user.userId, req.body.name, req.body.role)
+      .editUserInfo(
+        req.user.userId,
+        req.body.name,
+        req.body.role,
+        req.body.imageURL
+      )
       .then((retObj) => {
         //console.log("successful editing of user info from userId");
         return res.send({ success: true, result: retObj });
