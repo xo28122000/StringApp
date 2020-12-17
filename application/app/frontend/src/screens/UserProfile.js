@@ -16,10 +16,12 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Label,
+  FormText
 } from "reactstrap";
 
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -35,7 +37,7 @@ import ReloadPage from "./BandProfile/ReloadPage";
 
 const axios = require("axios");
 
-const UserProfileScreen = () => {
+const UserProfileScreen = props => {
   const userObj = useSelector(state => state.userObj);
   const [createBandModal, setCreateBandModal] = useState(false);
   const toggleCreateBandModal = () => setCreateBandModal(!createBandModal);
@@ -50,6 +52,7 @@ const UserProfileScreen = () => {
 
   useEffect(() => {
     if (userObj) {
+      setRoleType(userObj.role);
       axios
         .post("/api/user/getUserBand")
         .then(res => {
@@ -129,6 +132,11 @@ const UserProfileScreen = () => {
   const [addLinkModal, setAddLinkModal] = useState(false);
   const [deleteLinkModal, setDeleteLinkModal] = useState(false);
   const [deleteLink, setDeleteLink] = useState(null);
+  const [editProfileModal, setEditProfileModal] = useState(false);
+
+  const roleOptions = ["None", "Musician", "Band Manager", "Enthusiast"];
+  const [roleDDOpen, setRoleDDOpen] = useState(false);
+  const [roleType, setRoleType] = useState("None");
 
   return (
     <div style={{ backgroundColor: "#E5E5E5" }}>
@@ -184,6 +192,16 @@ const UserProfileScreen = () => {
                   />
                 )}
               </div>
+              <Button
+                onClick={() => {
+                  console.log("click");
+                  setEditProfileModal(true);
+                }}
+                color="primary"
+                style={{ fontSize: 18, marginTop: 15 }}
+              >
+                Edit Profile
+              </Button>
               <div
                 className="divShadow"
                 style={{
@@ -199,7 +217,7 @@ const UserProfileScreen = () => {
               >
                 {userObj.links &&
                   userObj.links.map(linkObj => (
-                    <div>
+                    <div style={{ marginBottom: 10 }}>
                       <div
                         style={{
                           display: "flex",
@@ -620,6 +638,138 @@ const UserProfileScreen = () => {
               </div>
             </ModalBody>
           </Modal>
+
+          <Modal
+            isOpen={editProfileModal}
+            toggle={() => {
+              setEditProfileModal(!editProfileModal);
+            }}
+            backdrop="static"
+          >
+            <ModalHeader
+              toggle={() => {
+                setEditProfileModal(!editProfileModal);
+              }}
+            >
+              Edit Profile
+            </ModalHeader>
+            <ModalBody>
+              <Label>Name</Label>
+              <Input
+                id="editProfileName"
+                style={{ marginBottom: 20 }}
+                placeholder="name"
+                defaultValue={userObj.name}
+              />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                Role:
+                <Dropdown
+                  isOpen={roleDDOpen}
+                  toggle={() => {
+                    setRoleDDOpen(!roleDDOpen);
+                  }}
+                  style={{ marginLeft: 20 }}
+                >
+                  <DropdownToggle
+                    caret
+                    style={{ backgroundColor: "#ffffff", color: "#000000" }}
+                  >
+                    {roleType}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {roleOptions.map(genreOption => (
+                      <DropdownItem
+                        onClick={() => {
+                          setRoleType(genreOption);
+                        }}
+                      >
+                        {genreOption}
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
+              <Label>Password</Label>
+              <Input
+                id="editProfilePassword"
+                type="password"
+                placeholder="password"
+              />
+              <FormText color="muted">
+                If you do not wish want to change your password, Please leave
+                this field blank
+              </FormText>
+              <FormText style={{ marginBottom: 20 }} color="muted">
+                Should be 8 to 21 characters long and <br />
+                contain atleast 1 number, 1 uppercase and 1 lowercase letter.
+              </FormText>
+
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <Button
+                  onClick={() => {
+                    setEditProfileModal(false);
+                  }}
+                  color="danger"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    let name = document.getElementById("editProfileName").value;
+                    let password = document.getElementById(
+                      "editProfilePassword"
+                    ).value;
+                    if (!name || !roleType) {
+                      alert("Name and Role are required fields");
+                    } else if (
+                      name.length > 30 ||
+                      name.replace(/[^a-zA-Z ]/g, "").length < 1 ||
+                      name.replace(/[^a-zA-Z ]/g, "").length > 30
+                    ) {
+                      alert(
+                        "Name should contain atleast one and atmost 30 characters"
+                      );
+                    } else if (
+                      (password !== "" || password) &&
+                      !/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,21}/.test(password)
+                    ) {
+                      alert(
+                        `Please enter a valid password containing 8 to 21 characters 
+                      containing atleast 1 number, 1 uppercase and 1 lowercase letter.`
+                      );
+                    } else {
+                      axios
+                        .post("/api/user/editUserInfo", {
+                          name,
+                          password: password === "" ? null : password,
+                          role: roleType
+                        })
+                        .then(res => {
+                          console.log(res.data);
+                          if (res.data.success) {
+                            window.location.reload();
+                          } else {
+                            alert("Please recheck your values and try again.");
+                          }
+                        })
+                        .catch(err => {
+                          console.log("err", err);
+                        });
+                    }
+                  }}
+                  color="primary"
+                >
+                  Done
+                </Button>
+              </div>
+            </ModalBody>
+          </Modal>
         </>
       ) : (
         <Redirect to="/explore" />
@@ -628,4 +778,4 @@ const UserProfileScreen = () => {
   );
 };
 
-export default UserProfileScreen;
+export default withRouter(UserProfileScreen);

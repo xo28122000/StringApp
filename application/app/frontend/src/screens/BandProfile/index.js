@@ -17,14 +17,14 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  UncontrolledTooltip,
+  UncontrolledTooltip
 } from "reactstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faMapMarkerAlt,
-  faMusic,
+  faMusic
 } from "@fortawesome/free-solid-svg-icons";
 
 import EventCard from "../../components/Cards/EventCard";
@@ -48,10 +48,10 @@ function validateUrl(value) {
     value
   );
 }
-const BandProfilePage = (props) => {
+const BandProfilePage = props => {
   const { bandName } = useParams();
   const history = useHistory();
-  const userObj = useSelector((store) => store.userObj);
+  const userObj = useSelector(store => store.userObj);
   const [band, setBand] = useState(null);
   const [bandMembers, setBandMembers] = useState(null);
   const [musicRep, setMusicRep] = useState(null);
@@ -140,7 +140,7 @@ const BandProfilePage = (props) => {
         // ]);
         try {
           let res = await axios.post("/api/band/getBandFromName", {
-            name: bandName,
+            name: bandName
           });
           if (res.data.success) {
             setBand(res.data.band);
@@ -160,25 +160,25 @@ const BandProfilePage = (props) => {
           let res;
 
           res = await axios.post("/api/band/getBandMembers", {
-            bandId: band.bandId,
+            bandId: band.bandId
           });
           if (res.data.success) {
             setBandMembers(res.data.bandMembers);
           }
           res = await axios.post("/api/band/getBandRep", {
-            bandId: band.bandId,
+            bandId: band.bandId
           });
           if (res.data.success) {
             setMusicRep(res.data.result);
           }
           res = await axios.post("/api/band/getBandPosts", {
-            bandId: band.bandId,
+            bandId: band.bandId
           });
           if (res.data.success) {
             setPosts(res.data.result);
           }
           res = await axios.post("/api/band/getEvents", {
-            bandId: band.bandId,
+            bandId: band.bandId
           });
           if (res.data.success) {
             //console.log(res.data.result);
@@ -194,7 +194,7 @@ const BandProfilePage = (props) => {
 
   useEffect(() => {
     if (bandMembers && userObj) {
-      bandMembers.forEach((bandMember) => {
+      bandMembers.forEach(bandMember => {
         if (bandMember.userId === userObj.userId) {
           setIsBandMember(true);
           if (bandMember.isBandAdmin === 1) {
@@ -215,13 +215,13 @@ const BandProfilePage = (props) => {
     if (invitationModal) {
       axios
         .post("/api/band/getInvites", { bandId: band.bandId })
-        .then((res) => {
+        .then(res => {
           //console.log(res.data);
           if (res.data.success) {
             setInvitations(res.data.result);
           }
         })
-        .catch((err) => {});
+        .catch(err => {});
     }
   }, [invitationModal]);
   const [invitations, setInvitations] = useState([]);
@@ -255,7 +255,7 @@ const BandProfilePage = (props) => {
               display: "flex",
               flexWrap: "wrap-reverse",
               justifyContent: "center",
-              padding: 40,
+              padding: 40
             }}
           >
             <div style={{ width: "25%", minWidth: 300, marginTop: 20 }}>
@@ -275,16 +275,16 @@ const BandProfilePage = (props) => {
                   alignItems: "stretch",
                   width: 300,
                   padding: 20,
-                  backgroundColor: "#ffffff",
+                  backgroundColor: "#ffffff"
                 }}
               >
-                {band.links.map((linkObj) => (
-                  <div>
+                {band.links.map(linkObj => (
+                  <div style={{ marginBottom: 10 }}>
                     <div
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        alignItems: "center",
+                        alignItems: "center"
                       }}
                     >
                       <div style={{ fontWeight: 600, marginRight: 5 }}>
@@ -295,7 +295,7 @@ const BandProfilePage = (props) => {
                           overflowX: "hidden",
                           whiteSpace: "nowrap",
                           textOverflow: "ellipsis",
-                          maxWidth: 150,
+                          maxWidth: 150
                         }}
                       >
                         <a target="_blank" href={linkObj.link}>
@@ -315,7 +315,7 @@ const BandProfilePage = (props) => {
                             borderRadius: 15,
                             display: "flex",
                             justifyContent: "center",
-                            alignItems: "center",
+                            alignItems: "center"
                           }}
                         >
                           x
@@ -349,14 +349,14 @@ const BandProfilePage = (props) => {
                     textAlign: "center",
                     width: 300,
                     padding: 20,
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "#ffffff"
                   }}
                 >
                   <div
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      justifyContent: "flex-start",
+                      justifyContent: "flex-start"
                     }}
                   >
                     Looking for new Members:{" "}
@@ -367,22 +367,22 @@ const BandProfilePage = (props) => {
                       style={{
                         position: "relative",
                         margin: 0,
-                        marginLeft: 10,
+                        marginLeft: 10
                       }}
                       onClick={() => {
                         axios
                           .post("/api/band/setIsLookingForMembers", {
                             bandId: band.bandId,
-                            isLooking: !band.isLookingForMember,
+                            isLooking: !band.isLookingForMember
                           })
-                          .then((res) => {
+                          .then(res => {
                             if (res.data.success) {
                               window.location.reload();
                             } else {
                               alert("Internal error. Please try again");
                             }
                           })
-                          .catch((err) => {});
+                          .catch(err => {});
                         // make axios call to change the islooking for member in db and refresh page
                       }}
                     />
@@ -424,7 +424,7 @@ const BandProfilePage = (props) => {
                           textAlign: "center",
                           width: 300,
                           padding: 20,
-                          backgroundColor: "#ffffff",
+                          backgroundColor: "#ffffff"
                         }}
                       >
                         <div style={{ marginBottom: 10 }}>
@@ -438,7 +438,7 @@ const BandProfilePage = (props) => {
                             backgroundColor: "#CB0086",
                             fontSize: 18,
                             paddingRight: 20,
-                            paddingLeft: 20,
+                            paddingLeft: 20
                           }}
                         >
                           Apply
@@ -455,7 +455,7 @@ const BandProfilePage = (props) => {
                 marginRight: 40,
                 fontSize: 18,
                 width: "60%",
-                minWidth: 300,
+                minWidth: 300
               }}
             >
               <div style={{ fontSize: 45, fontWeight: 700 }}>{band.name}</div>
@@ -471,7 +471,7 @@ const BandProfilePage = (props) => {
                     marginRight: 10,
                     borderRadius: 13,
                     backgroundColor: "#FFE600",
-                    color: "#000000",
+                    color: "#000000"
                   }}
                 >
                   <FontAwesomeIcon icon={faUser} style={{ marginRight: 4 }} />
@@ -487,7 +487,7 @@ const BandProfilePage = (props) => {
                     marginLeft: 10,
                     marginRight: 10,
                     borderRadius: 13,
-                    backgroundColor: "#CB0086",
+                    backgroundColor: "#CB0086"
                   }}
                 >
                   <FontAwesomeIcon icon={faMusic} style={{ marginRight: 4 }} />
@@ -504,7 +504,7 @@ const BandProfilePage = (props) => {
                     marginRight: 10,
                     borderRadius: 13,
                     backgroundColor: "#FFFFFF",
-                    color: "#8A8A8A",
+                    color: "#8A8A8A"
                   }}
                 >
                   <FontAwesomeIcon
@@ -529,7 +529,7 @@ const BandProfilePage = (props) => {
                   marginTop: 30,
                   padding: 20,
                   paddingBottom: 30,
-                  backgroundColor: "#ffffff",
+                  backgroundColor: "#ffffff"
                 }}
               >
                 <div style={{ fontSize: 35, fontWeight: 700 }}>
@@ -564,7 +564,7 @@ const BandProfilePage = (props) => {
                     alignItems: "center",
                     flexWrap: "wrap",
                     maxHeight: 400,
-                    overflowY: "auto",
+                    overflowY: "auto"
                   }}
                 >
                   {bandMembers ? (
@@ -592,7 +592,7 @@ const BandProfilePage = (props) => {
               style={{
                 backgroundColor: "#ffffff",
                 padding: 40,
-                marginBottom: 20,
+                marginBottom: 20
               }}
             >
               <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
@@ -614,7 +614,7 @@ const BandProfilePage = (props) => {
             style={{
               backgroundColor: "#ffffff",
               padding: 40,
-              marginBottom: 20,
+              marginBottom: 20
             }}
           >
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
@@ -638,14 +638,14 @@ const BandProfilePage = (props) => {
                   overflowX: "auto",
                   maxHeight: 350,
                   overflowY: "auto",
-                  padding: 40,
+                  padding: 40
                 }}
               >
                 <Row
                   style={{
                     marginBottom: 30,
                     color: "#B7B7B7",
-                    flexWrap: "nowrap",
+                    flexWrap: "nowrap"
                   }}
                 >
                   <Col xs="1"></Col>
@@ -686,7 +686,7 @@ const BandProfilePage = (props) => {
             style={{
               padding: 40,
               marginBottom: 20,
-              backgroundColor: "#ffffff",
+              backgroundColor: "#ffffff"
             }}
           >
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
@@ -710,7 +710,7 @@ const BandProfilePage = (props) => {
                   display: "flex",
                   alignItems: "center",
                   overflowX: "auto",
-                  paddingBottom: 10,
+                  paddingBottom: 10
                 }}
               >
                 {posts.map((post, i) => (
@@ -733,7 +733,7 @@ const BandProfilePage = (props) => {
           <div
             style={{
               padding: 40,
-              backgroundColor: "#ffffff",
+              backgroundColor: "#ffffff"
             }}
           >
             <div style={{ fontSize: 35, fontWeight: 700, marginBottom: 20 }}>
@@ -756,7 +756,7 @@ const BandProfilePage = (props) => {
                   display: "flex",
                   alignItems: "center",
                   overflowX: "auto",
-                  paddingBottom: 10,
+                  paddingBottom: 10
                 }}
               >
                 {events.map((event, i) => (
@@ -767,7 +767,7 @@ const BandProfilePage = (props) => {
                           display: "flex",
                           justifyContent: "flex-end",
                           marginBottom: -20,
-                          marginRight: 25,
+                          marginRight: 25
                         }}
                       >
                         <Button
@@ -802,7 +802,7 @@ const BandProfilePage = (props) => {
                 right: 0,
                 padding: 20,
                 borderRadius: 20,
-                backgroundColor: "rgba(255,255,255,0.8)",
+                backgroundColor: "rgba(255,255,255,0.8)"
               }}
             >
               <Button
@@ -859,9 +859,9 @@ const BandProfilePage = (props) => {
                       axios
                         .post("/api/user/sendinvite", {
                           bandId: band.bandId,
-                          message,
+                          message
                         })
-                        .then((res) => {
+                        .then(res => {
                           if (res.data.success) {
                             setSendInviteModal(!sendInviteModal);
                             alert("Successfully sent the invite!");
@@ -871,7 +871,7 @@ const BandProfilePage = (props) => {
                             );
                           }
                         })
-                        .catch((err) => {});
+                        .catch(err => {});
                     }}
                     color="primary"
                     style={{ float: "right", marginTop: 10 }}
@@ -898,7 +898,7 @@ const BandProfilePage = (props) => {
                   alignItems: "center",
                   fontSize: 20,
                   fontWeight: 600,
-                  marginTop: 10,
+                  marginTop: 10
                 }}
               >
                 <Input
@@ -924,9 +924,9 @@ const BandProfilePage = (props) => {
                     axios
                       .post("/api/band/createLink", {
                         link: { key: key, link: link },
-                        bandId: band.bandId,
+                        bandId: band.bandId
                       })
-                      .then((res) => {
+                      .then(res => {
                         if (res.data.success) {
                           window.location.reload();
                         } else {
@@ -935,7 +935,7 @@ const BandProfilePage = (props) => {
                           );
                         }
                       })
-                      .catch((err) => {});
+                      .catch(err => {});
                   } else {
                     alert("please enter a key and a valid link");
                   }
@@ -959,7 +959,7 @@ const BandProfilePage = (props) => {
                 paddingTop: 40,
                 paddingBottom: 40,
                 fontSize: 18,
-                fontWeight: 600,
+                fontWeight: 600
               }}
             >
               Are you sure you want to delete "{deleteLink && deleteLink.key}"
@@ -968,7 +968,7 @@ const BandProfilePage = (props) => {
                 style={{
                   marginTop: 20,
                   display: "flex",
-                  justifyContent: "space-around",
+                  justifyContent: "space-around"
                 }}
               >
                 <Button
@@ -984,16 +984,16 @@ const BandProfilePage = (props) => {
                     axios
                       .post("/api/band/deleteLink", {
                         bandId: band.bandId,
-                        link: deleteLink,
+                        link: deleteLink
                       })
-                      .then((res) => {
+                      .then(res => {
                         if (res.data.success) {
                           window.location.reload();
                         } else {
                           alert("Please recheck your values and try again.");
                         }
                       })
-                      .catch((err) => {});
+                      .catch(err => {});
                   }}
                   color="danger"
                 >
@@ -1029,13 +1029,13 @@ const BandProfilePage = (props) => {
                     style={{
                       marginTop: 50,
                       marginBottom: 50,
-                      textAlign: "center",
+                      textAlign: "center"
                     }}
                   >
                     There are not invitations sent to your band.
                   </div>
                 )}
-                {invitations.map((invitation) => (
+                {invitations.map(invitation => (
                   <div
                     className="divShadow"
                     style={{ margin: 20, padding: 20, borderRadius: 20 }}
@@ -1046,7 +1046,7 @@ const BandProfilePage = (props) => {
                         marginLeft: 20,
                         marginTop: 15,
                         maxHeight: 150,
-                        overflowY: "auto",
+                        overflowY: "auto"
                       }}
                     >
                       {invitation.message}
@@ -1056,7 +1056,7 @@ const BandProfilePage = (props) => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "flex-end",
-                        marginTop: 20,
+                        marginTop: 20
                       }}
                     >
                       <Button
@@ -1065,9 +1065,9 @@ const BandProfilePage = (props) => {
                             .post("/api/band/acceptInvite", {
                               inviteId: invitation.inviteId,
                               bandId: band.bandId,
-                              userId: invitation.userId,
+                              userId: invitation.userId
                             })
-                            .then((res) => {
+                            .then(res => {
                               if (res.data.success) {
                                 window.location.reload();
                               } else {
@@ -1076,7 +1076,7 @@ const BandProfilePage = (props) => {
                                 );
                               }
                             })
-                            .catch((err) => {});
+                            .catch(err => {});
                         }}
                         style={{ marginRight: 15, backgroundColor: "#000000" }}
                       >
@@ -1086,9 +1086,9 @@ const BandProfilePage = (props) => {
                         onClick={() => {
                           axios
                             .post("/api/band/deleteInvite", {
-                              inviteId: invitation.inviteId,
+                              inviteId: invitation.inviteId
                             })
-                            .then((res) => {
+                            .then(res => {
                               if (res.data.success) {
                                 window.location.reload();
                               } else {
@@ -1097,11 +1097,11 @@ const BandProfilePage = (props) => {
                                 );
                               }
                             })
-                            .catch((err) => {});
+                            .catch(err => {});
                         }}
                         style={{
                           backgroundColor: "#f11313",
-                          borderColor: "#f88989",
+                          borderColor: "#f88989"
                         }}
                       >
                         Decline
@@ -1124,7 +1124,7 @@ const BandProfilePage = (props) => {
                 paddingTop: 40,
                 paddingBottom: 40,
                 fontSize: 18,
-                fontWeight: 600,
+                fontWeight: 600
               }}
             >
               Are you sure you want to delete "
@@ -1133,7 +1133,7 @@ const BandProfilePage = (props) => {
                 style={{
                   marginTop: 20,
                   display: "flex",
-                  justifyContent: "space-around",
+                  justifyContent: "space-around"
                 }}
               >
                 <Button
@@ -1148,16 +1148,16 @@ const BandProfilePage = (props) => {
                   onClick={() => {
                     axios
                       .post("/api/band/deleteEvent", {
-                        eventId: deleteEvent.eventId,
+                        eventId: deleteEvent.eventId
                       })
-                      .then((res) => {
+                      .then(res => {
                         if (res.data.success) {
                           window.location.reload();
                         } else {
                           alert("unable to delete the event. Please retry.");
                         }
                       })
-                      .catch((err) => {});
+                      .catch(err => {});
                   }}
                   color="danger"
                 >
@@ -1202,7 +1202,7 @@ const BandProfilePage = (props) => {
                   {genre ? genre : "All"}
                 </DropdownToggle>
                 <DropdownMenu>
-                  {genreOptions.map((genreOption) => (
+                  {genreOptions.map(genreOption => (
                     <DropdownItem
                       key={genreOption}
                       onClick={() => {
@@ -1223,7 +1223,7 @@ const BandProfilePage = (props) => {
                   id="editBandStreet"
                   placeholder="street"
                   style={{
-                    margin: 5,
+                    margin: 5
                   }}
                   defaultValue={
                     band.location && band.location.street
@@ -1236,7 +1236,7 @@ const BandProfilePage = (props) => {
                     id="editBandCity"
                     placeholder="city"
                     style={{
-                      margin: 5,
+                      margin: 5
                     }}
                     defaultValue={
                       band.location && band.location.city
@@ -1248,7 +1248,7 @@ const BandProfilePage = (props) => {
                     id="editBandState"
                     placeholder="state"
                     style={{
-                      margin: 5,
+                      margin: 5
                     }}
                     defaultValue={
                       band.location && band.location.state
@@ -1260,7 +1260,7 @@ const BandProfilePage = (props) => {
                     id="editBandZip"
                     placeholder="zip"
                     style={{
-                      margin: 5,
+                      margin: 5
                     }}
                     defaultValue={
                       band.location && band.location.zip
@@ -1306,9 +1306,9 @@ const BandProfilePage = (props) => {
                         name,
                         description,
                         location: { street, city, state, zip },
-                        genre: genre,
+                        genre: genre
                       })
-                      .then((res) => {
+                      .then(res => {
                         if (res.data.success) {
                           if (band.name !== name) {
                             props.history.push("/profile");
@@ -1319,7 +1319,7 @@ const BandProfilePage = (props) => {
                           alert("Please recheck your values and try again.");
                         }
                       })
-                      .catch((err) => {
+                      .catch(err => {
                         //console.log("err", err);
                       });
                     // axios call
@@ -1371,7 +1371,7 @@ const BandProfilePage = (props) => {
                   {repGenre ? repGenre : "-"}
                 </DropdownToggle>
                 <DropdownMenu>
-                  {genreOptions.map((genreOption) => (
+                  {genreOptions.map(genreOption => (
                     <DropdownItem
                       key={genreOption}
                       onClick={() => {
@@ -1391,7 +1391,7 @@ const BandProfilePage = (props) => {
                   marginLeft: 50,
                   alignItems: "center",
                   fontSize: 20,
-                  fontWeight: 600,
+                  fontWeight: 600
                 }}
               >
                 <Input
@@ -1426,16 +1426,16 @@ const BandProfilePage = (props) => {
                       runTime: DurationMin + ":" + DurationSec,
                       genre: repGenre,
                       link,
-                      bandId: band.bandId,
+                      bandId: band.bandId
                     })
-                    .then((res) => {
+                    .then(res => {
                       if (res.data.success) {
                         window.location.reload();
                       } else {
                         alert("Please recheck your values and try again.");
                       }
                     })
-                    .catch((err) => {});
+                    .catch(err => {});
                 }}
                 color="primary"
               >
@@ -1495,16 +1495,16 @@ const BandProfilePage = (props) => {
                       media,
                       title,
                       description,
-                      bandId: band.bandId,
+                      bandId: band.bandId
                     })
-                    .then((res) => {
+                    .then(res => {
                       if (res.data.success) {
                         window.location.reload();
                       } else {
                         alert("Please recheck your values and try again.");
                       }
                     })
-                    .catch((err) => {});
+                    .catch(err => {});
                 }}
                 color="primary"
               >
@@ -1582,7 +1582,7 @@ const BandProfilePage = (props) => {
                     id="addEventStreet"
                     placeholder="street"
                     style={{
-                      margin: 5,
+                      margin: 5
                     }}
                   />
                   <div style={{ display: "flex" }}>
@@ -1590,7 +1590,7 @@ const BandProfilePage = (props) => {
                       id="addEventCity"
                       placeholder="city"
                       style={{
-                        margin: 5,
+                        margin: 5
                       }}
                     />
 
@@ -1598,7 +1598,7 @@ const BandProfilePage = (props) => {
                       id="addEventState"
                       placeholder="state"
                       style={{
-                        margin: 5,
+                        margin: 5
                       }}
                     />
 
@@ -1606,7 +1606,7 @@ const BandProfilePage = (props) => {
                       id="addEventZip"
                       placeholder="zip"
                       style={{
-                        margin: 5,
+                        margin: 5
                       }}
                     />
                   </div>
@@ -1636,9 +1636,9 @@ const BandProfilePage = (props) => {
                       startTime,
                       endTime,
                       location: { street, city, state, zip },
-                      bandId: band.bandId,
+                      bandId: band.bandId
                     })
-                    .then((res) => {
+                    .then(res => {
                       if (res.data.success) {
                         window.location.reload();
                       } else {
@@ -1647,7 +1647,7 @@ const BandProfilePage = (props) => {
                         );
                       }
                     })
-                    .catch((err) => {});
+                    .catch(err => {});
                 }}
                 color="primary"
               >
@@ -1669,7 +1669,7 @@ const BandProfilePage = (props) => {
                 paddingTop: 40,
                 paddingBottom: 40,
                 fontSize: 18,
-                fontWeight: 600,
+                fontWeight: 600
               }}
             >
               Are you sure you want to delete this Band?
@@ -1682,7 +1682,7 @@ const BandProfilePage = (props) => {
                 style={{
                   marginTop: 20,
                   display: "flex",
-                  justifyContent: "space-around",
+                  justifyContent: "space-around"
                 }}
               >
                 <Button
@@ -1709,7 +1709,7 @@ const BandProfilePage = (props) => {
                 paddingTop: 40,
                 paddingBottom: 40,
                 fontSize: 18,
-                fontWeight: 600,
+                fontWeight: 600
               }}
             >
               Are you sure you want to leave this Band?
@@ -1722,7 +1722,7 @@ const BandProfilePage = (props) => {
                 style={{
                   marginTop: 20,
                   display: "flex",
-                  justifyContent: "space-around",
+                  justifyContent: "space-around"
                 }}
               >
                 <Button
@@ -1737,7 +1737,7 @@ const BandProfilePage = (props) => {
                   onClick={() => {
                     axios
                       .post("/api/band/leaveBand", { bandId: band.bandId })
-                      .then((res) => {
+                      .then(res => {
                         if (res.data.success) {
                           window.location.reload();
                         } else {
@@ -1746,7 +1746,7 @@ const BandProfilePage = (props) => {
                           );
                         }
                       })
-                      .catch((err) => {});
+                      .catch(err => {});
                   }}
                   color="danger"
                 >
@@ -1762,7 +1762,7 @@ const BandProfilePage = (props) => {
             minHeight: "100vh",
             display: "flex",
             justifyContent: "center",
-            alignItems: "center",
+            alignItems: "center"
           }}
         >
           <Spinner color="dark" style={{ width: "100px", height: "100px" }} />
