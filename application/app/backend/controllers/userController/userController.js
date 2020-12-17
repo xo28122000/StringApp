@@ -150,7 +150,7 @@ const deleteLink = async (req, res) => {
   currentLinks = JSON.stringify(currentLinks);
 
   bandQueries
-    .createLink(req.body.userId, currentLinks)
+    .createLink(req.user.userId, currentLinks)
     .then((retObj) => {
       return res.send({ success: true });
     })
