@@ -5,7 +5,7 @@ const bandQueries = require("../../db/queries/band.js");
 const isBandAdmin = async (req, res, next) => {
   //console.log("called inside isMember");
   if (!req.body.bandId) {
-    console.log("bandId field missing");
+    //console.log("bandId field missing");
   } else if (!req.user) {
     //console.log("Must be a logged in user to proceed.");
   }
