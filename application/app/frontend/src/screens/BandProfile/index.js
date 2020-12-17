@@ -193,10 +193,9 @@ const BandProfilePage = props => {
   }, [band]);
 
   useEffect(() => {
-    console.log(bandMembers);
     if (bandMembers && userObj) {
       bandMembers.forEach(bandMember => {
-        if (bandMember.bandMemberId === userObj.userId) {
+        if (bandMember.userId === userObj.userId) {
           setIsBandMember(true);
           if (bandMember.isBandAdmin === 1) {
             setIsBandAdmin(true);
@@ -782,7 +781,11 @@ const BandProfilePage = props => {
                         </Button>
                       </div>
                     )}
-                    <EventCard {...event} loc={event.location} />
+                    <EventCard
+                      {...event}
+                      loc={event.location}
+                      bandName={event.name}
+                    />
                   </div>
                 ))}
               </div>
@@ -1141,7 +1144,25 @@ const BandProfilePage = props => {
                 >
                   Cancel
                 </Button>
-                <Button color="danger">Delete Event</Button>
+                <Button
+                  onClick={() => {
+                    axios
+                      .post("/api/band/deleteEvent", {
+                        eventId: deleteEvent.eventId
+                      })
+                      .then(res => {
+                        if (res.data.success) {
+                          window.location.reload();
+                        } else {
+                          alert("unable to delete the event. Please retry.");
+                        }
+                      })
+                      .catch(err => {});
+                  }}
+                  color="danger"
+                >
+                  Delete Event
+                </Button>
               </div>
             </ModalBody>
           </Modal>
@@ -1270,14 +1291,34 @@ const BandProfilePage = props => {
                 </Button>
                 <Button
                   onClick={() => {
-                    let name = document.getElementById("editBandName");
-                    let street = document.getElementById("editBandStreet");
-                    let city = document.getElementById("editBandCity");
-                    let state = document.getElementById("editBandState");
-                    let zip = document.getElementById("editBandZip");
-                    let description = document.getElementById("editBandDesc");
-                    // genre is a state variable
+                    let name = document.getElementById("editBandName").value;
+                    let street = document.getElementById("editBandStreet")
+                      .value;
+                    let city = document.getElementById("editBandCity").value;
+                    let state = document.getElementById("editBandState").value;
+                    let zip = document.getElementById("editBandZip").value;
+                    let description = document.getElementById("editBandDesc")
+                      .value;
 
+                    axios
+                      .post("/api/band/editBandInfo", {
+                        bandId: band.bandId,
+                        name,
+                        description,
+                        location: { street, city, state, zip },
+                        genre: genre
+                      })
+                      .then(res => {
+                        console.log("came here");
+                        if (res.data.success) {
+                          window.location.replace("/band/" + name);
+                        } else {
+                          alert("Please recheck your values and try again.");
+                        }
+                      })
+                      .catch(err => {
+                        console.log("err", err);
+                      });
                     // axios call
                   }}
                   color="primary"
@@ -1595,7 +1636,13 @@ const BandProfilePage = props => {
                       bandId: band.bandId
                     })
                     .then(res => {
-                      console.log(res.data);
+                      if (res.data.success) {
+                        window.location.reload();
+                      } else {
+                        alert(
+                          "Error adding the event, Please check your values and try again."
+                        );
+                      }
                     })
                     .catch(err => {});
                 }}
@@ -1683,7 +1730,25 @@ const BandProfilePage = props => {
                 >
                   Cancel
                 </Button>
-                <Button color="danger">Delete Band</Button>
+                <Button
+                  onClick={() => {
+                    axios
+                      .post("/api/band/leaveBand", { bandId: band.bandId })
+                      .then(res => {
+                        if (res.data.success) {
+                          window.location.reload();
+                        } else {
+                          alert(
+                            "Error leaving the band. Please try again later."
+                          );
+                        }
+                      })
+                      .catch(err => {});
+                  }}
+                  color="danger"
+                >
+                  Leave Band
+                </Button>
               </div>
             </ModalBody>
           </Modal>
