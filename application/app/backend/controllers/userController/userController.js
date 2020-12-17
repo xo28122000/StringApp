@@ -266,7 +266,7 @@ const editUserInfo = (req, res) => {
 
 //controller for sending invite from registered users
 const sendInvite = (req, res) => {
-  if (!req.user.userId || !req.band.bandId) {
+  if (!req.user.userId || !req.body.bandId) {
     //console.log(req.body);
     return res.send({ success: false, error: "field(s) missing" });
   }
