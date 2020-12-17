@@ -55,7 +55,7 @@ const createBand = async (req, res) => {
     // console.log(req.body);
     return res.send({ success: false, error: "fields missing" });
   }
-
+console.log("came here")
   try {
     let contents = await awsS3.getS3files("csc648-string", "M3/");
 
